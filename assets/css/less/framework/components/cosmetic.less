@@ -23,6 +23,8 @@
 @_null-t: _null-t;
 
 @_padding-lr: _padding-lr; // поля(padding) слева и справа
+@_padding-l: _padding-l; // поля(padding) слева
+@_padding-half-l: _padding-half-l; // половинное поле(padding) слева
 @_padding: _padding; // поля со всех сторон
 
 @_left: _left; // float left
@@ -89,6 +91,12 @@
   }
   .@{_padding} {
     padding: @paddingSize !important;
+  }
+  .@{_padding-l} {
+    padding-left: @paddingSize !important;;
+  }
+  .@{_padding-half-l} {
+    padding-left: (@paddingSize / 2) !important;;
   }
 } // END padding
 

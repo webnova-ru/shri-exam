@@ -44,6 +44,76 @@ body {
   text-decoration: none;
 }
 
+// MENU
+.menu-wrapper {
+  margin-bottom: @unit-space;
+}
+.menu {
+
+}
+  @hoverColor: hsl(161, 30%, 88%);
+  .menu_item {
+    float: left;
+    width: 33.3%;
+    .box-sizing();
+    padding: 10px 20px;
+    position: relative;
+    background-color: hsl(50, 45%, 90%);
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: hsl(@hue, 60%, 100%) hsl(@hue, 5%, 65%) hsl(@hue, 5%, 40%);
+    border-right: none;
+    @sh: inset 0px 0px 2px #fff;
+    .shadow(@sh);
+    &:first-child {
+      border-left: none;
+    }
+    &:hover {
+      background-color: @hoverColor;
+      @sh: inset 0px 0px 2px #fff,
+           0px 1px 2px #999;
+      .shadow(@sh);
+    }
+  }
+  .menu_item--active {
+    cursor: default;
+    background-color: @hoverColor;
+    @sh: 0px 1px 2px #999;
+    .shadow(@sh);
+  }
+
+  .menu_item_arrow {
+    position: absolute;
+    overflow: hidden;
+    .size(25px, 13px);
+    .side(50%, 100%);
+    margin: 0 0 0 -12px;
+    &:after {
+      content: '';
+      display: block;
+      margin: -9px 0 0 4px;
+      .size(15px, 15px);
+      background-color: @hoverColor;
+      .border(hsl(@hue, 5%, 40%));
+      .rotate(45deg);
+      .shadow(0px 1px 2px #999);
+    }
+  }
+    .menu_item_icon {
+      font-size: 32px;
+      display: block;
+      margin-top: 12px;
+      color: lighten(@textColor, 12%);
+    }
+    .menu_item_text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .menu_item_subtext {
+      color: lighten(@textColor, 12%);
+    }
+
 @contrColor: hsl(@hue, 5%, 60%);
 .content {
   background: hsl(@hue, 10%, 96%) url("@{path-imgFolder}/bg_page.png");
