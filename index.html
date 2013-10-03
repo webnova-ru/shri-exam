@@ -89,103 +89,107 @@
                     <div class="-win_header_inline _left">
                         <a href="#" class="-btn"><i class="icon-chevron-left"></i> К списку студентов</a>
                     </div>
-                    <div class="student-desc-title -win_header_title">Информация о студенте</div>
+                    <div class="win-title -win_header_title">Информация о студенте</div>
                     <div class="-win_header_inline _right">
                         <div class="-ui-group">
-                            <a href="#" class="-ui-group_item -btn -btn--active">Просмотр</a>
-                            <a href="#" class="-ui-group_item -btn">Редактирование</a>
+                            <a href="#" id="js-view-student" class="-ui-group_item -btn -btn--active"><i class="icon-eye-open"></i> Просмотр</a>
+                            <a href="#" id="js-edit-student" class="-ui-group_item -btn"><i class="icon-pencil"></i> Редактирование</a>
                         </div>
                     </div>
                 </div>
                 <div class="-win_content">
-                    <h2 class="title">О себе</h2>
-                    <p>
-                        Всем привет, меня зовут Вася. Родился и живу в Москве. В школе вебом, версткой и даже программированием не увлекался, просто мне нравилось ходить на олимпиады по математике и лингвистике. Потом поступил в МИФИ, где любовь к математике мне отбили. С третьего курса работаю. Занимался вебом и ios. В школу пришел чтобы восполнить пробелы в знаниях, узнать как изнутри работает такая большая организация и конечно познакомиться с новыми интересными людьми.
-                    </p>
-                    <h2 class="title">Ссылки на социальные сети</h2>
-                    <table class="-table -table--bordered">
-                        <tbody>
-                        <tr>
-                            <td><strong>Facebook</strong></td>
-                            <td><a href="#">facebook.com/popov.nikita</a></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Вконтакте</strong></td>
-                            <td><a href="#">vk.com/nikita.v.popov</a></td>
-                        </tr>
-                        <tr>
-                            <td><strong>GitHub</strong></td>
-                            <td><a href="#">github.com/losnikitos</a></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ya.ru</strong></td>
-                            <td><a href="#">losnikitos123.ya.ru</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="student-info-full">
+                        <h2 class="title">О себе</h2>
+                        <p>
+                            Всем привет, меня зовут Вася. Родился и живу в Москве. В школе вебом, версткой и даже программированием не увлекался, просто мне нравилось ходить на олимпиады по математике и лингвистике. Потом поступил в МИФИ, где любовь к математике мне отбили. С третьего курса работаю. Занимался вебом и ios. В школу пришел чтобы восполнить пробелы в знаниях, узнать как изнутри работает такая большая организация и конечно познакомиться с новыми интересными людьми.
+                        </p>
+                        <h2 class="title">Ссылки на социальные сети</h2>
+                        <table class="-table -table--bordered">
+                            <tbody>
+                            <tr>
+                                <td><strong>Facebook</strong></td>
+                                <td><a href="#">facebook.com/popov.nikita</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Вконтакте</strong></td>
+                                <td><a href="#">vk.com/nikita.v.popov</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>GitHub</strong></td>
+                                <td><a href="#">github.com/losnikitos</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ya.ru</strong></td>
+                                <td><a href="#">losnikitos123.ya.ru</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <!--редактирование-->
-                    <form action="#" method="get" data-validate="formNova">
+                    <div class="student-edit">
                         <h2 class="title">Редактирование студента</h2>
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="fio">Ф.И.О.</label>
-                            <div class="-form-right">
-                                <input id="fio" class="-input-text" name="fio" data-validrules="required" />
+                        <form action="#" method="get" data-validate="formNova">
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="fio">Ф.И.О.</label>
+                                <div class="-form-right">
+                                    <input id="fio" class="-input-text" name="fio" data-validrules="required" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="fotoLink">Ссылка на фото</label>
-                            <div class="-form-right">
-                                <input id="fotoLink" class="-input-text" name="fotoLink" data-validrules="required" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="fotoLink">Ссылка на фото</label>
+                                <div class="-form-right">
+                                    <input id="fotoLink" class="-input-text" name="fotoLink" data-validrules="required" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="city">Город</label>
-                            <div class="-form-right">
-                                <input id="city" class="-input-text" name="city" data-validrules="required" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="city">Город</label>
+                                <div class="-form-right">
+                                    <input id="city" class="-input-text" name="city" data-validrules="required" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="facebook">Ссылка facebook</label>
-                            <div class="-form-right">
-                                <input id="facebook" class="-input-text" name="facebook" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="facebook">Ссылка facebook</label>
+                                <div class="-form-right">
+                                    <input id="facebook" class="-input-text" name="facebook" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="vk">Ссылка vk</label>
-                            <div class="-form-right">
-                                <input id="vk" class="-input-text" name="vk" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="vk">Ссылка vk</label>
+                                <div class="-form-right">
+                                    <input id="vk" class="-input-text" name="vk" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="gitHub">Ссылка GitHub</label>
-                            <div class="-form-right">
-                                <input id="gitHub" class="-input-text" name="gitHub" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="gitHub">Ссылка GitHub</label>
+                                <div class="-form-right">
+                                    <input id="gitHub" class="-input-text" name="gitHub" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="-form-line">
-                            <label class="-label -form-left" for="yaRu">Ссылка Ya.ru</label>
-                            <div class="-form-right">
-                                <input id="yaRu" class="-input-text" name="yaRu" />
+                            <div class="-form-line">
+                                <label class="-label -form-left" for="yaRu">Ссылка Ya.ru</label>
+                                <div class="-form-right">
+                                    <input id="yaRu" class="-input-text" name="yaRu" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="-form-line">
-                            <label class="-label" for="desc">О себе</label>
-                            <textarea id="desc" class="-textarea -width-100" name="desc" data-validrules="required"></textarea>
-                        </div>
-
-                        <div class="-form-line -form-action">
-                            <div class="-form-right">
-                                <button type="submit" class="-button">Сохранить</button>
-                                <button type="reset" class="-button -button--gray _spacer-l">Очистить</button>
+                            <div class="-form-line">
+                                <label class="-label" for="desc">О себе</label>
+                                <textarea id="desc" class="-textarea -width-100" name="desc" data-validrules="required"></textarea>
                             </div>
-                        </div>
-                    </form>
+
+                            <div class="-form-line -form-action">
+                                <div class="-form-right">
+                                    <button type="submit" class="-button">Сохранить</button>
+                                    <button type="reset" class="-button -button--gray _spacer-l">Очистить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

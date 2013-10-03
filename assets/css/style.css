@@ -3176,6 +3176,25 @@ h3 {
 .header {
   margin: 20px;
 }
+.title {
+  border-bottom: 1px solid #819198;
+  box-shadow: 0 1px 0 #FFFFFF;
+  color: #556268;
+  font-size: 15px;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+  word-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.win-title {
+  position: absolute;
+  left: 50%;
+  width: 180px;
+  margin-left: -90px;
+  float: none;
+}
 .logo {
   margin: auto;
   width: 350px;
@@ -3273,18 +3292,6 @@ h3 {
 .menu_item_subtext {
   color: #646e73;
 }
-.title {
-  border-bottom: 1px solid #819198;
-  box-shadow: 0 1px 0 #FFFFFF;
-  color: #556268;
-  font-size: 15px;
-  font-weight: bolder;
-  letter-spacing: 0.1em;
-  padding-bottom: 2px;
-  text-transform: uppercase;
-  word-spacing: 0.1em;
-  margin-bottom: 10px;
-}
 .student-info {
   margin: 20px;
 }
@@ -3313,12 +3320,8 @@ h3 {
   margin-top: 20px;
   font-size: 18px;
 }
-.student-desc-title {
-  position: absolute;
-  left: 50%;
-  width: 180px;
-  margin-left: -90px;
-  float: none;
+.student-edit {
+  display: none;
 }
 .mediaBox {
   background: #f4f5f6 url("/assets/img/bg_page.png");

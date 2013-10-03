@@ -61,6 +61,28 @@ h1, h2, h3 {
 .header {
   margin: @unit-space;
 }
+
+.title {
+  border-bottom: 1px solid #819198;
+  box-shadow: 0 1px 0 #FFFFFF;
+  color: #556268;
+  font-size: 15px;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+  word-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.win-title {
+  position: absolute;
+  left: 50%;
+  width: 180px;
+  margin-left: -90px;
+  float: none;
+}
+
+// LOGO
 .logo {
   margin: auto;
   width: 350px;
@@ -74,6 +96,7 @@ h1, h2, h3 {
   border: none;
   text-decoration: none;
 }
+// END LOGO
 
 // MENU
 .menu-wrapper {
@@ -145,19 +168,7 @@ h1, h2, h3 {
       color: lighten(@textColor, 12%);
     }
 // END MENU
-// title
-.title {
-  border-bottom: 1px solid #819198;
-  box-shadow: 0 1px 0 #FFFFFF;
-  color: #556268;
-  font-size: 15px;
-  font-weight: bolder;
-  letter-spacing: 0.1em;
-  padding-bottom: 2px;
-  text-transform: uppercase;
-  word-spacing: 0.1em;
-  margin-bottom: 10px;
-}
+
 // STUDENT INFO
 .student-info {
   margin: @unit-space;
@@ -184,12 +195,8 @@ h1, h2, h3 {
     margin-top: 20px;
     font-size: 18px;
   }
-.student-desc-title {
-  position: absolute;
-  left: 50%;
-  width: 180px;
-  margin-left: -90px;
-  float: none;
+.student-edit {
+  display: none;
 }
 // END STUDENT INFO
 
@@ -201,7 +208,6 @@ h1, h2, h3 {
   @sh: 0px 1px 0px hsl(@hue, 30%, 25%);
   .shadow(@sh);
 }
-
 
 
 .footer {
