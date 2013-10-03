@@ -10,7 +10,7 @@
 // includes
 @import "framework/mixins/_mixins";
 
-// variables
+// variables and mixins
 @path-imgFolder: '/assets/img';
 @path-iconFolder: '/assets/img/icons';
 @unit-space: 20px;
@@ -18,13 +18,42 @@
 @textColor: hsl(197, 7%, 30%);
 @hue: hue(@textColor);
 
+.an-noiseSlide() {
+  .noiseSlide() {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 471px 0;
+    }
+  }
+  @-webkit-keyframes noiseSlide {.noiseSlide();}
+  @-moz-keyframes noiseSlide {.noiseSlide();}
+  @-o-keyframes noiseSlide {.noiseSlide();}
+  @keyframes noiseSlide {.noiseSlide();}
+}
+
 body {
   background: #170D0C url("@{path-imgFolder}/bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
+
+.an-noiseSlide();
+.noise {
+  .animation(noiseSlide, 20s, 0s, linear, infinite, normal, none);
+  background: url("@{path-imgFolder}/noise.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
 .page {
   margin: auto;
   width: 700px;
+  position: relative;
+  z-index: 2;
 }
 .header {
   margin: @unit-space;
@@ -64,22 +93,21 @@ body {
     border-style: solid;
     border-color: hsl(@hue, 60%, 100%) hsl(@hue, 5%, 65%) hsl(@hue, 5%, 40%);
     border-right: none;
-    @sh: inset 0px 0px 2px #fff;
+    @sh: inset 0px 0px 2px #eee;
     .shadow(@sh);
     &:first-child {
       border-left: none;
     }
     &:hover {
       background-color: @hoverColor;
-      @sh: inset 0px 0px 2px #fff,
-           0px 1px 2px #999;
+      @sh: 0px 1px 2px #aaa;
       .shadow(@sh);
     }
   }
   .menu_item--active {
     cursor: default;
     background-color: @hoverColor;
-    @sh: 0px 1px 2px #999;
+    @sh: 0px 1px 2px #aaa;
     .shadow(@sh);
   }
 
@@ -113,9 +141,10 @@ body {
     .menu_item_subtext {
       color: lighten(@textColor, 12%);
     }
+// END MENU
 
 @contrColor: hsl(@hue, 5%, 60%);
-.content {
+.mediaBox {
   background: hsl(@hue, 10%, 96%) url("@{path-imgFolder}/bg_page.png");
   background-color: hsl(@hue, 10%, 96%);
   .border(@contrColor);

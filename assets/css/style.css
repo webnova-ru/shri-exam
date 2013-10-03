@@ -289,7 +289,6 @@ table {
 /* COMMON HTML-ELEMENTS STYLE */
 html,
 body {
-  height: 100%;
   min-height: 100%;
 }
 body {
@@ -2908,9 +2907,61 @@ body {
   background: #170d0c url("/assets/img/bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
+@-webkit-keyframes noiseSlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 471px 0;
+  }
+}
+@-moz-keyframes noiseSlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 471px 0;
+  }
+}
+@-o-keyframes noiseSlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 471px 0;
+  }
+}
+@keyframes noiseSlide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 471px 0;
+  }
+}
+.noise {
+  -webkit-animation: noiseSlide 20s linear 0s infinite normal;
+  -moz-animation: noiseSlide 20s linear 0s infinite normal;
+  -ms-animation: noiseSlide 20s linear 0s infinite normal;
+  -o-animation: noiseSlide 20s linear 0s infinite normal;
+  animation: noiseSlide 20s linear 0s infinite normal;
+  -webkit-animation-fill-mode: none;
+  -moz-animation-fill-mode: none;
+  -o-animation-fill-mode: none;
+  animation-fill-mode: none;
+  background: url("/assets/img/noise.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
 .page {
   margin: auto;
   width: 700px;
+  position: relative;
+  z-index: 2;
 }
 .header {
   margin: 20px;
@@ -2947,28 +2998,28 @@ body {
   border-style: solid;
   border-color: #ffffff #a1a8aa #61686b;
   border-right: none;
-  -webkit-box-shadow: inset 0px 0px 2px #ffffff;
-  -moz-box-shadow: inset 0px 0px 2px #ffffff;
-  -o-box-shadow: inset 0px 0px 2px #ffffff;
-  box-shadow: inset 0px 0px 2px #ffffff;
+  -webkit-box-shadow: inset 0px 0px 2px #eeeeee;
+  -moz-box-shadow: inset 0px 0px 2px #eeeeee;
+  -o-box-shadow: inset 0px 0px 2px #eeeeee;
+  box-shadow: inset 0px 0px 2px #eeeeee;
 }
 .menu_item:first-child {
   border-left: none;
 }
 .menu_item:hover {
   background-color: #d7eae4;
-  -webkit-box-shadow: inset 0px 0px 2px #ffffff, 0px 1px 2px #999999;
-  -moz-box-shadow: inset 0px 0px 2px #ffffff, 0px 1px 2px #999999;
-  -o-box-shadow: inset 0px 0px 2px #ffffff, 0px 1px 2px #999999;
-  box-shadow: inset 0px 0px 2px #ffffff, 0px 1px 2px #999999;
+  -webkit-box-shadow: 0px 1px 2px #aaaaaa;
+  -moz-box-shadow: 0px 1px 2px #aaaaaa;
+  -o-box-shadow: 0px 1px 2px #aaaaaa;
+  box-shadow: 0px 1px 2px #aaaaaa;
 }
 .menu_item--active {
   cursor: default;
   background-color: #d7eae4;
-  -webkit-box-shadow: 0px 1px 2px #999999;
-  -moz-box-shadow: 0px 1px 2px #999999;
-  -o-box-shadow: 0px 1px 2px #999999;
-  box-shadow: 0px 1px 2px #999999;
+  -webkit-box-shadow: 0px 1px 2px #aaaaaa;
+  -moz-box-shadow: 0px 1px 2px #aaaaaa;
+  -o-box-shadow: 0px 1px 2px #aaaaaa;
+  box-shadow: 0px 1px 2px #aaaaaa;
 }
 .menu_item_arrow {
   position: absolute;
@@ -3008,7 +3059,7 @@ body {
 .menu_item_subtext {
   color: #646e73;
 }
-.content {
+.mediaBox {
   background: #f4f5f6 url("/assets/img/bg_page.png");
   background-color: #f4f5f6;
   border: 1px solid #949b9e;
