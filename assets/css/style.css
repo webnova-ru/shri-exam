@@ -1745,6 +1745,211 @@ button.-button {
 .-ui-group > .-ui-group_item:focus {
   position: relative;
 }
+/* ОКНА И ПЛАШКИ */
+.-win-wrap {
+  padding: 10px;
+  background-color: rgba(172, 198, 210, 0.3);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+.-win-wrap .-win {
+  -webkit-box-shadow: 0px 0px 4px #365463;
+  -moz-box-shadow: 0px 0px 4px #365463;
+  -o-box-shadow: 0px 0px 4px #365463;
+  box-shadow: 0px 0px 4px #365463;
+  border: none;
+}
+.-win {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #eff0f0;
+  overflow: hidden;
+  border: 1px solid #97928c;
+}
+.-win_header {
+  position: relative;
+  height: 39px;
+  border-bottom: 1px solid #484541;
+  padding: 0px 10px;
+  background: #dad5d0;
+  background-image: -moz-linear-gradient(top, #e9e6e2, #cbc5bd);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e9e6e2), to(#cbc5bd));
+  background-image: -webkit-linear-gradient(top, #e9e6e2, #cbc5bd);
+  background-image: -o-linear-gradient(top, #e9e6e2, #cbc5bd);
+  background-image: linear-gradient(top, #e9e6e2, #cbc5bd);
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#e9e6e2, endColorstr=#cbc5bd)";
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#e9e6e2, endColorstr=#cbc5bd)";
+  background-image: -ms-linear-gradient(top, #e9e6e2, #cbc5bd);
+  *zoom: 1;
+  -webkit-box-shadow: 0 1px 0 #ffffff, inset 0 1px 0 #ffffff, inset 0 -1px 1px #afa69d;
+  -moz-box-shadow: 0 1px 0 #ffffff, inset 0 1px 0 #ffffff, inset 0 -1px 1px #afa69d;
+  -o-box-shadow: 0 1px 0 #ffffff, inset 0 1px 0 #ffffff, inset 0 -1px 1px #afa69d;
+  box-shadow: 0 1px 0 #ffffff, inset 0 1px 0 #ffffff, inset 0 -1px 1px #afa69d;
+  -webkit-border-top-left-radius: 2px;
+  -moz-border-top-left-radius: 2px;
+  border-top-left-radius: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -moz-border-top-right-radius: 2px;
+  border-top-right-radius: 2px;
+}
+.-win_header:after,
+.-win_header:before {
+  display: table;
+  content: "";
+}
+.-win_header:after {
+  clear: both;
+}
+.-win_header_title {
+  float: left;
+  margin: 0;
+  font-weight: bold;
+  padding: 9px 0;
+  font-size: 16px;
+  text-shadow: 0px 1px 0px #eeeeee;
+}
+.-win_header_close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 6px 0 0 20px;
+}
+.-win_header_inline {
+  display: inline-block;
+  margin-top: 6px;
+}
+.-win_content {
+  padding: 10px;
+  background-color: #eff0f0;
+  border-top: 1px solid #FFF;
+}
+.-win_footer {
+  margin-top: 20px;
+  padding-top: 10px;
+  -webkit-box-shadow: 0px -1px 0px #ffffff, 0px -2px 0px #adb1b3;
+  -moz-box-shadow: 0px -1px 0px #ffffff, 0px -2px 0px #adb1b3;
+  -o-box-shadow: 0px -1px 0px #ffffff, 0px -2px 0px #adb1b3;
+  box-shadow: 0px -1px 0px #ffffff, 0px -2px 0px #adb1b3;
+}
+/* КЛАССЫ ПОСТРОЕНИЯ ТАБЛИЦ */
+.-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.-table caption {
+  text-align: left;
+  font-weight: bold;
+}
+.-table th,
+.-table td {
+  padding: 9px 10px 10px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #aaaaaa;
+}
+.-table th {
+  font-weight: bold;
+}
+.-table thead th {
+  vertical-align: bottom;
+}
+.-table tr:last-child td {
+  padding-top: 10px;
+}
+.-table caption + thead tr:first-child th,
+.-table caption + thead tr:first-child td,
+.-table colgroup + thead tr:first-child th,
+.-table colgroup + thead tr:first-child td,
+.-table thead:first-child tr:first-child th,
+.-table thead:first-child tr:first-child td {
+  border-top: 0;
+}
+.-table tbody + tbody {
+  border-top: 2px solid #aaaaaa;
+}
+.-table--hover tbody tr:hover td,
+.-table--hover tbody tr:hover th {
+  background-color: #dddddd;
+}
+.-table--bordered {
+  border: 1px solid #aaaaaa;
+  border-collapse: separate;
+  *border-collapse: collapse;
+  border-left: 0;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+.-table--bordered th,
+.-table--bordered td {
+  border-left: 1px solid #aaaaaa;
+}
+.-table--bordered caption + thead tr:first-child th,
+.-table--bordered caption + tbody tr:first-child th,
+.-table--bordered caption + tbody tr:first-child td,
+.-table--bordered colgroup + thead tr:first-child th,
+.-table--bordered colgroup + tbody tr:first-child th,
+.-table--bordered colgroup + tbody tr:first-child td,
+.-table--bordered thead:first-child tr:first-child th,
+.-table--bordered tbody:first-child tr:first-child th,
+.-table--bordered tbody:first-child tr:first-child td {
+  border-top: 0;
+  padding-bottom: 9px;
+}
+.-table--bordered tbody:last-child tr:last-child td,
+.-table--bordered tfoot:last-child tr:last-child td {
+  padding-bottom: 9px;
+}
+.-table--bordered thead:first-child tr:first-child th:first-child,
+.-table--bordered tbody:first-child tr:first-child td:first-child {
+  -webkit-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+}
+.-table--bordered thead:first-child tr:first-child th:last-child,
+.-table--bordered tbody:first-child tr:first-child td:last-child {
+  -webkit-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  -moz-border-radius-topright: 6px;
+}
+.-table--bordered thead:last-child tr:last-child th:first-child,
+.-table--bordered tbody:last-child tr:last-child td:first-child,
+.-table--bordered tfoot:last-child tr:last-child td:first-child {
+  -webkit-border-radius: 0 0 0 6px;
+  -moz-border-radius: 0 0 0 6px;
+  border-radius: 0 0 0 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomleft: 6px;
+}
+.-table--bordered thead:last-child tr:last-child th:last-child,
+.-table--bordered tbody:last-child tr:last-child td:last-child,
+.-table--bordered tfoot:last-child tr:last-child td:last-child {
+  -webkit-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+}
+.-table--bordered caption + thead tr:first-child th:first-child,
+.-table--bordered caption + tbody tr:first-child td:first-child,
+.-table--bordered colgroup + thead tr:first-child th:first-child,
+.-table--bordered colgroup + tbody tr:first-child td:first-child {
+  -webkit-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+}
+.-table--bordered caption + thead tr:first-child th:last-child,
+.-table--bordered caption + tbody tr:first-child td:last-child,
+.-table--bordered colgroup + thead tr:first-child th:last-child,
+.-table--bordered colgroup + tbody tr:first-child td:last-child {
+  -webkit-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+}
 /* РАЗНООБРАЗНЫЕ КЛАССЫ */
 .-toolTip {
   display: inline-block;
@@ -2907,6 +3112,11 @@ body {
   background: #170d0c url("/assets/img/bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
+h1,
+h2,
+h3 {
+  margin: 0;
+}
 @-webkit-keyframes noiseSlide {
   0% {
     background-position: 0 0;
@@ -2970,7 +3180,6 @@ body {
   margin: auto;
   width: 350px;
   height: 110px;
-  margin-bottom: -3px;
 }
 .logo_link {
   text-indent: -9999px;
@@ -2981,7 +3190,7 @@ body {
   text-decoration: none;
 }
 .menu-wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .menu_item {
   float: left;
@@ -3002,6 +3211,11 @@ body {
   -moz-box-shadow: inset 0px 0px 2px #eeeeee;
   -o-box-shadow: inset 0px 0px 2px #eeeeee;
   box-shadow: inset 0px 0px 2px #eeeeee;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
 .menu_item:first-child {
   border-left: none;
@@ -3058,6 +3272,46 @@ body {
 }
 .menu_item_subtext {
   color: #646e73;
+}
+.title {
+  border-bottom: 1px solid #819198;
+  box-shadow: 0 1px 0 #FFFFFF;
+  color: #556268;
+  font-size: 15px;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+  word-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.student-info {
+  margin: 20px;
+}
+.student-info_foto {
+  width: 410px;
+  display: block;
+  margin-right: 20px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.student-info_fio {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  font-size: 28px;
+  line-height: 150%;
+}
+.student-desc-title {
+  position: absolute;
+  left: 50%;
+  width: 180px;
+  margin-left: -90px;
+  float: none;
 }
 .mediaBox {
   background: #f4f5f6 url("/assets/img/bg_page.png");

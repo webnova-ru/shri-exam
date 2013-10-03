@@ -33,11 +33,14 @@
   @keyframes noiseSlide {.noiseSlide();}
 }
 
+// style
 body {
   background: #170D0C url("@{path-imgFolder}/bg.jpg") no-repeat;
   background-size: 100% 100%;
 }
-
+h1, h2, h3 {
+  margin: 0;
+}
 .an-noiseSlide();
 .noise {
   .animation(noiseSlide, 20s, 0s, linear, infinite, normal, none);
@@ -62,7 +65,6 @@ body {
   margin: auto;
   width: 350px;
   height: 110px;
-  margin-bottom: -3px;
 }
 .logo_link {
   text-indent: -9999px;
@@ -75,7 +77,7 @@ body {
 
 // MENU
 .menu-wrapper {
-  margin-bottom: @unit-space;
+  margin-bottom: 30px;
 }
 .menu {
 
@@ -95,6 +97,7 @@ body {
     border-right: none;
     @sh: inset 0px 0px 2px #eee;
     .shadow(@sh);
+    .trans(all 0.3s ease-out);
     &:first-child {
       border-left: none;
     }
@@ -142,6 +145,46 @@ body {
       color: lighten(@textColor, 12%);
     }
 // END MENU
+// title
+.title {
+  border-bottom: 1px solid #819198;
+  box-shadow: 0 1px 0 #FFFFFF;
+  color: #556268;
+  font-size: 15px;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+  word-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+// STUDENT INFO
+.student-info {
+  margin: @unit-space;
+}
+  .student-info_foto {
+    width: 410px;
+    display: block;
+    margin-right: 20px;
+    padding: 5px;
+    background-color: hsla(0, 100%, 100%, 50%);
+    .box-sizing();
+  }
+  .student-info_fio {
+    padding: @unit-space;
+    background-color: hsla(0, 100%, 100%, 50%);
+    overflow: hidden;
+    font-size: 28px;
+    line-height: 150%;
+  }
+  .student-desc-title {
+    position: absolute;
+    left: 50%;
+    width: 180px;
+    margin-left: -90px;
+    float: none;
+  }
+// END STUDENT INFO
 
 @contrColor: hsl(@hue, 5%, 60%);
 .mediaBox {
