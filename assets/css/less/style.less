@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+@import "framework/framework";
+#framework > .init('/assets/img');
+
+// -----------------------------------------
+/* PROJECT STYLE */
+//------------------------------------------
+
+// includes
+@import "framework/mixins/_mixins";
+
+// variables
+@path-imgFolder: '/assets/img';
+@path-iconFolder: '/assets/img/icons';
+@unit-space: 20px;
+@round: 3px;
+@textColor: hsl(197, 7%, 30%);
+@hue: hue(@textColor);
+
+body {
+  background: #170D0C url("@{path-imgFolder}/bg.jpg") no-repeat;
+  background-size: 100% 100%;
+}
+.page {
+  margin: auto;
+  width: 700px;
+}
+.header {
+  margin: @unit-space;
+}
+.logo {
+  margin: auto;
+  width: 350px;
+  height: 110px;
+  margin-bottom: -3px;
+}
+.logo_link {
+  text-indent: -9999px;
+  display: block;
+  height: 130px;
+  background: url("@{path-imgFolder}/logo.png") no-repeat;
+  border: none;
+  text-decoration: none;
+}
+
+@contrColor: hsl(@hue, 5%, 60%);
+.content {
+  background: hsl(@hue, 10%, 96%) url("@{path-imgFolder}/bg_page.png");
+  background-color: hsl(@hue, 10%, 96%);
+  .border(@contrColor);
+  @sh: 0px 1px 0px hsl(@hue, 30%, 25%);
+  .shadow(@sh);
+}
+
+
+
+.footer {
+  padding: (@unit-space / 2) @unit-space;
+}

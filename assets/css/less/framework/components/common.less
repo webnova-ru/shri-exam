@@ -1,0 +1,183 @@
+#common { .init(@_fontSize;
+                @_fontSizeBig;
+                @_fontSizeMiddle;
+                @_fontFamily;
+                @_lineHeight;
+                @_colorText;
+                @_colorTextGhost;
+                @_colorLink;
+                @_colorLinkHover;
+                @_colorTextSelectBg;
+                @_colorPlaceholder;
+                @_bgColor) {
+// -----------------------------------------
+/* COMMON HTML-ELEMENTS STYLE */
+//------------------------------------------
+
+// class name variables --------------------
+// -----------------------------------------
+
+// local variables and mixins --------------
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+body {
+  font: @_fontSize/@_lineHeight @_fontFamily;
+  color: @_colorText;
+  background-color: @_bgColor;
+}
+p, dl {
+  font-size: 1em;
+  margin: 0 0 @_lineHeight 0;
+}
+h1 {
+  font-size: @_fontSizeBig;
+  line-height: (2 * @_lineHeight);
+  margin: @_lineHeight 0 0;
+}
+h2, h3, h4, h5, h6 {
+  font-size: @_fontSizeMiddle;
+  line-height: @_lineHeight;
+  margin: @_lineHeight 0 0;
+}
+a {
+  color: @_colorLink;
+  text-decoration: none;
+  border-bottom: 1px solid fadeout(@_colorLink, 60%);
+  &:hover {
+    color: @_colorLinkHover;
+    border-bottom-color: fadeout(@_colorLinkHover, 60%);
+  }
+}
+
+// цвет выделенного текста
+::-moz-selection,
+::selection {
+  background: @_colorTextSelectBg;
+  text-shadow: none;
+}
+
+ul,
+ol,
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+  margin: 0 0 0 @_lineHeight;
+  padding-left: 0;
+}
+ol ol li {
+  list-style-type: lower-alpha;
+}
+ol ol ol li {
+  list-style-type: lower-roman;
+}
+nav ul, nav ol {
+  padding-left: 0;
+  margin: 0;
+}
+p + ul,
+p + ol {
+  margin-top: -@_lineHeight;
+}
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted @_colorText;
+  cursor: help;
+}
+ins,
+mark {
+  background-color: #ffee55;
+  color: @_colorText;
+  text-decoration: none;
+}
+dl dt {
+  font-weight: bold;
+}
+dd {
+  margin-left: 1em;
+}
+pre,
+code,
+kbd,
+samp {
+  font-family: Menlo, Monaco, monospace, sans-serif;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid @_colorTextGhost;
+}
+figcaption {
+  font-size: .85em;
+  font-style: italic;
+}
+// стили форм
+button,
+input,
+select,
+textarea {
+  font-family: @_fontFamily;
+}
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: @_colorPlaceholder;
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: @_colorPlaceholder;
+}
+[disabled] {
+  cursor: default !important;
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+.Code(@colorBg, @colorBorder, @padding) {
+  code {
+    padding: @padding;
+    font-size: .85em;
+    display: inline-block;
+    line-height: 1;
+    background: @colorBg;
+    border: 1px solid @colorBorder;
+  }
+} // END code()
+
+.Pre(@unitSpace, @colorBg, @borderColor, @round) {
+  pre {
+    background: @colorBg;
+    border: 1px solid @borderColor;
+    .round(@round);
+    padding: (@unitSpace - 1);
+    white-space: pre;
+    overflow: auto;
+  }
+} // END .pre()
+
+.Kbd(@padding, @shadow, @color, @colorBg, @colorBorder, @round) {
+  kbd {
+    padding: @padding;
+    .round(@round);
+    .shadow(@shadow);
+    background-color: @colorBg;
+    border-color: @colorBorder;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    color: @color;
+    font-weight: bold;
+    line-height: 1;
+    white-space: nowrap;
+  }
+} // END .kbd()
+
+//----------------------------------
+}}

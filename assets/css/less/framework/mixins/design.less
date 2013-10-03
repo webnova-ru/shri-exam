@@ -1,0 +1,70 @@
+#style {
+  .btnNormal(@color, @textColor, @innerReflex, @isButton: true) {
+    @hue: hue(@color);
+    .isTrue(@isButton, '0 1px 0 hsl(@{hue}, 15%, 75%)', '0 1px 2px hsl(@{hue}, 15%, 36%)');
+    @buttonShadow: inset 0px @innerReflex 0px hsla(0, 0%, 100%, 0.33),
+                   inset 0px 0px 4px hsl(@hue, 7%, 90%),
+                   inset 0px -2px 0px hsl(@hue, 7%, 53%),
+                   inset -1px 0px 0px hsl(@hue, 7%, 88%),
+                   inset  1px 0px 0px hsl(@hue, 7%, 88%),
+                   inset 0 1px 0px #FFF, @isTrue;
+    color: @textColor;
+    font-size: 13px;
+    border: none;
+    text-decoration: none;
+    .text-shadow(lighten(@textColor, 60%));
+    .grad(hsl(@hue, 10%, 71%), 14%);
+    .shadow(@buttonShadow);
+    .if() when(@isButton = true)
+    {
+      .border(@color);
+      border-bottom-color: darken(@color, 15%);
+      border-top-color: lighten(@color, 10%);
+    }.if();
+  }
+  .btnHover(@color, @glowColor, @innerReflex, @isButton: true) {
+    @glowHue: hue(@glowColor);
+    @hue: hue(@color);
+    .isTrue(@isButton, '0 1px 0 hsl(@{hue}, 15%, 80%)', '0 1px 2px hsl(@{hue}, 15%, 36%)');
+    @buttonHoverShadow: inset 0px @innerReflex 0px hsla(0, 0%, 100%, 0.33),
+                        inset 0px 0px 3px hsl(@hue, 7%, 90%),
+                        inset 0px 0px 4px @glowColor,
+                        inset 0px -2px 0px hsl(@glowHue, 40%, 40%),
+                        inset -1px 0px 0px hsl(@glowHue, 40%, 88%),
+                        inset 1px 0px 0px hsl(@glowHue, 40%, 88%),
+                        inset 0 1px 0px #FFF,
+                              0px 0px 3px @glowColor, @isTrue;
+    color: hsl(@glowHue, 75%, 23%);
+    border: none;
+    .text-shadow(hsl(@glowHue, 40%, 83%));
+    .grad(hsl(@glowHue, 50%, 70%), 15%);
+    .shadow(@buttonHoverShadow);
+    .if() when(@isButton = true) {
+      .border(hsl(@glowHue, 70%, 35%));
+    }.if();
+  }
+  .btnActive(@color, @isButton: true) {
+    @hue: hue(@color);
+    @buttonActiveShadow: inset 0px 1px 2px hsl(@hue, 7%, 45%);
+    @buttonActiveShadow2: ~'0 1px 0 #FFF, @{buttonActiveShadow}';
+    color: hsl(@hue, 5%, 35%);
+    .text-shadow(none);
+    .grad(hsl(@hue, 10%, 88%), 8%, false);
+    .isTrue(@isButton, @buttonActiveShadow2, @buttonActiveShadow);
+    .shadow(@isTrue);
+    .if() when(@isButton = true) {
+      .border(@color);
+      border-top-color: darken(@color, 10%);
+    }.if();
+  }
+  .btnDisabled(@color) {
+    cursor: not-allowed;
+    .border(@color);
+    .shadow(~'0 1px 0 #FFF');
+    background-image: none;
+    background-color: lighten(@color, 12%);
+    .text-shadow(none);
+    color: #EEE;
+  }
+//--------------------------------------
+}

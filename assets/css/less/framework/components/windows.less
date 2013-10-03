@@ -1,0 +1,131 @@
+#windows { .init(@_unit-space,
+                 @_winWrapBgColor,
+                 @_winBorderColor,
+                 @_winBgColor,
+                 @_round) {
+// -----------------------------------------
+/* ОКНА И ПЛАШКИ */
+//------------------------------------------
+
+// class name variable ---------------------
+@-win-wrap: -win-wrap;
+@-win: -win;
+  @-win_header: -win_header;
+    @-win_header_title: -win_header_title;
+    @-win_header_close: -win_header_close;
+    @-win_header_inline: -win_header_inline;
+    @-win_header_tab: -win_header_tab;
+    @-win_header_tab--active: -win_header_tab--active;
+  @-win_content: -win_content;
+  @-win_footer: -win_footer;
+// -----------------------------------------
+
+// local variable and mixin ----------------
+@_winRound: @_round + 2;
+@winHeaderInlineMarginTop: 6px;
+@_winHeaderHeight: 2 * @_unit-space - 1;
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+.@{-win-wrap} {
+  padding: @_unit-space / 2;
+  background-color: @_winWrapBgColor;
+  .round(@_winRound);
+
+  & .@{-win} {
+    .shadow(0px 0px 4px hsl(hue(@_winWrapBgColor), 30%, 30%));
+    border: none;
+  }
+}
+.@{-win} {
+  .round(@_winRound);
+  background-color: @_winBgColor;
+  overflow: hidden;
+  .border(lighten(@_winBorderColor, 17%));
+}
+.@{-win_header} {
+  @headerHue: hue(@_winBorderColor);
+  @headerShadow: 0 1px 0 #FFF,
+                 inset 0 1px 0 #FFF,
+                 inset 0 -1px 1px hsl(@headerHue, 10%, 65%);
+  .clearFix();
+  position: relative;
+  height: @_winHeaderHeight;
+  border-bottom: 1px solid darken(@_winBorderColor, 13%);
+  padding: 0px @_unit-space / 2;
+  .grad(hsl(@headerHue, 12%, 77%), 13%);
+  .shadow(@headerShadow);
+  .round-top-left(@_winRound);
+  .round-top-right(@_winRound);
+}
+.@{-win_header_title} {
+  float: left;
+  margin: 0;
+  //font-weight: bolder;
+  padding: @_unit-space / 2 - 1 0;
+  font-size: 16px;
+  .text-shadow(#EEE);
+}
+.@{-win_header_close} {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  margin: @winHeaderInlineMarginTop 0 0 @_unit-space;
+}
+.@{-win_header_inline} {
+  display: inline-block;
+  margin-top: @winHeaderInlineMarginTop;
+}
+.@{-win_content} {
+  padding: @unit-space / 2;
+  background-color: @_winBgColor;
+  border-top: 1px solid #FFF;
+}
+.@{-win_footer} {
+  margin-top: @_unit-space;
+  padding-top: @_unit-space / 2;
+  @sh: 0px -1px 0px #FFF, 0px -2px 0px darken(@_winBgColor, 25%);
+  .shadow(@sh);
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+.Head-tabs(@tabColor, @tabTextColor, @tabGlow) {
+  .@{-win_header_tab} {
+    display: block;
+    float: left;
+    position: relative;
+    z-index: 2;
+    padding: @_unit-space / 2 @_unit-space / 2 @_unit-space / 2 - 1;
+    text-align: center;
+    #style > .btnNormal(@tabColor, @tabTextColor, @_winHeaderHeight / 2, false);
+    &:hover {
+      #style > .btnHover(@tabColor, @tabGlow, @_winHeaderHeight / 2, false);
+    }
+    &:active {
+      #style > .btnActive(@tabColor, false);
+    }
+    &.@{-win_header_tab--active} {
+      @sh: inset 0px 1px 0px darken(@_winBgColor, 33%),
+           inset 0px 2px 2px darken(@_winBgColor, 23%);
+      background-image: none;
+      background-color: @_winBgColor;
+      .shadow(@sh);
+      position: relative;
+      padding-bottom: @_unit-space / 2;
+      border-bottom: 1px solid @_winBgColor;
+      z-index: 1;
+      cursor: default;
+      color: inherit;
+      .text-shadow(none);
+      /*&:first-child {
+        .shadow(inset 1px 1px 1px darken(@_winBgColor, 23%));
+      }
+      &:last-child {
+        .shadow(inset -1px 1px 1px darken(@_winBgColor, 23%));
+      }*/
+    }
+  }
+} // END head-tabs()
+// -----------------------------------------
+}}

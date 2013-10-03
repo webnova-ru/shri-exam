@@ -1,0 +1,143 @@
+#cosmetic { .init() {
+// -----------------------------------------
+/* COSMETIC CLASS */
+//------------------------------------------
+
+// class name variables --------------------
+@_hide: _hide; // скрыть элемент со страницы
+@_cursor-normal: _cursor-normal; // курсор по-умолчанию
+
+@_spacer: _spacer; // отступ(margin) снизу
+@_spacer-big: _spacer-big; // большой отступ снизу
+@_spacer-l: _spacer-l; // отступ слева
+@_spacer-r: _spacer-r; // отступ справа
+@_spacer-t: _spacer-t; // отступ сверху
+@_spacer-half-l: _spacer-half-l; // половинный отступ слева
+@_spacer-half-r: _spacer-half-r; // половинный отступ справа
+@_spacer-half-t: _spacer-half-t; // половинный отступ сверху
+@_spacer-half-b: _spacer-half-b; // половинный отступ снизу
+
+@_null-r: _null-r; // обнулить отступ(margin) c справа/слева/снизу/сверху
+@_null-l: _null-l;
+@_null-b: _null-b;
+@_null-t: _null-t;
+
+@_padding-lr: _padding-lr; // поля(padding) слева и справа
+@_padding: _padding; // поля со всех сторон
+
+@_left: _left; // float left
+@_right: _right; // float right
+@_clear: _clear; // блок реагирующий на элементы c флоат
+
+@_text-big:    _text-big;    // маленький размер текста
+@_text-middle: _text-middle; // средний размер текста
+@_text-small:  _text-small;  // большой размер текста
+@_text-ghost:  _text-ghost;  // полупрозрачный текст
+// -----------------------------------------
+
+// local variables and mixins --------------
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+.@{_hide} {
+  position: absolute !important;
+  left: -9999px !important;
+  font-size: 0px !important;
+}
+.@{_cursor-normal} {
+  cursor: default !important;
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+// отступы(margin) с разных сторон
+.Spacer(@spacerSize) {
+  .@{_spacer} {
+    margin-bottom: @spacerSize !important;
+  }
+  .@{_spacer-big} {
+    margin-bottom: (2 * @spacerSize) !important;
+  }
+  .@{_spacer-l} {
+    margin-left: @spacerSize !important;
+  }
+  .@{_spacer-r} {
+    margin-right: @spacerSize !important;
+  }
+  .@{_spacer-t} {
+    margin-top: @spacerSize !important;
+  }
+  .@{_spacer-half-l} {
+     margin-left: (@spacerSize / 2) !important;
+   }
+  .@{_spacer-half-r} {
+    margin-right: (@spacerSize / 2) !important;
+  }
+  .@{_spacer-half-t} {
+    margin-top: (@spacerSize / 2) !important;
+  }
+  .@{_spacer-half-b} {
+    margin-bottom: (@spacerSize / 2) !important;
+  }
+} // END spacer()
+
+// поля(padding) с разных сторон
+.Padding(@paddingSize) {
+  .@{_padding-lr} {
+    padding-right: @paddingSize !important;
+    padding-left: @paddingSize !important;
+  }
+  .@{_padding} {
+    padding: @paddingSize !important;
+  }
+} // END padding
+
+// обнуления отступов и полей
+.Null() {
+  .@{_null-r} {
+    margin-right: 0 !important;
+  }
+  .@{_null-l} {
+    margin-left: 0 !important;
+  }
+  .@{_null-b} {
+    margin-bottom: 0 !important;
+  }
+  .@{_null-t} {
+    margin-top: 0 !important;
+  }
+} // END null()
+
+// флоат классы
+.Float() {
+  .@{_left} {
+    float: left !important;
+  }
+  .@{_right} {
+    float: right !important;
+  }
+  .@{_clear} {
+    clear: both !important;
+  }
+} // END float()
+
+// типографические классы
+.Typography(@fontSizeBig, @fontSizeMiddle, @fontSizeSmall, @colorTextGhost) {
+  .@{_text-big} {
+    font-size: @fontSizeBig !important;
+    line-height: 1.5em;
+  }
+  .@{_text-middle} {
+    font-size: @fontSizeMiddle !important;
+    line-height: 1em;
+  }
+  .@{_text-small} {
+    font-size: @fontSizeSmall !important;
+    line-height: 1;
+  }
+  .@{_text-ghost} {
+    color: @colorTextGhost !important;
+  }
+}
+//---------------------------------------
+}}

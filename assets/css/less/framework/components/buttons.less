@@ -1,0 +1,281 @@
+#buttons { .init(@_unitSpace,
+                 @btnHeight,
+                 @btnPaddingTop,
+                 @btnPaddingBottom,
+                 @btnBorderColor,
+                 @round) {
+// -----------------------------------------
+/* КНОПКИ */
+//------------------------------------------
+  
+// class name variable ---------------------
+@-button: -button; // кнопка формы
+// <button class="-button" type="submit">...</button>
+//
+@-button--gray: -button--gray; // модификатор серенькой кнопочки
+// <a href="#" class="-btn -btn--gray">сохранить</a>
+// <button class="-btn -btn--gray">зарегистрироваться</button>
+//
+@-button--disabled: -button--disabled;
+// <a href="#" class="-btn -btn--disabled">сохранить</a>
+// <button class="-btn -btn--disabled" disabled="disabled">зарегистрироваться</button>
+//
+@-button--active: -button--active; // нажатая кнопка
+// <a href="#" class="-btn -btn--active">сохранить</a>
+// <button class="-btn -btn--active">зарегистрироваться</button>
+//
+@-btn: -btn; // простая кнопка
+@-btn--disabled: -btn--disabled;
+@-btn--active: -btn--active;
+@-btn--big: -btn--big; //большая кнопка
+//
+@-ui-group: -ui-group; // группа элементов пользовательского интерфейса
+@-ui-group_item: -ui-group_item; // элемент из группы
+// <span class="-ui-group">
+//    <button class="-ui-group_item -btn">abc</button>
+//    <button class="-ui-group_item -btn">abc</button>
+// </span>
+//
+@-mark: -mark; // значки к инпуту
+// <span class="-mark">http://www.</span><input type="text"/>
+//
+//------------------------------------------
+  
+// local variable and mixin ----------------
+@_btnHeight: @btnHeight - @btnPaddingTop - @btnPaddingBottom - 2;
+@_btnCorrect: (1.5 * @_unitSpace) - @btnHeight;
+@_btnPaddingTop: @btnPaddingTop;
+@_btnPaddingBottom: @btnPaddingBottom;
+@_btnBorderColor: @btnBorderColor;
+@_round: @round;
+//------------------------------------------
+
+// COMPONENT STYLE -------------------------
+.@{-button} {
+  height: @_btnHeight + @btnPaddingTop + @btnPaddingBottom + 2px;
+  vertical-align: top;
+  .border(@_btnBorderColor);
+  margin-bottom: @_btnCorrect;
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+// button
+.Button(@imgPath, @sprite-name) {
+  @btnColorText: #faf9f0;
+  @btnHeight: 27px;
+  @btnPaddingLeftRight: 12px;
+  @btnRound: 4px;
+  @btnShadow: 0 1px 0px #246c80,
+              0 2px 2px #7b7b7b;
+  @btnShadow_hover: 0 1px 0px #246c80,
+                    0 2px 2px #7b7b7b,
+                    0 0   4px #92f5ff;
+  @btnShadow_active: 0 1px 0px #FFF;
+
+  @btnDisabledColorText: #e8eef4;
+  @btnDisabledShadow: 0 1px 0px #FFF;
+
+  @btnGrayColorText: #FFF;
+  @btnGrayColorText_shadow: #3b3b3b;
+  @btnGrayShadow: 0 1px 0px #666666,
+                  0 2px 2px #7b7b7b;
+
+  .sprite(@type, @x, @y) when(@type = "button") {
+    background: url("@{imgPath}/@{sprite-name}") no-repeat;
+    .sprite-helper(@x, @y, 0px, 37px);
+  }
+  .@{-button} {
+    color: @btnColorText;
+    font-size: 13px;
+    .text-shadow(#1b2c33);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: visible;
+    vertical-align: top;
+    .sprite("button", 1, 1);
+    .inline-block();
+    position: relative;
+    height: @btnHeight - 3;
+    line-height: @btnHeight - 3;
+    padding: 1px @btnPaddingLeftRight 2px;
+    border:none;
+    .round(@btnRound);
+    .shadow(@btnShadow);
+    button& {
+      height: @btnHeight;
+    }
+    &:after {
+      content: "";
+      .inline-block();
+      position: absolute;
+      .sprite("button", 1, 2);
+      .size(8px, @btnHeight);
+      top: 0px;
+      right: 0px;
+    }
+    .lt-ie9 & {
+      margin-right: 3px;
+      padding-right: @btnPaddingLeftRight - 3px;
+      &:after {
+        right: -3px;
+      }
+    }
+    &:focus,
+    &:hover {
+      border: none;
+      outline: none !important;
+      color: @btnColorText;
+      .sprite("button", 1, 3);
+      .shadow(@btnShadow_hover);
+      &:after {
+        .sprite("button", 1, 4);
+      }
+    }
+    &:active,
+    &.@{-button--active} {
+      .sprite("button", 1, 5);
+      .shadow(@btnShadow_active);
+      top:1px;
+      &:after {
+        .sprite("button", 1, 6);
+      }
+    }
+  }
+  .@{-button--active} {
+    cursor: default;
+  }
+
+  .@{-button--gray} {
+    color: @btnGrayColorText;
+    .text-shadow(@btnGrayColorText_shadow);
+    .shadow(@btnGrayShadow);
+    .sprite("button", 1, 9);
+    &:after {
+      .sprite("button", 1, 10);
+    }
+    &:focus,
+    &:hover {
+      color: @btnColorText;
+      .sprite("button", 1, 3);
+      .shadow(@btnShadow_hover);
+      &:after {
+        .sprite("button", 1, 4);
+      }
+    }
+    &:active,
+    &.@{-button--active} {
+      .sprite("button", 1, 11);
+      .shadow(@btnShadow_active);
+      top:1px;
+      &:after {
+        .sprite("button", 1, 12);
+      }
+    }
+    &.@{-button--disabled},
+    &.@{-button--disabled}:hover,
+    &.@{-button--disabled}:focus {
+      color: @btnGrayColorText;
+      .sprite("button", 1, 13);
+      &:after {
+        .sprite("button", 1, 14);
+      }
+    }
+  }
+  .@{-button--disabled},
+  .@{-button--disabled}:focus,
+  .@{-button--disabled}:hover {
+    color: @btnDisabledColorText;
+    text-shadow:none;
+    cursor: not-allowed;
+    .shadow(@btnDisabledShadow);
+    .sprite("button", 1, 7);
+    &:after {
+      .sprite("button", 1, 8);
+    }
+    &:active {
+      top: 0px;
+    }
+  }
+} // END button();
+
+// простые кнопки -----------------------
+.Btn(@btnTextColor, @btnGlowColor) {
+  .@{-btn} {
+    display: inline-block;
+    font-size: 13px !important;
+    margin-bottom: @_btnCorrect;
+    padding: @_btnPaddingTop @_unitSpace / 2 @_btnPaddingBottom;
+    @btnInnerReflex: (@_btnHeight + @_btnPaddingTop + @_btnPaddingBottom) / 2;
+    line-height: 16px;
+    #style > .btnNormal(@_btnBorderColor, @btnTextColor, @btnInnerReflex, true);
+    .round(@_round);
+
+    &:hover {
+      cursor: pointer;
+      #style > .btnHover(@_btnBorderColor, @btnGlowColor, @btnInnerReflex, true);
+    }
+    &:active,
+    &.@{-btn--active} {
+      #style > .btnActive(@_btnBorderColor, true);
+    }
+    &.@{-btn--disabled} {
+      #style > .btnDisabled(@_btnBorderColor);
+    }
+  }
+  .@{-btn--big} {
+    @height: 2 * @_unitSpace - (@_btnPaddingTop + @_btnPaddingBottom + 2);
+    line-height: @height;
+    margin-bottom: 0px;
+    font-size: 16px;
+  }
+} // END .btn();
+
+// значки
+.Mark(@markColorBg) {
+  .@{-mark} {
+    background-color: @markColorBg;
+    .shadow(inset 0px 1px 0px lighten(@markColorBg, 7%));
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    line-height: @_btnHeight + 1;
+    height: @_btnHeight;
+    padding: @_btnPaddingTop 5px @_btnPaddingBottom;
+    .border(@_btnBorderColor);
+    .round(@_round);
+  }
+}
+
+// группа элементов интерфейса
+.Ui-group(@fontSize) {
+  .@{-ui-group} {
+    vertical-align: top;
+    text-wrap: none;
+    white-space: nowrap;
+    display: inline-table;
+    font-size: 0px;
+    & > .@{-ui-group_item} {
+      letter-spacing: normal;
+      margin-left: -1px;
+      font-size: @fontSize;
+      .round(0px);
+      &:first-child {
+        margin-left: 0;
+        .round-top-left(@_round);
+        .round-bottom-left(@_round);
+      }
+      &:last-child {
+        .round-top-right(@_round);
+        .round-bottom-right(@_round);
+      }
+      &:hover,
+      &:focus {
+        position: relative;
+      }
+    }
+  }
+}
+//----------------------------------
+}}

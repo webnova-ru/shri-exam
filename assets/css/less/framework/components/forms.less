@@ -1,0 +1,679 @@
+#forms { .init(@unitSpace,
+               @inputWidth: 150px,
+               @inputHeight: 27px,
+               @inputPaddingLeftRight: 5px,
+               @inputPaddingTop: 4px,
+               @inputPaddingBottom: 4px,
+               @textColor,
+               @inputBorderColor,
+               @errorColor,
+               @successColor,
+               @disabledColor,
+               @round,
+               @reqLabelColor: red) {
+// -----------------------------------------
+// КЛАССЫ ФОРМЫ
+//------------------------------------------
+
+// class name variable ---------------------
+@-fieldset: -fieldset;
+@-form-line: -form-line; // контейнер для горизонтальной формы
+@-form-inline-group: -form-inline-group; // группа элементов формы с правым отступом равным одному микромодулю
+// <span class="-form-group-line">...</span>
+//
+@-label: -label; // подпись для элемента поля вертикальной конфигурации
+// <label class="-label" for="" >*</label>
+@-label-inline: -label-inline; // подпись для элемента поля вытянутого в строку
+// <label class="-label-inline" for="" >*</label>
+@-required: -required; // звездочка обязательного поля
+// <label class="-label -required" for="" >*</label>
+//
+@-form-note: -form-note; // подсказака для инпута
+// <input type="text" class="-input-text" name="" /> <span class="-form-note">*</span>
+//
+@-form-note--error: -form-note--error; // модификатор подсказки ошибки
+@-form-note--success: -form-note--success; // модификатор подсказки успеха
+//
+@-form-note-inline: -form-note-inline; // подсказака для инпута в строку
+// <input type="text" class="-input-text" name="" /> <span class="-form-note-inline">пример подсказки</span>
+//
+@-input-text: -input-text; // текстовый инпут
+// <input type="text" class="-input-text" name="" />
+//
+@-input--success: -input--success; // модификатор успеха
+@-input--error: -input--error; // модификатор ошибки
+@-input--disabled: -input--disabled; // модификатор недоступного поля
+// <input type="text" class="-input-text -input--error" name="" />
+//
+@-select: -select; // селект
+// <select class="-select" name="">*</select>
+//
+@-textarea: -textarea; // текстэреа
+// <textarea class="-textarea">*</textarea>
+//
+@-input-file: -input-file; // поле для загрузки файла
+// <input type="file" class="-input-file" name="" />
+//
+@-fake-input: -fake-input; // элемент со стилем текстового инпута
+// <span class="-fake-input" />
+//
+@-letter: -letter; // ширина тесктового инпута по величине букв(2-10, 12, 16)
+// <input type="text" class="-input-text -letter2" />
+//
+@-width-33: -width-33; // разная ширина элементов выстоенных по горизонтали
+@-width-50: -width-50;
+@-width-100: -width-100;
+// <input type="text" class="-input-text -width-33" />
+//
+@-chosen: -chosen; // контейнер для checkbox и radio
+@-chosen_label: -chosen_label; // подпись для checkbox и radio
+@-chosen_label--inline: -chosen_label--inline; // подпись для checkbox и radio при строковой форме
+// <label class="-chosen_label -chosen_label--inline"><input type="checkbox" class="-chosen_input" name="rr1" /> Check me out</label>
+@-chosen_input: -chosen_input;
+// <div class="-chosen">
+//   <label class="-chosen_label"><input type="checkbox" class="-chosen_input" name="rr1" /> Check me out</label>
+// </div>
+//
+@-form-action: -form-action; // плашка с кнопками формы
+// <div class="-form-action">
+//   <button type="submit" class="-btn">Sign in</button>
+// </div>
+//
+@-form-left: -form-left; // левая часть группы
+// <label class="-label-left" for="">...</label>
+@-form-right: -form-right; // правая часть группы
+// <div class="-form-row">
+//   <label for="" class="-label-left">...</label>
+//   <div class="-form-right">
+//     <input type="text" name="" />
+//   </div>
+// </div>
+@-label--spacer: -label--spacer; // корректировака лебла по высоте при появлении группы инлайн инпутов в правой части формы
+// <div class="-row">
+//   <div class="-form-left">
+//     <label class="-label -label--spacer" for="" >*</label>
+//   </div>
+//   <div class="-form-right">*</div>
+// </div>
+//
+
+@-chosen-custom: -chosen_custom;
+@-select_custom-wrap: -select_custom-wrap;
+@-select_custom: -select_custom;
+@-input-file_custom: -input-file_custom;
+
+@-input-shake: -input-shake;
+@-input-note-error: -input-note-error;
+
+@-form-errors: -form-errors;
+  @-form-errors_title: -form-errors_title;
+  @-form-errors_list: -form-errors_list;
+    @-form-errors_list_item: -form-errors_list_item;
+// -----------------------------------------
+
+// local variable and mixin ----------------
+@_unitSpace: @unitSpace;
+@_inputHeight: @inputHeight - @inputPaddingTop - @inputPaddingBottom - 2;
+@_inputCorrect: (1.5 * @unitSpace) - @inputHeight;
+@_inputPaddingLeftRight: @inputPaddingLeftRight;
+@_inputPaddingTop: @inputPaddingTop;
+@_inputPaddingBottom: @inputPaddingBottom;
+@_inputPadding: @inputPaddingTop @_inputPaddingLeftRight @inputPaddingBottom;
+
+@_textColor: @textColor;
+@_round: @round;
+@_hue: hue(@inputBorderColor);
+@_errorHue: hue(@errorColor);
+@_successHue: hue(@successColor);
+@_disabledHue: hue(@disabledColor);
+@_inputBorderColorFocus: hsl(@_hue, 46%, 55%);
+// стиль инпутов
+.inputNormal() {
+  @borderColor: hsl(@_hue, 7%, 65%);
+  .border(@borderColor);
+  border-top: 1px solid darken(@borderColor, 10%);
+  .round(@_round);
+  @inputShadow: inset 0 1px 2px hsl(@_hue, 1%, 75%),
+  0 1px 0px #FFF;
+  .shadow(@inputShadow);
+  .grad(hsl(@_hue, 1%, 96%), 3%);
+}
+.inputFocus() {
+  background: transparent;
+  background-color: #FFF;
+  .border(@_inputBorderColorFocus);
+  @formShadowFocus: 0 0 0 2px hsl(@_hue, 70%, 80%),
+              inset 0 1px 2px hsl(@_hue, 10%, 70%);
+  .shadow(@formShadowFocus);
+  outline: none;
+}
+.inputDisabled() {
+  background: hsl(@_disabledHue, 30%, 96%);
+  .shadow(0 1px 0px #FFF);
+  .border(hsl(@_disabledHue, 7%, 80%));
+}
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+.@{-fieldset} {
+  margin: 0 0 @_unitSpace 0;
+  padding: @_unitSpace / 2 (@_unitSpace / 2) - 1 (@_unitSpace / 2) - 1;
+}
+.@{-form-line} {
+  .clearFix();
+  margin-bottom: @_unitSpace;
+}
+.@{-form-inline-group} {
+  display: inline-block;
+  margin-right: @_unitSpace;
+}
+.@{-label} {
+  display: block;
+  //font-weight: bold;
+  width: @inputWidth;
+}
+.@{-label-inline} {
+  display: inline-block;
+  font-weight: bold;
+  padding-top: @_inputPaddingTop;
+}
+.@{-required}:after {
+  content: "*";
+  font-weight: normal;
+  color:@reqLabelColor;
+  padding-left: .15em;
+}
+.@{-form-note} {
+  display: block;
+  margin-top: -@_inputCorrect;
+  margin-bottom: @_inputCorrect;
+}
+.@{-form-note-inline} {
+  display: inline-block;
+  padding-top: @inputPaddingTop;
+}
+.@{-input-text},
+.@{-select},
+.@{-textarea},
+.@{-input-file},
+.@{-fake-input} {
+  padding: @_inputPadding;
+  margin-bottom: @_inputCorrect;
+  .border(@inputBorderColor);
+  vertical-align: top;
+  line-height: @_inputHeight;
+}
+.@{-input-file} {
+  height: @_inputHeight + @inputPaddingTop + @inputPaddingBottom + 2;
+}
+.@{-input-text} {
+  height: @_inputHeight;
+}
+.@{-input-text},
+.@{-textarea},
+.@{-fake-input} {
+  width: @inputWidth - 2;
+}
+.@{-input-file} {
+  width: @inputWidth + 2 * @_inputPaddingLeftRight;
+}
+.@{-fake-input} {
+  display: inline-block;
+  background-color: #FFF;
+  height: @_inputHeight;
+  overflow: hidden;
+}
+.@{-input--error} {
+  border-color: @errorColor;
+}
+.@{-input--success} {
+  border-color: @successColor;
+}
+.@{-input--disabled} {
+  border-color: @disabledColor;
+}
+.@{-select} {
+  height: @_inputHeight + @inputPaddingTop + @inputPaddingBottom + 2;
+  & option {
+    padding: @_inputPadding;
+  }
+}
+.@{-textarea} {
+  line-height: @_unitSpace;
+  padding: @_inputPadding;
+  min-height: (@_unitSpace * 3) - @_inputCorrect;
+}
+// checkbox and radiobuttom
+.@{-chosen} {
+  min-height: @_unitSpace;
+  padding-left: @_unitSpace;
+}
+.@{-chosen_label} {
+  font-weight: normal;
+  cursor: pointer;
+  display: inline;
+  & [disabled] {
+    cursor: default;
+  }
+}
+.@{-chosen_label--inline} {
+  margin-right: 1em;
+  & input {
+    float: none;
+    margin: 0;
+  }
+}
+.@{-chosen_input} {
+  cursor: pointer;
+  float: left;
+  margin: 4px 4px 0 -@_unitSpace;
+  &:disabled {
+    cursor: default;
+  }
+  /*&[disabled] {
+    border: none;
+  }*/
+}
+// подвал формы
+.@{-form-action} {
+  @color: hsl(176, 10%, 86%);
+  padding: @_unitSpace / 2 0;
+  margin-top: @_unitSpace / 2;
+  background-color: @color;
+  .round-bottom-left(4px);
+  .round-bottom-right(4px);
+  border-top: 1px solid darken(@color, 10%);
+  border-bottom: 1px solid #FFF;
+  @sh: inset 0 0px 1px darken(@color, 15%);
+  .shadow(@sh);
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+// длины инпутов
+.Input-sizes(@oneLetterWidth: 8px) {
+  .@{-letter}2 {width: 2 * @oneLetterWidth;}
+  .@{-letter}3 {width: 3 * @oneLetterWidth;}
+  .@{-letter}4 {width: 4 * @oneLetterWidth;}
+  .@{-letter}5 {width: 5 * @oneLetterWidth;}
+  .@{-letter}6 {width: 6 * @oneLetterWidth;}
+  .@{-letter}7 {width: 7 * @oneLetterWidth;}
+  .@{-letter}8 {width: 8 * @oneLetterWidth;}
+  .@{-letter}9 {width: 9 * @oneLetterWidth;}
+  .@{-letter}10 {width: 10 * @oneLetterWidth;}
+  .@{-letter}12 {width: 12 * @oneLetterWidth;}
+  .@{-letter}16 {width: 16 * @oneLetterWidth;}
+  .@{-width-33},
+  .@{-width-50},
+  .@{-width-100} {
+    .box-sizing(border-box);
+  }
+  .@{-width-33} {
+    width: 33.33%;
+  }
+  .@{-width-50} {
+    width: 50%;
+  }
+  .@{-width-100} {
+    width: 100%;
+  }
+  .@{-width-100},
+  .@{-width-50},
+  .@{-width-33} {
+    height: @_inputHeight + @_inputPaddingTop + @_inputPaddingBottom + 2;
+  }
+  textarea.@{-width-100},
+  textarea.@{-width-50},
+  textarea.@{-width-33} {
+    min-height: (@_unitSpace * 3) - 1 + @_inputPaddingTop + @_inputPaddingBottom;
+    height: auto;
+  }
+}
+// горизонтальная форма
+.Form-horizont(@leftWidth: 100px, @leftRightSpacer) {
+  .@{-form-left} {
+    float: left;
+    padding-top: @_inputPaddingTop;
+    text-align: left;
+    width: @leftWidth;
+  }
+  .@{-form-right} {
+    margin-left: @leftWidth + @leftRightSpacer;
+    & label {
+      font-weight: normal;
+    }
+  }
+  .@{-label--spacer} {
+    margin-top: @_unitSpace;
+  }
+}
+
+// дизайн инпутов
+.Input-style() {
+  .@{-form-note},
+  .@{-form-note-inline} {
+    color: hsl(@_hue, 7%, 45%);
+  }
+  .@{-input-text},
+  .@{-select},
+  .@{-textarea},
+  .@{-fake-input} {
+    color:@_textColor;
+    .inputNormal();
+    &:focus {
+      .inputFocus();
+    }
+  }
+  input:-moz-placeholder,
+  textarea:-moz-placeholder {
+    color: hsl(@_hue, 7%, 63%);
+  }
+  input:-ms-input-placeholder,
+  textarea:-ms-input-placeholder {
+    color: hsl(@_hue, 7%, 63%);
+  }
+
+  .@{-input--success} {
+    .border(hsl(@_successHue, 70%, 35%));
+    @inputSuccessShadow: 0 0 0 2px hsl(@_successHue, 50%, 70%),
+                   inset 0 1px 2px hsl(15, 10%, 75%);
+    .shadow(@inputSuccessShadow);
+  }
+  .@{-form-note--success} {
+    color: hsl(@_successHue, 70%, 30%);
+  }
+  .@{-input--disabled} {
+    .inputDisabled();
+  }
+} // END .input-style()
+
+// ошибки инпутов
+.Inputs-errors(@fontSizeTitleErrors) {
+  .errorStyle() {
+    color: hsl(@_errorHue, 55%, 30%);
+    .border(hsl(@_errorHue, 60%, 50%));
+    .round(@_round);
+    @sh: inset 0px 0px 4px hsl(@_errorHue, 65%, 93%),
+    inset 0px 1px 0px hsl(@_errorHue, 65%, 95%),
+    inset 1px 0px 0px hsl(@_errorHue, 65%, 90%),
+      inset -1px 0px 0px hsl(@_errorHue, 65%, 90%),
+    0 1px 2px hsl(@_errorHue, 40%, 70%);
+    .shadow(@sh);
+    background-color: hsla(@_errorHue, 45%, 80%, .9);
+    .lt-ie9 & {
+      background-color: hsl(@_errorHue, 45%, 80%);
+    }
+  }
+  .@{-input--error} {
+    .border(hsl(@_errorHue, 60%, 50%));
+    @inputErrorShadow: 0 0 0 2px hsl(@_errorHue, 70%, 75%),
+    inset 0 1px 2px hsl(@_errorHue, 10%, 75%);
+    .shadow(@inputErrorShadow);
+  }
+  .@{-form-note--error} {
+    color: hsl(@_errorHue, 55%, 30%);
+  }
+  .an-fadeInRight();
+  .@{-input-note-error} {
+    font-size: 13px;
+    display: inline-block;
+    max-width: @_unitSpace * 10;
+    min-width: @_unitSpace * 5;
+    position: absolute;
+    padding: @_inputPadding;
+    margin-left: @_unitSpace / 2;
+    line-height: 17px;
+    .errorStyle();
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0px;
+      margin-left: -13px;
+      top: 6px;
+      .triangle(left, 6px, hsl(@_errorHue, 60%, 50%));
+    }
+    .animation(fadeInRight, .75s, .8s, ease-in);
+  }
+  .@{-form-errors} {
+    margin-bottom: @_unitSpace / 2;
+    .errorStyle();
+    padding: @_unitSpace / 2;
+    //display: inline-block;
+  }
+  .@{-form-errors_title} {
+    font-size: @fontSizeTitleErrors;
+    font-weight: bold;
+    margin: 0 0 5px;
+    padding-bottom: 5px;
+    .shadow(0px 1px 0px hsl(@_errorHue, 65%, 90%));
+    border-bottom: 1px solid hsl(@_errorHue, 60%, 50%);
+  }
+  .@{-form-errors_list} {
+    list-style: none;
+    margin: 0;
+  }
+  .@{-form-errors_list_item} {
+
+  }
+  // трясущиеся инпуты
+  .Input-shake() {
+    .an-shake();
+    .@{-input-shake} {
+      .animation(shake, .7s, 0s, ease);
+    }
+  } // END .input-shake();
+
+} // END inputs-errors();
+
+
+// custom checkbox and radio button
+.Checkbox-radio() {
+  @checkRadioSize: 11px;
+  @checkTickColor: lighten(@_textColor, 6%);
+  @radioColor: lighten(@_textColor, 6%);
+
+  @radioBorderColorDisabled: hsl(@_hue, 4%, 76%);
+  @radioBgColorDisabled: hsl(@_hue, 4%, 80%);
+  @checkDisabledTickColor: darken(@radioBgColorDisabled, 8%);
+
+  :root {
+    .@{-chosen_input} {
+      .opacity(0);
+      position: relative;
+      z-index: 1;
+      & + .@{-chosen-custom} {
+        display:inline-block;
+        position: absolute;
+        margin: 4px 0 0 -18px;
+        cursor: pointer;
+        .size(@checkRadioSize, @checkRadioSize);
+        .inputNormal();
+        &.@{-input--error} {
+          .border(hsl(@_errorHue, 60%, 50%));
+          @inputErrorShadow: 0 0 0 2px hsl(@_errorHue, 70%, 75%),
+          inset 0 1px 2px hsl(@_errorHue, 10%, 75%);
+          .shadow(@inputErrorShadow);
+        }
+      }
+      &:hover + .@{-chosen-custom} {
+        .border(@_inputBorderColorFocus);
+      }
+      &:focus + .@{-chosen-custom} {
+        .inputFocus();
+      }
+      &[disabled] + .@{-chosen-custom} {
+        .inputDisabled();
+        cursor: default;
+      }
+    }
+    input[type="radio"].@{-chosen_input} + .@{-chosen-custom} {
+      .round(50%);
+    }
+    input[type="checkbox"].@{-chosen_input}:checked + .@{-chosen-custom}:before,
+    input[type="checkbox"].@{-chosen_input}:checked + .@{-chosen-custom}:after {
+      content: "";
+      display: block;
+      position: absolute;
+    }
+    @tick_left: 1px;
+    @tick_top: -1px;
+    input[type="checkbox"].@{-chosen_input}:checked + .@{-chosen-custom}:before {
+      .size(10px, 4px);
+      .side(@tick_left, @tick_top);
+      border-color: @checkTickColor;
+      border-style: solid;
+      border-width: 0px 0px 3px 3px;
+      .round-bottom-left(2px);
+      .rotate(-45deg);
+    }
+    @media screen and (-webkit-min-device-pixel-ratio:0) { // hack for chrome
+      & input[type="checkbox"]:checked + .@{-chosen-custom}:before {
+        .side(@tick_left + 1, @tick_top - 1);
+      }
+    } // END hack for chrome
+    input[type="checkbox"].@{-chosen_input}:disabled:checked + .@{-chosen-custom}:before,
+    input[type="checkbox"].@{-chosen_input}:disabled:checked + .@{-chosen-custom}:after {
+      cursor: default;
+      border-color: @checkDisabledTickColor;
+    }
+
+    input[type="radio"].@{-chosen_input}:checked + .@{-chosen-custom}:before,
+    input[type="radio"].@{-chosen_input}:disabled:checked + .@{-chosen-custom}:before {
+      content: "";
+      display: inline-block;
+      .size(@checkRadioSize - 4, @checkRadioSize - 4);
+      position: absolute;
+      margin-top: 1px;
+      margin-left: 1px;
+      .round(50%);
+      .grad(@radioColor, 35%);
+      .border(@radioColor);
+      .shadow(inset 0px 0px 1px lighten(@radioColor, 100%));
+    }
+    input[type="radio"].@{-chosen_input}:disabled:checked + .@{-chosen-custom}:before {
+      cursor: default;
+      background: @radioBgColorDisabled;
+      .border(@radioBorderColorDisabled);
+    }
+  }
+} // END .checkbox-radio()
+
+// custom select box
+.Select(@arrowColor, @glowColor) {
+  @selectArrowSize: 5px;
+  @selectBgArrowHeight: 25px;
+  @selectBgArrowWidth: 21px;
+  @innerReflex: (@_inputHeight + @inputPaddingTop + @inputPaddingBottom) / 2;
+  .@{-select_custom-wrap} {
+    position: relative;
+    display:inline-block;
+    vertical-align: top;
+    & select {
+      .opacity(0);
+      position: relative;
+      z-index: 1;
+      padding-right:10px;
+      & option {
+        .opacity(1);
+        border-bottom:1px solid #DDD;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      &:hover + .@{-select_custom} {
+        .border(@_inputBorderColorFocus);
+        &:before {
+          #style > .btnHover(@inputBorderColor, @glowColor, @innerReflex, false);
+        }
+      }
+      &:focus + .@{-select_custom} {
+        .inputFocus();
+        &:before {
+          #style > .btnActive(@inputBorderColor, false);
+        }
+      }
+    }
+  }
+  .@{-select_custom} {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    .box-sizing();
+    min-height: 27px;
+    width: 100%;
+    overflow: visible;
+    padding-right: @selectBgArrowWidth + 8;
+    font-style: normal;
+    &:before {
+      content: "";
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      width: @selectBgArrowWidth;
+      height: @selectBgArrowHeight;
+      .round-custom(@_round, @_round, 0, 0);
+      #style > .btnNormal(@inputBorderColor, @_textColor, @innerReflex, false);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      right: 5px;
+      top: 11px;
+      width: 0px;
+      height: 0px;
+      border-width: @selectArrowSize;
+      border-style: solid;
+      border-color: @arrowColor transparent transparent;
+    }
+  }
+} // END select()
+
+// custom file input
+.Input-file() {
+  @fileBtnWidth: 104px;
+  @fileBtnPadding: 3px 10px 5px;
+  @min-width: 100px;
+  @max-width: 250px;
+  @innerReflex: (@_inputHeight + @inputPaddingTop + @inputPaddingBottom) / 2;
+
+  .@{-input-file_custom} {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    padding-right: @fileBtnWidth + 8;
+    font-style: normal;
+    white-space: nowrap;
+    min-width:@min-width;
+    width:auto;
+    max-width:@max-width;
+    overflow: hidden;
+    &:after {
+      content: "выбрать файл";
+      cursor: default;
+      position: absolute;
+      display: block;
+      top: 0px;
+      right: 0px;
+      padding: @fileBtnPadding;
+      .text-shadow(hsl(0, 0%, 88%));
+      .round-custom(@_round, @_round, 0, 0);
+      #style > .btnNormal(@inputBorderColor, @_textColor, @innerReflex, false);
+    }
+  }
+  .@{-input-file} {
+    .opacity(0);
+    position: absolute;
+    left:-9999px;
+    &:focus + .@{-input-file_custom} {
+      .inputFocus();
+    }
+    &:active + .@{-input-file_custom}:after {
+      #style > .btnActive(@inputBorderColor, false);
+    }
+  }
+} // END .input-file()
+//
+// -----------------------------------------
+}}
+

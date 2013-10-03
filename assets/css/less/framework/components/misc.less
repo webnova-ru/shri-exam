@@ -1,0 +1,180 @@
+#misc { .init() {
+// -----------------------------------------
+/* РАЗНООБРАЗНЫЕ КЛАССЫ */
+//------------------------------------------
+
+// class name variable ---------------------
+@-arrow-l: -arrow-l; // (влево) стрелки с различным направлением
+@-arrow-r: -arrow-r; // (вправо)
+@-arrow-t: -arrow-t; // (вверх)
+@-arrow-b: -arrow-b; // (вниз)
+
+@-toolTip: -toolTip;
+  @-toolTip_content: -toolTip_content;
+
+@-note: -note; // подсказка
+// -----------------------------------------
+
+// local variable and mixin ----------------
+
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+
+// -----------------------------------------
+
+// MODULES ---------------------------------
+// стрелочки
+.Arrows(@arrowSize, @arrowColor) {
+  .@{-arrow-l},
+  .@{-arrow-r},
+  .@{-arrow-t},
+  .@{-arrow-b} {
+    .inline-block();
+    content: '';
+    position: relative;
+  }
+  .@{-arrow-r} {
+    .triangle(right, @arrowSize, @arrowColor);
+    top: 0px;
+    margin-right: -@arrowSize;
+  }
+  .@{-arrow-l} {
+    .triangle(left, @arrowSize, @arrowColor);
+    top: 0px;
+    margin-left: -@arrowSize;
+  }
+  .@{-arrow-t} {
+    .triangle(top, @arrowSize, @arrowColor);
+    top: -2px;
+  }
+  .@{-arrow-b} {
+    .triangle(bottom, @arrowSize, @arrowColor);
+    top: -1px;
+  }
+} // END arrows()
+
+// toolTips
+.ToolTip(@color; @round; @widthTip) {
+  @hue: hue(@color);
+  @tipTextColor: hsl(@hue, 40%, 30%);
+  @tipShadow: inset 0px 1px 0px hsl(@hue, 20%, 97%),
+              inset 0px 0px 3px hsl(@hue, 60%, 95%),
+                    0px 1px 2px hsl(@hue, 10%, 60%);
+  @tipBorder: hsl(@hue, 50%, 55%);
+  @tipBg: hsl(@hue, 50%, 88%);;
+  .@{-toolTip} {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    padding: 1px 4px;
+    line-height: 1;
+
+    cursor: help;
+    vertical-align: bottom;
+    font-size: 11px;
+    text-align: center;
+    margin-left: 2px;
+
+    color: @tipTextColor;
+    .border(@tipBorder);
+    background-color: @tipBg;
+    .round(@round);
+  }
+  .@{-toolTip_content} {
+    display: none;
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    z-index: 1;
+    width: @widthTip;
+
+    padding: 10px;
+
+    text-align: left;
+    font-size: 13px;
+    line-height: 16px;
+
+    //color: @tipTextColor;
+    background-color: @tipBg;
+    .border(@tipBorder);
+    .shadow(@tipShadow);
+    .round(@round);
+  }
+}
+
+// note
+.Note() {
+  @-note_round: 3px;
+  @-note_bg_color: hsl(176, 60%, 35%);
+  @-note_border_color: hsl(176, 50%, 25%);
+  @-note_text_color: hsl(0, 0%, 100%);
+  @-note_font_size: 11px;
+  @-note_text_line_h: 16px;
+  @-note_text_w: 140px;
+  @-note_padding_note: 10px;
+  @-note_color_shadow: inset 0px 1px 0px hsl(176, 50%, 65%),
+                       inset 0px 0px 3px hsl(176, 60%, 55%),
+                             0px 1px 2px hsl(176, 30%, 15%);
+  @-note_bezier_fun: cubic-bezier(0.7, 0.57, 0.22, 1);
+  @-note_anim_time: 400ms;
+  @-note_w: 13px;
+  @-note_h: 14px;
+  @-note_font_size_symbol: 11px;
+
+  .@{-note} {
+    display: inline-block;
+    position: relative;
+    color: @-note_text_color;
+    cursor: help;
+    height: @-note_h;
+
+    font-size: 0px;
+    line-height: 0px;
+    width: @-note_w;
+    max-width: @-note_w;
+
+    @width_time : @-note_anim_time / 2;
+    .trans(~"width @{width_time} @{-note_bezier_fun}, line-height @{-note_anim_time} @{-note_bezier_fun}, font-size @{-note_anim_time} @{-note_bezier_fun}");
+
+    &:before {
+      content: attr(data-symbol);
+      font-size: @-note_font_size_symbol;
+      .round(@-note_round);
+      .border(@-note_border_color);
+      background-color: @-note_bg_color;
+      padding: 0px 3px;
+      line-height: @-note_font_size_symbol + 1;
+      position: absolute;
+    }
+    &:after {
+      content: attr(data-note);
+      font-weight: normal;
+      position: absolute;
+      top: 100%;
+      z-index: 1;
+      font-size: 0px;
+    }
+    &:hover {
+      width: @-note_text_w;
+      font-size: @-note_font_size;
+      line-height: @-note_text_line_h;
+      &:after {
+        width: inherit;
+        font-size: inherit;
+        line-height: inherit;
+
+        height: auto;
+        .translate(0px, -100%);
+
+        .round(@-note_round);
+        .shadow(@-note_color_shadow);
+        .border(@-note_border_color);
+        padding: @-note_padding_note;
+        background-color: @-note_bg_color;
+      }
+    }
+  }
+} // END .note();
+//----------------------------------
+}}
