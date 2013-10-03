@@ -112,7 +112,7 @@ h1, h2, h3 {
     .box-sizing();
     padding: 10px 20px;
     position: relative;
-    background-color: hsl(50, 45%, 90%);
+    background-color: hsl(45, 45%, 90%);
     cursor: pointer;
     border-width: 1px;
     border-style: solid;
@@ -200,6 +200,7 @@ h1, h2, h3 {
 }
 // END STUDENT INFO
 
+// LESSONS
 @contrColor: hsl(@hue, 5%, 60%);
 .mediaBox {
   background: hsl(@hue, 10%, 96%) url("@{path-imgFolder}/bg_page.png");
@@ -207,8 +208,74 @@ h1, h2, h3 {
   .border(@contrColor);
   @sh: 0px 1px 0px hsl(@hue, 30%, 25%);
   .shadow(@sh);
+
+  padding: @unit-space;
 }
 
+.stripe-title {
+  @titleColor: hsl(40, 40%, 93%);
+  @titleColorHue: hue(@titleColor);
+
+  position: relative;
+  font-size: 20px;
+  line-height: 150%;
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  padding: 5px @unit-space + 10px;
+  margin: 0 -(@unit-space + 10px) (@unit-space / 2);
+  .text-shadow(hsl(@titleColorHue, 10%, 97%));
+  background-color: @titleColor;
+  .gradient(hsl(@titleColorHue, 40%, 88%), @titleColor);
+  @sh: 0px 1px 0px hsl(@titleColorHue, 20%, 70%),
+  0px 1px 1px hsl(@titleColorHue, 20%, 75%);
+  .shadow(@sh);
+  &:before,
+  &:after {
+    display: block;
+    content: '';
+    .size(0px, 0px);
+    left: 0px;
+    bottom: -10px;
+    position: absolute;
+    border-style: solid;
+    @brColor: hsl(@titleColorHue, 35%, 73%);
+    border-color: @brColor @brColor transparent transparent;
+    border-width: 5px;
+    border-left-width: 4px;
+  }
+  &:after {
+    right: 0px;
+    left:  auto;
+    border-color: darken(@titleColor, 15%) transparent transparent darken(@titleColor, 15%);
+  }
+}
+.lesson-info {
+  font-size: 16px;
+  height: 24px;
+  border-bottom: 1px solid #ccc;
+  padding-top: 1px;
+  margin-bottom: @unit-space;
+}
+.lesson-video {
+  margin-bottom: @unit-space;
+}
+.lesson-download {
+  @color: hsl(200, 10%, 88%);
+  padding: (@unit-space / 2);
+  padding-bottom: (@unit-space / 2 - 3);
+  margin-top: (@unit-space / 2);
+  background-color: @color;
+  .round(4px);
+  border-top: 1px solid darken(@color, 10%);
+  border-bottom: 1px solid #FFF;
+  @sh: inset 0 0px 1px darken(@color, 15%);
+  .shadow(@sh);
+}
+  .lesson-download_title {
+    display: inline-block;
+    margin-top: 3px;
+  }
+// END LESSONS
 
 .footer {
   padding: (@unit-space / 2) @unit-space;

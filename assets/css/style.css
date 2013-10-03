@@ -1697,6 +1697,7 @@ button.-button {
   -o-box-shadow: inset 0px 1px 0px #f7f7f7;
   box-shadow: inset 0px 1px 0px #f7f7f7;
   display: inline-block;
+  font-size: 13px !important;
   text-align: center;
   vertical-align: top;
   line-height: 17px;
@@ -3220,7 +3221,7 @@ h3 {
   box-sizing: border-box;
   padding: 10px 20px;
   position: relative;
-  background-color: #f1edda;
+  background-color: #f1ebda;
   cursor: pointer;
   border-width: 1px;
   border-style: solid;
@@ -3331,6 +3332,81 @@ h3 {
   -moz-box-shadow: 0px 1px 0px #2d4853;
   -o-box-shadow: 0px 1px 0px #2d4853;
   box-shadow: 0px 1px 0px #2d4853;
+  padding: 20px;
+}
+.stripe-title {
+  position: relative;
+  font-size: 20px;
+  line-height: 150%;
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  padding: 5px 30px;
+  margin: 0 -30px 10px;
+  text-shadow: 0px 1px 0px #f8f8f7;
+  background-color: #f4f0e6;
+  background: #f0eadd;
+  background-image: -moz-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f0e6), to(#ede4d4));
+  background-image: -webkit-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: -o-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: linear-gradient(top, #f4f0e6, #ede4d4);
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
+  background-image: -ms-linear-gradient(top, #f4f0e6, #ede4d4);
+  *zoom: 1;
+  -webkit-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  -moz-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  -o-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+}
+.stripe-title:before,
+.stripe-title:after {
+  display: block;
+  content: '';
+  width: 0px;
+  height: 0px;
+  left: 0px;
+  bottom: -10px;
+  position: absolute;
+  border-style: solid;
+  border-color: #d2c2a2 #d2c2a2 transparent transparent;
+  border-width: 5px;
+  border-left-width: 4px;
+}
+.stripe-title:after {
+  right: 0px;
+  left: auto;
+  border-color: #ddceb0 transparent transparent #ddceb0;
+}
+.lesson-info {
+  font-size: 16px;
+  height: 24px;
+  border-bottom: 1px solid #ccc;
+  padding-top: 1px;
+  margin-bottom: 20px;
+}
+.lesson-video {
+  margin-bottom: 20px;
+}
+.lesson-download {
+  padding: 10px;
+  padding-bottom: 7px;
+  margin-top: 10px;
+  background-color: #dde1e3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  border-top: 1px solid #c1c9cd;
+  border-bottom: 1px solid #FFF;
+  -webkit-box-shadow: inset 0 0px 1px #b3bcc1;
+  -moz-box-shadow: inset 0 0px 1px #b3bcc1;
+  -o-box-shadow: inset 0 0px 1px #b3bcc1;
+  box-shadow: inset 0 0px 1px #b3bcc1;
+}
+.lesson-download_title {
+  display: inline-block;
+  margin-top: 3px;
 }
 .footer {
   padding: 10px 20px;
