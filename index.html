@@ -78,6 +78,7 @@
                 </div>
                 <div class="-unit1of3">
                     <h1 class="student-info_fio">Логиневский Василий</h1>
+                    <div class="student-info_city"><i class="icon-map-marker"></i> Санкт-петербург</div>
                 </div>
             </div>
         </div>
@@ -85,7 +86,7 @@
             <div class="-win">
                 <div class="-win_header">
                     <div class="-win_header_inline _left">
-                        <a href="#" class="-btn">К списку всех студентов</a>
+                        <a href="#" class="-btn"><i class="icon-chevron-left"></i> К списку студентов</a>
                     </div>
                     <div class="student-desc-title -win_header_title">Информация о студенте</div>
                     <div class="-win_header_inline _right">
@@ -121,6 +122,69 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <!--редактирование-->
+                    <form action="#" method="get">
+                        <h2 class="title">Редактирование студента</h2>
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="fio">Ф.И.О.</label>
+                            <div class="-form-right">
+                                <input id="fio" class="-input-text" name="fio" data-validrules="required" />
+                            </div>
+                        </div>
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="fotoLink">Ссылка на фото</label>
+                            <div class="-form-right">
+                                <input id="fotoLink" class="-input-text" name="fotoLink" data-validrules="required" />
+                            </div>
+                        </div>
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="city">Город</label>
+                            <div class="-form-right">
+                                <input id="city" class="-input-text" name="city" data-validrules="required" />
+                            </div>
+                        </div>
+
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="facebook">Ссылка facebook</label>
+                            <div class="-form-right">
+                                <input id="facebook" class="-input-text" name="facebook" />
+                            </div>
+                        </div>
+
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="vk">Ссылка vk</label>
+                            <div class="-form-right">
+                                <input id="vk" class="-input-text" name="vk" />
+                            </div>
+                        </div>
+
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="gitHub">Ссылка GitHub</label>
+                            <div class="-form-right">
+                                <input id="gitHub" class="-input-text" name="gitHub" />
+                            </div>
+                        </div>
+
+                        <div class="-form-line">
+                            <label class="-label -form-left" for="yaRu">Ссылка Ya.ru</label>
+                            <div class="-form-right">
+                                <input id="yaRu" class="-input-text" name="yaRu" />
+                            </div>
+                        </div>
+
+                        <div class="-form-line">
+                            <label class="-label" for="desc">О себе</label>
+                            <textarea id="desc" class="-textarea -width-100" name="desc" data-validrules="required"></textarea>
+                        </div>
+
+                        <div class="-form-line -form-action">
+                            <div class="-form-right">
+                                <button type="submit" class="-button">Сохранить</button>
+                                <button type="reset" class="-button -button--gray _spacer-l">Очистить</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

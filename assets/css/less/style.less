@@ -36,7 +36,7 @@
 // style
 body {
   background: #170D0C url("@{path-imgFolder}/bg.jpg") no-repeat;
-  background-size: 100% 100%;
+  background-size: 100%;// 100%;
 }
 h1, h2, h3 {
   margin: 0;
@@ -177,13 +177,20 @@ h1, h2, h3 {
     font-size: 28px;
     line-height: 150%;
   }
-  .student-desc-title {
-    position: absolute;
-    left: 50%;
-    width: 180px;
-    margin-left: -90px;
-    float: none;
+  .student-info_city {
+    padding: @unit-space;
+    background-color: hsla(0, 100%, 100%, 50%);
+    overflow: hidden;
+    margin-top: 20px;
+    font-size: 18px;
   }
+.student-desc-title {
+  position: absolute;
+  left: 50%;
+  width: 180px;
+  margin-left: -90px;
+  float: none;
+}
 // END STUDENT INFO
 
 @contrColor: hsl(@hue, 5%, 60%);

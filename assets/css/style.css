@@ -525,7 +525,7 @@ textarea:-ms-input-placeholder {
 }
 .-label {
   display: block;
-  width: 170px;
+  width: 220px;
 }
 .-label-inline {
   display: inline-block;
@@ -567,10 +567,10 @@ textarea:-ms-input-placeholder {
 .-input-text,
 .-textarea,
 .-fake-input {
-  width: 168px;
+  width: 218px;
 }
 .-input-file {
-  width: 180px;
+  width: 230px;
 }
 .-fake-input {
   display: inline-block;
@@ -711,10 +711,10 @@ textarea.-width-33 {
   float: left;
   padding-top: 4px;
   text-align: left;
-  width: 100px;
+  width: 120px;
 }
 .-form-right {
-  margin-left: 120px;
+  margin-left: 140px;
 }
 .-form-right label {
   font-weight: normal;
@@ -1871,10 +1871,10 @@ button.-button {
 .-table tbody + tbody {
   border-top: 2px solid #aaaaaa;
 }
-.-table--hover tbody tr:hover td,
-.-table--hover tbody tr:hover th {
-  background-color: #dddddd;
-}
+/*
+#tables > .init > .zebra(hsl(180, 5%, 92%);     // цвет нечётных строк
+                         #F3F3F3); // цвет чётных строк
+*/
 .-table--bordered {
   border: 1px solid #aaaaaa;
   border-collapse: separate;
@@ -3110,7 +3110,7 @@ ul.icons-ul > li .icon-li {
 /* PROJECT STYLE */
 body {
   background: #170d0c url("/assets/img/bg.jpg") no-repeat;
-  background-size: 100% 100%;
+  background-size: 100%;
 }
 h1,
 h2,
@@ -3305,6 +3305,13 @@ h3 {
   overflow: hidden;
   font-size: 28px;
   line-height: 150%;
+}
+.student-info_city {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  margin-top: 20px;
+  font-size: 18px;
 }
 .student-desc-title {
   position: absolute;

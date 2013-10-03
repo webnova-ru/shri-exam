@@ -1,0 +1,201 @@
+#tables { .init(@borderColor, @tablePadding) {
+// -----------------------------------------
+/* КЛАССЫ ПОСТРОЕНИЯ ТАБЛИЦ */
+//------------------------------------------
+
+// class name variable ---------------------
+@-sort-arrow: -sort-arrow; // стрелки от порядка сортировки колонки таблицы
+// <th><span class="-sort-arrow"></span> Имя колонки</th>
+@-sort-arrow--max-to-min: -sort-arrow--max-to-min; // от максимального значения к минимальному
+// <th><span class="-sort-arrow -sort-arrow--max-to-min"></span> Имя колонки</th>
+@-sort-arrow--min-to-max: -sort-arrow--min-to-max; // от минимального значения к максимальному
+// <th><span class="-sort-arrow -sort-arrow--min-to-max"></span> Имя колонки</th>
+@-table: -table; // базовый класс таблицы
+// <table class="-table">...
+@-table--zebra: -table--zebra; // полосатая таблица
+// <table class="-table -table--zebra">...</table>
+@-table--hover: -table--hover; // подсветка строки при наведении
+// <table class="-table -table--hover">...</table>
+@-table--bordered: -table--bordered; // таблица с бордюрем и закругленными углами
+// <table class="-table -table--bordered">...</table>
+// -----------------------------------------
+
+// local variable and mixin ----------------
+@_tableBorderColor: @borderColor;
+@_tablePadding_b: @tablePadding;
+// -----------------------------------------
+
+// COMPONENT STYLE -------------------------
+// стили таблиц
+.@{-table} {
+  width: 100%;
+  margin-bottom: @unit-space;
+  & caption {
+    text-align: left;
+    font-weight: bold;
+  }
+  & th,
+  & td {
+    padding: @tablePadding - 1 @tablePadding @_tablePadding_b @tablePadding;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid @_tableBorderColor;
+  }
+  & th {
+    font-weight: bold;
+  }
+  & thead th {
+    vertical-align: bottom;
+  }
+  & tr:last-child td {
+    padding-top: @unit-space / 2;
+  }
+  & caption + thead tr:first-child th,
+  & caption + thead tr:first-child td,
+  & colgroup + thead tr:first-child th,
+  & colgroup + thead tr:first-child td,
+  & thead:first-child tr:first-child th,
+  & thead:first-child tr:first-child td {
+    border-top: 0;
+  }
+  & tbody + tbody {
+    border-top: 2px solid @_tableBorderColor;
+  }
+}
+// -----------------------------------------
+
+// MODULES ---------------------------------
+// стрелочки порядка сортировки колонок таблицы
+.sort-arrow(@size: 4px, @color: #DDD, @color_active: #555) {
+  .@{-sort-arrow} {
+    .inline-block();
+    position: relative;
+    top: -@size - 1;
+    .triangle(top, @size, @color);
+    &:after {
+      content: "";
+      position: absolute;
+      top: 2px +  @size;
+      left: -@size;
+      .triangle(bottom, @size, @color);
+    }
+  }
+  .@{-sort-arrow--max-to-min} {
+    border-bottom-color: @color;
+    &:after {
+      border-top-color: @color_active;
+    }
+  }
+  .@{-sort-arrow--min-to-max} {
+    border-bottom-color: @color_active;
+    &:after {
+      border-top-color: @color;
+    }
+  }
+} // END sort-arrow()
+
+// таблица зебра
+.zebra(@colorOdd, @colorEven) {
+  .@{-table--zebra} tbody tr {
+    & td,
+    & th {
+      background-color: @colorOdd;
+    }
+    &:nth-child(odd) {
+      & td,
+      & th {
+        background-color: @colorEven;
+      }
+    }
+  }
+} // END zebra()
+
+// подсветка строк при наведении
+.hover(@colorHover) {
+  .@{-table--hover} tbody tr:hover {
+    & td,
+    & th {
+      background-color: @colorHover;
+    }
+  }
+} // END hover()
+
+// таблица с бардюром и закругленными углами
+.bordered(@round) {
+  .@{-table--bordered} {
+    border: 1px solid @_tableBorderColor;
+    border-collapse: separate;
+    *border-collapse: collapse;
+    border-left: 0;
+    .round(@round);
+
+    & th,
+    & td {
+      border-left: 1px solid @_tableBorderColor;
+    }
+    & caption + thead tr:first-child th,
+    & caption + tbody tr:first-child th,
+    & caption + tbody tr:first-child td,
+    & colgroup + thead tr:first-child th,
+    & colgroup + tbody tr:first-child th,
+    & colgroup + tbody tr:first-child td,
+    & thead:first-child tr:first-child th,
+    & tbody:first-child tr:first-child th,
+    & tbody:first-child tr:first-child td {
+      border-top: 0;
+      padding-bottom: @_tablePadding_b - 1;
+    }
+    & tbody:last-child tr:last-child td,
+    & tfoot:last-child tr:last-child td {
+      padding-bottom: @_tablePadding_b - 1;
+    }
+    & thead:first-child tr:first-child th:first-child,
+    & tbody:first-child tr:first-child td:first-child {
+      -webkit-border-top-left-radius: @round;
+      border-top-left-radius: @round;
+      -moz-border-radius-topleft: @round;
+    }
+    & thead:first-child tr:first-child th:last-child,
+    & tbody:first-child tr:first-child td:last-child {
+      -webkit-border-top-right-radius: @round;
+      border-top-right-radius: @round;
+      -moz-border-radius-topright: @round;
+    }
+    & thead:last-child tr:last-child th:first-child,
+    & tbody:last-child tr:last-child td:first-child,
+    & tfoot:last-child tr:last-child td:first-child {
+      -webkit-border-radius: 0 0 0 @round;
+      -moz-border-radius: 0 0 0 @round;
+      border-radius: 0 0 0 @round;
+      -webkit-border-bottom-left-radius: @round;
+      border-bottom-left-radius: @round;
+      -moz-border-radius-bottomleft: @round;
+    }
+    & thead:last-child tr:last-child th:last-child,
+    & tbody:last-child tr:last-child td:last-child,
+    & tfoot:last-child tr:last-child td:last-child {
+      -webkit-border-bottom-right-radius: @round;
+      border-bottom-right-radius: @round;
+      -moz-border-radius-bottomright: @round;
+    }
+    & caption + thead tr:first-child th:first-child,
+    & caption + tbody tr:first-child td:first-child,
+    & colgroup + thead tr:first-child th:first-child,
+    & colgroup + tbody tr:first-child td:first-child {
+      -webkit-border-top-left-radius: @round;
+      border-top-left-radius: @round;
+      -moz-border-radius-topleft: @round;
+    }
+    & caption + thead tr:first-child th:last-child,
+    & caption + tbody tr:first-child td:last-child,
+    & colgroup + thead tr:first-child th:last-child,
+    & colgroup + tbody tr:first-child td:last-child {
+      -webkit-border-top-right-radius: @round;
+      border-top-right-radius: @round;
+      -moz-border-radius-topleft: @round;
+    }
+  }
+} // END bordered()
+
+//----------------------------------
+}}
