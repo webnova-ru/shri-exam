@@ -3241,7 +3241,7 @@ h3 {
   border-left: none;
 }
 .menu_item:hover {
-  background-color: #d7eae4;
+  background-color: #dbe9f0;
   -webkit-box-shadow: 0px 1px 2px #aaaaaa;
   -moz-box-shadow: 0px 1px 2px #aaaaaa;
   -o-box-shadow: 0px 1px 2px #aaaaaa;
@@ -3249,7 +3249,7 @@ h3 {
 }
 .menu_item--active {
   cursor: default;
-  background-color: #d7eae4;
+  background-color: #dbe9f0;
   -webkit-box-shadow: 0px 1px 2px #aaaaaa;
   -moz-box-shadow: 0px 1px 2px #aaaaaa;
   -o-box-shadow: 0px 1px 2px #aaaaaa;
@@ -3270,7 +3270,7 @@ h3 {
   margin: -9px 0 0 4px;
   width: 15px;
   height: 15px;
-  background-color: #d7eae4;
+  background-color: #dbe9f0;
   border: 1px solid #61686b;
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
@@ -3440,18 +3440,77 @@ h3 {
   font-family: 'Roboto Slab', serif;
   font-size: 28px;
   font-weight: normal;
-  text-shadow: 0px 1px 1px #e4e6e7;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 10px 20px;
+  text-shadow: 0px 1px 2px #222;
+  color: #ffffff;
+  padding-left: 20px;
 }
 .list-lessons_list {
-  margin: 0 0 0 -20px;
+  margin: 0;
 }
 .list-lessons_item {
+  position: relative;
   list-style: none;
-  margin: 20px 0 0 20px;
+  margin-top: 15px;
   background-color: #ffffff;
   padding: 10px 20px;
+  background-color: #f9fafb;
+  -webkit-box-shadow: 0px 1px 2px #333333, inset 0px 1px 0px #ffffff;
+  -moz-box-shadow: 0px 1px 2px #333333, inset 0px 1px 0px #ffffff;
+  -o-box-shadow: 0px 1px 2px #333333, inset 0px 1px 0px #ffffff;
+  box-shadow: 0px 1px 2px #333333, inset 0px 1px 0px #ffffff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+.list-lessons_item_arrow {
+  display: inline-block;
+  left: -25px;
+  top: 4px;
+  padding: 5px 20px;
+  max-width: 440px;
+  height: 25px;
+  position: relative;
+  background-color: #dbe9f0;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom: 1px solid #94bdd1;
+  font-size: 18px;
+  font-weight: bold;
+}
+.list-lessons_item_arrow:before {
+  border-left: 5px solid transparent;
+  border-top: 5px solid #9cbac9;
+  bottom: -5px;
+  content: "";
+  height: 0;
+  left: 0;
+  position: absolute;
+  width: 0;
+}
+.list-lessons_item_arrow:after {
+  border-bottom: 19px solid transparent;
+  border-left: 8px solid #dbe9f0;
+  border-top: 18px solid transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: -8px;
+  top: 0;
+  width: 0;
+}
+.list-lessons_item_arrow:hover {
+  background-color: #ede2de;
+}
+.list-lessons_item_arrow:hover:after {
+  border-left-color: #ede2de;
+}
+.list-lessons_item_arrow:hover:before {
+  border-top-color: #c9a79c;
+}
+.list-lessons_item_info {
+  border-left: 1px solid #ccc;
 }
 .footer {
   padding: 10px 20px;
