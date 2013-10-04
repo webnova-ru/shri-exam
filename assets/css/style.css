@@ -3293,6 +3293,10 @@ h3 {
 .menu_item_subtext {
   color: #646e73;
 }
+.video-info {
+  margin: 0 auto 20px auto;
+  width: 480px;
+}
 .student-info {
   margin: 20px;
 }
