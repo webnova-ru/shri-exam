@@ -3436,6 +3436,9 @@ h3 {
   -moz-transform: rotate(-60deg);
   transform: rotate(-60deg);
 }
+.list-lessons {
+  text-align: center;
+}
 .list-lessons_title {
   font-family: 'Roboto Slab', serif;
   font-size: 28px;
@@ -3444,14 +3447,12 @@ h3 {
   color: #ffffff;
   padding-left: 20px;
 }
-.list-lessons_list {
-  margin: 0;
-}
 .list-lessons_item {
+  display: inline-block;
   position: relative;
   list-style: none;
+  text-align: left;
   margin-top: 15px;
-  background-color: #ffffff;
   padding: 10px 20px;
   background-color: #f9fafb;
   -webkit-box-shadow: 0px 1px 2px #333333, inset 0px 1px 0px #ffffff;

@@ -326,7 +326,7 @@ h1, h2, h3 {
 
 // LIST LESSONS
 .list-lessons {
-
+  text-align: center;
 }
   .list-lessons_title {
     font-family: 'Roboto Slab', serif;
@@ -336,14 +336,12 @@ h1, h2, h3 {
     color: hsl(200, 100%, 100%);
     padding-left: @unit-space;
   }
-  .list-lessons_list {
-    margin: 0;
-  }
   .list-lessons_item {
+    display: inline-block;
     position: relative;
     list-style: none;
+    text-align: left;
     margin-top: 15px;
-    background-color: hsl(0, 100%, 100%);
     padding: (@unit-space / 2) @unit-space;
     background-color: hsl(200, 20%, 98%);
     @sh: 0px 1px 2px #333,
