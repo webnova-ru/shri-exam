@@ -160,7 +160,7 @@
   -o-box-shadow: @depth;
   box-shadow: @depth;
 }
-.text-shadow(@color) {
+.text-shadow(@color) { // Выпилить этот миксим на нормальный
   .isNone(@color, '', '0px 1px 0px');
   text-shadow: @isNone @color;
 }

@@ -82,6 +82,14 @@ h1, h2, h3 {
   margin-left: -90px;
   float: none;
 }
+.big-title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 28px;
+  @cl: hsl(32, 5%, 53%);
+  text-shadow: 0px 2px 0px @cl, 0px -1px 0px @cl, 1px 0px 0px @cl, -1px 0px 0px @cl, 0px 1px 3px #000;
+  color: hsl(200, 100%, 98%);
+  padding: 0px @unit-space;
+}
 
 // LOGO
 .logo {
@@ -186,7 +194,7 @@ h1, h2, h3 {
     display: block;
     margin-right: 20px;
     padding: 5px;
-    background-color: hsla(0, 100%, 100%, 50%);
+    background-color: hsla(200, 100%, 95%, 30%);
     .box-sizing();
   }
   .student-info_fio {
@@ -286,41 +294,80 @@ h1, h2, h3 {
 // END LESSONS
 
 // LIST STUDENTS
-.stud-list {
-
+.hex-grid {
+  text-align: center;
+  margin-top: -90px;
 }
-  .stud-list_item {
-    width: 250px;
-    float: left;
-    margin-right: 20px;
+  .hex-grid_row-odd {
+    display: inline-block;
+    margin: 0 auto -270px auto;
+    overflow: hidden;
   }
-  .stud-list_odd {
+  .hex-grid_row-even {
+    display: inline-block;
+    margin: 0 auto -270px auto;
+    overflow: hidden;
+  }
 
+.hexagon-wrap {
+  float: left;
+  margin: 20px 10px;
+  width: 160px;
+  &:first-child {
+    margin-left: 0px;
   }
-  .stud-list_even {
-
+  &:last-child {
+    margin-right: 0px;
   }
+}
 .hexagon {
-  //cursor: pointer;
-  //height: 440px;
-  overflow: hidden;
   .rotate(120deg);
-  //visibility: hidden;
-  width: 300px; // 320px
-  height: 200px;
+  cursor: pointer;
+  height: 380px;
+  overflow: hidden;
+  visibility: hidden;
+  width: 160px;
+
+  &:hover .hexagon_desc {
+    opacity: 1;
+  }
 }
   .hexagon_inner1 {
-   // height: 100%;
-    overflow: hidden;
     .rotate(-60deg);
-    //width: 100%;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
   }
   .hexagon_inner2 {
-    //height: 100%;
-    //position: relative;
     .rotate(-60deg);
-    //visibility: visible;
-    //width: 100%;
+    height: 100%;
+    position: relative;
+    visibility: visible;
+    width: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 170% 50%;
+  }
+  .hexagon_inner2--bgCorrect {
+    background-size: 100% 100%;
+  }
+
+.hexagon_desc {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 1px 2px #222;
+  visibility: visible;
+  background-color: hsla(32, 90%, 20%, 75%);
+  opacity: 0;
+  .trans();
+}
+  .hexagon_desc_title {
+    margin: 165px 20px 0px;
   }
 // END LIST STUDENTS
 
@@ -328,14 +375,6 @@ h1, h2, h3 {
 .list-lessons {
   text-align: center;
 }
-  .list-lessons_title {
-    font-family: 'Roboto Slab', serif;
-    font-size: 28px;
-    font-weight: normal;
-    text-shadow: 0px 1px 2px #222;
-    color: hsl(200, 100%, 100%);
-    padding-left: @unit-space;
-  }
   .list-lessons_item {
     display: inline-block;
     position: relative;
@@ -362,6 +401,7 @@ h1, h2, h3 {
       border-bottom:1px solid hsl(200, 40%, 70%);
       font-size: 18px;
       font-weight: bold;
+      .trans(all 0.4s ease-out);
 
       &:before {
         border-left: 5px solid transparent;
