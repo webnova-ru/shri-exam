@@ -19,6 +19,9 @@
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="assets/plugins/formNova/formNova.js"></script>
+    <script src="assets/js/libs/can.jquery.js"></script>
+    <script src="assets/js/libs/can.fixture.js"></script>
+    <script src="assets/js/app.js"></script>
     <script src="assets/js/common.js"></script>
 
     <meta name="description" content="Описание" />
@@ -72,132 +75,11 @@
         </ul>
     </nav>
     <div class="content">
-        <div class="student-info">
-            <div class="-row">
-                <div class="-unit2of3">
-                    <img class="student-info_foto" src="http://img-fotki.yandex.ru/get/9110/29991134.0/0_d32e8_fc889efd_L" alt="фото студента" width="100%" height="100%">
-                </div>
-                <div class="-unit1of3">
-                    <h1 class="student-info_fio">Логиневский Василий</h1>
-                    <div class="student-info_city"><i class="icon-map-marker"></i> Санкт-петербург</div>
-                </div>
-            </div>
-        </div>
-        <div class="-win-wrap">
-            <div class="-win">
-                <div class="-win_header">
-                    <div class="-win_header_inline _left">
-                        <a href="#" class="-btn"><i class="icon-chevron-left"></i> К списку студентов</a>
-                    </div>
-                    <div class="win-title -win_header_title">Информация о студенте</div>
-                    <div class="-win_header_inline _right">
-                        <div class="-ui-group">
-                            <a href="#" id="js-view-student" class="-ui-group_item -btn -btn--active"><i class="icon-eye-open"></i> Просмотр</a>
-                            <a href="#" id="js-edit-student" class="-ui-group_item -btn"><i class="icon-pencil"></i> Редактирование</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="-win_content">
-                    <div class="student-info-full">
-                        <h2 class="title">О себе</h2>
-                        <p>
-                            Всем привет, меня зовут Вася. Родился и живу в Москве. В школе вебом, версткой и даже программированием не увлекался, просто мне нравилось ходить на олимпиады по математике и лингвистике. Потом поступил в МИФИ, где любовь к математике мне отбили. С третьего курса работаю. Занимался вебом и ios. В школу пришел чтобы восполнить пробелы в знаниях, узнать как изнутри работает такая большая организация и конечно познакомиться с новыми интересными людьми.
-                        </p>
-                        <h2 class="title">Ссылки на социальные сети</h2>
-                        <table class="-table -table--bordered">
-                            <tbody>
-                            <tr>
-                                <td><strong>Facebook</strong></td>
-                                <td><a href="#">facebook.com/popov.nikita</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Вконтакте</strong></td>
-                                <td><a href="#">vk.com/nikita.v.popov</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>GitHub</strong></td>
-                                <td><a href="#">github.com/losnikitos</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ya.ru</strong></td>
-                                <td><a href="#">losnikitos123.ya.ru</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
-                    <!--редактирование-->
-                    <div class="student-edit">
-                        <h2 class="title _spacer">Редактирование данных студента</h2>
-                        <form action="#" method="get" data-validate="formNova">
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="fio">Ф.И.О.</label>
-                                <div class="-form-right">
-                                    <input id="fio" class="-input-text" name="fio" data-validrules="required" />
-                                </div>
-                            </div>
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="fotoLink">Ссылка на фото</label>
-                                <div class="-form-right">
-                                    <input id="fotoLink" class="-input-text" name="fotoLink" data-validrules="required" />
-                                </div>
-                            </div>
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="city">Город</label>
-                                <div class="-form-right">
-                                    <input id="city" class="-input-text" name="city" data-validrules="required" />
-                                </div>
-                            </div>
-
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="facebook">Ссылка facebook</label>
-                                <div class="-form-right">
-                                    <input id="facebook" class="-input-text" name="facebook" />
-                                </div>
-                            </div>
-
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="vk">Ссылка vk</label>
-                                <div class="-form-right">
-                                    <input id="vk" class="-input-text" name="vk" />
-                                </div>
-                            </div>
-
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="gitHub">Ссылка GitHub</label>
-                                <div class="-form-right">
-                                    <input id="gitHub" class="-input-text" name="gitHub" />
-                                </div>
-                            </div>
-
-                            <div class="-form-line">
-                                <label class="-label -form-left" for="yaRu">Ссылка Ya.ru</label>
-                                <div class="-form-right">
-                                    <input id="yaRu" class="-input-text" name="yaRu" />
-                                </div>
-                            </div>
-
-                            <div class="-form-line">
-                                <label class="-label" for="desc">О себе</label>
-                                <textarea id="desc" class="-textarea -width-100" name="desc" data-validrules="required"></textarea>
-                            </div>
-
-                            <div class="-form-line -form-action">
-                                <div class="-form-right">
-                                    <button type="submit" class="-button">Сохранить</button>
-                                    <button type="reset" class="-button -button--gray _spacer-l">Очистить</button>
-                                    <span class="-btn _right _spacer-r"><i class="icon-trash"></i> Удалить студента</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <footer class="footer">
-        Задание выполнил Михаил Махоткин. <a href="https://github.com/webnova-ru/shri-exam">Исходный код</a>.
+        Задание выполнил Михаил Махоткин: <a href="https://github.com/webnova-ru/shri-exam">Исходный код</a>
     </footer>
 </div>
 </body>
