@@ -108,19 +108,21 @@ h1, h2, h3 {
 // END LOGO
 
 // MENU
-.menu-wrapper {
+.menu {
   margin-bottom: 30px;
 }
-.menu {
-
-}
+  .menu_item_icon-wrap {
+    margin-top: 12px;
+  }
   @hoverColor: hsl(200, 40%, 90%);
   .menu_item {
+    display: block;
     float: left;
     width: 33.3%;
     .box-sizing();
     padding: 10px 20px;
     position: relative;
+    color: @textColor;
     background-color: hsl(45, 45%, 90%);
     cursor: pointer;
     border-width: 1px;
@@ -135,7 +137,9 @@ h1, h2, h3 {
     }
     &:hover {
       background-color: @hoverColor;
-      @sh: 0px 1px 2px #aaa;
+      color: @textColor;
+      border-bottom: 1px solid hsl(@hue, 5%, 40%);
+      @sh: 0px 1px 2px #999;
       .shadow(@sh);
     }
   }
