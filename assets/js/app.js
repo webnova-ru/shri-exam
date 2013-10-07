@@ -5,7 +5,8 @@ $(function(){
     };
     var pages = {
         index: {
-            routeName: 'info'
+            routeName: '',
+            template: 'info.ejs'
         },
         lessons: {
             routeName: 'lessons',
@@ -30,28 +31,27 @@ $(function(){
                 text: 'О ШРИ',
                 desc: 'Информация о школе',
                 id: 'js-menu-info',
-                url: pages.index.routeName
+                url: ''
             },
             {
                 text: 'Студенты',
                 desc: 'Список учащихся',
                 id: 'js-menu-students',
-                url: pages.students.routeName
+                url: 'students'
             },{
                 text: 'Лекции',
                 desc: 'Записи видео лекций',
                 id: 'js-menu-lessons',
-                url: pages.lessons.routeName
+                url: 'lessons'
             }]
     };
 
-    can.route(":page/:action/:param");
-
     var Menu = can.Control.extend({
             defaults: {
-                menuItemClass: 'js-menu',
+                menuItemClass: 'js-menu_item',
                 activeClassName: 'menu_item--active',
-                arrowActiveMenuClassName: 'menu_item_arrow'
+                arrowActiveMenuClassName: 'menu_item_arrow',
+                hideClass: '_hide'
             }
         }, {
             init: function(element, menuData) {
@@ -70,34 +70,51 @@ $(function(){
             },
             '.{menuItemClass} click': function($el) {
                 this.setActiveMenuItem($el);
-                //console.log(can.route());
-                //can.route.attr( "type", "songs" );
             },
             setActiveMenuItem: function($el) {
                 var opt = this.options;
                 $('.' + opt.activeClassName, this.element).removeClass(opt.activeClassName);
-                $('.' + opt.arrowActiveMenuClassName, this.element).addClass('_hide');
+                $('.' + opt.arrowActiveMenuClassName, this.element).addClass(opt.hideClass);
                 $el.addClass(opt.activeClassName);
-                $('.' + opt.arrowActiveMenuClassName, $el).removeClass('_hide');
+                $('.' + opt.arrowActiveMenuClassName, $el).removeClass(opt.hideClass);
             }
     });
-    var menu = new Menu('.menu', menuData);
 
-    var Router = can.Control({
-        "content/:type route" : function(){
-            alert('fffdfvv');
+    var Router = can.Control.extend({
+        init: function() {
+            can.route(":page/:action/:param");
         },
-        "active route" : function(){
-            console.log("the hash is #!active")
+        'route': function(){
+            this.renderIndexPage();
         },
-        "project/create" : function(){
+        '{index.routeName} route': function(){
+            this.renderIndexPage();
+        },
+        '{students.routeName} route' : function(){
+            console.log("the hash is #!active");
+           // this.element.remove();
+        },
+        '{lessons.routeName} route' : function(){
             console.log("the hash is #!project/create")
+        },
+        renderIndexPage: function() {
+            var pages = this.options;
+            var contentFragment = can.view(config.pathViewFolder + pages.index.template, INFO_PAGE_CONTENT);
+            this.element.html(contentFragment);
         }
     });
 
-// make sure to initialize the Control
-    new Router(document);
-
+    var App = {
+        config: {
+            contentClass: 'content',
+            menuClass: 'js-menu'
+        },
+        init: function() {
+            new Router('.' + this.config.contentClass, pages);
+            new Menu('.' + this.config.menuClass, menuData);
+        }
+    }
+    App.init();
 
    // can.route( "#!content/:type" );
    // can.route.attr( "type", "songs" );
@@ -105,7 +122,5 @@ $(function(){
     //can.route.ready(false);
     //can.route.ready(true);
     //    can.route.attr({type: 'pages', id: 5}, true)
-
-    //can.route("content/:type");
 
 });
