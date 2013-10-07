@@ -31,17 +31,20 @@ $(function(){
                 text: 'О ШРИ',
                 desc: 'Информация о школе',
                 id: 'js-menu-info',
+                iconClass: 'icon-info-sign',
                 url: ''
             },
             {
                 text: 'Студенты',
                 desc: 'Список учащихся',
                 id: 'js-menu-students',
+                iconClass: 'icon-group',
                 url: 'students'
             },{
                 text: 'Лекции',
                 desc: 'Записи видео лекций',
                 id: 'js-menu-lessons',
+                iconClass: 'icon-film',
                 url: 'lessons'
             }]
     };
@@ -80,7 +83,19 @@ $(function(){
             }
     });
 
+    var InfoPageContent = can.Model({
+        findAll: 'GET /info'
+    }, {});
+    can.fixture('GET /info', function(){
+        return [PAGE_CONTENT.index];
+    });
+
+
     var Router = can.Control.extend({
+        defaults: {
+            wrapContentClass: 'js-content_inner'
+        }
+    },{
         init: function() {
             can.route(":page/:action/:param");
         },
@@ -91,22 +106,27 @@ $(function(){
             this.renderIndexPage();
         },
         '{students.routeName} route' : function(){
+            this.element.empty();
             console.log("the hash is #!active");
-           // this.element.remove();
         },
         '{lessons.routeName} route' : function(){
+            this.element.empty();
             console.log("the hash is #!project/create")
         },
         renderIndexPage: function() {
             var pages = this.options;
-            var contentFragment = can.view(config.pathViewFolder + pages.index.template, INFO_PAGE_CONTENT);
-            this.element.html(contentFragment);
+            var $el = this.element;
+            this.element.empty();
+            can.when(InfoPageContent.findAll()).then(function(pageContent){
+                var contentFragment = can.view(config.pathViewFolder + pages.index.template, pageContent[0]);
+                $el.html(contentFragment);
+            });
         }
     });
 
     var App = {
         config: {
-            contentClass: 'content',
+            contentClass: 'js-content',
             menuClass: 'js-menu'
         },
         init: function() {
