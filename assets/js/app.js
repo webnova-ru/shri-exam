@@ -175,16 +175,14 @@ $(function(){
         toggleLoadAndContent: function(fragment) {
              if(fragment)
              {
-                 this.$contentInner.html(fragment);
                  this.$preloader.addClass(this.options.hideClass);
+                 this.$contentInner.html(fragment);
              }
-
              else
              {
                  this.$contentInner.empty();
                  this.$preloader.removeClass(this.options.hideClass);
              }
-
         },
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
@@ -197,6 +195,7 @@ $(function(){
             LessonsModel.findOne({id: urlParam.param}, function(lessonInfo){
                 var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
                 self.toggleLoadAndContent(pageFragment);
+                $('[data-validate="formNova"]').formNova();
             });
         },
         '{lessons.routeName} route' : function(){
