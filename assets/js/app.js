@@ -2,7 +2,7 @@ $(function(){
     "use strict";
     var config = {
         pathViewFolder: '/assets/views/',
-        ServerRequestDelay: 600
+        ServerRequestDelay: 1000
     };
     var pages = {
         index: {

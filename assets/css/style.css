@@ -2807,7 +2807,11 @@ h3 {
   -moz-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.55);
+  -webkit-box-shadow: inset 0px 1px 4px #111111;
+  -moz-box-shadow: inset 0px 1px 4px #111111;
+  -o-box-shadow: inset 0px 1px 4px #111111;
+  box-shadow: inset 0px 1px 4px #111111;
 }
 .logo {
   margin: auto;
