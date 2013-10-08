@@ -14,7 +14,9 @@ $(function(){
             template: 'lessons.ejs'
         },
         lesson: {
-            routeName: 'lesson'
+            routeName: 'lesson',
+            routeMethod: 'view',
+            template: 'lesson.ejs'
         },
         students: {
             routeName: 'students'
@@ -96,34 +98,6 @@ $(function(){
         return PAGE_CONTENT[request.data.pageName];
     });
 
-    // Модель взятия лекций
-    var LessonsModel = can.Model({
-        findAll: 'GET /lessons',
-        findOne: 'GET /lesson/{id}'
-    }, {});
-    function getFullLessonsInfo(lessons, category, teachers) {
-        var lessonsArray = $.isPlainObject(lessons)? [lessons]: lessons;
-
-        return lessonsArray.map(function(lesson) {
-            var lessonCopy = can.extend({}, lesson);
-            lessonCopy.category = category.filter(function(cat){
-                return cat.id === lessonCopy.categoryId
-            })[0];
-            lessonCopy.category = lessonCopy.category.name;
-            lessonCopy.teacher = teachers.filter(function(teacher){
-                return teacher.id === lessonCopy.teacherId
-            })[0];
-            lessonCopy.teacher = lessonCopy.teacher.name;
-            return lessonCopy;
-        });
-    }
-    can.fixture('GET /lessons', function() {
-        return getFullLessonsInfo(LESSONS, LESSONS_CATEGORY, TEACHERS);
-    });
-    can.fixture('GET /lesson/{id}', function(request) {
-        return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS);
-    });
-
     // Модель взятия лектора
     var TeachersModel = can.Model({
         findAll: 'GET /teachers',
@@ -148,6 +122,33 @@ $(function(){
         return LESSONS_CATEGORY[request.data.id - 1];
     });
 
+    // Модель взятия лекций
+    var LessonsModel = can.Model({
+        findAll: 'GET /lessons',
+        findOne: 'GET /lesson/{id}'
+    }, {});
+    function getFullLessonsInfo(lessons, category, teachers) {
+        var lessonsArray = $.isPlainObject(lessons)? [lessons]: lessons;
+        return lessonsArray.map(function(lesson) {
+            var lessonCopy = can.extend({}, lesson);
+            lessonCopy.category = category.filter(function(cat){
+                return cat.id === lessonCopy.categoryId
+            })[0];
+            lessonCopy.category = lessonCopy.category.name;
+            lessonCopy.teacher = teachers.filter(function(teacher){
+                return teacher.id === lessonCopy.teacherId
+            })[0];
+            lessonCopy.teacher = lessonCopy.teacher.name;
+            return lessonCopy;
+        });
+    }
+    can.fixture('GET /lessons', function() {
+        return getFullLessonsInfo(LESSONS, LESSONS_CATEGORY, TEACHERS);
+    });
+    can.fixture('GET /lesson/{id}', function(request) {
+        return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS)[0];
+    });
+
     // Отслеживание изменения хеша и обработка событий по ним
     var Router = can.Control.extend({
         init: function() {
@@ -163,10 +164,22 @@ $(function(){
             this.element.empty();
             console.log("the hash is #!active");
         },
+        '{lesson.routeName}/{lesson.routeMethod}/:param route' : function(urlParam){
+            var pages = this.options;
+            var $el = this.element;
+            $el.empty();
+
+            LessonsModel.findOne({id: urlParam.param}, function(lessonInfo){
+                console.log(lessonInfo);
+                var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
+                $el.html(pageFragment);
+            });
+        },
         '{lessons.routeName} route' : function(){
             var pages = this.options;
             var $el = this.element;
             $el.empty();
+
             can.when(PageContentModel.findOne({pageName: 'lessons'}), LessonsCategoryModel.findAll(), LessonsModel.findAll())
                .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray){
                     var tempParam = {
@@ -184,6 +197,7 @@ $(function(){
             var pages = this.options;
             var $el = this.element;
             $el.empty();
+
             PageContentModel.findOne({pageName: 'index'}, function(pageContent){
                 var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
                 $el.html(pageFragment);
@@ -202,12 +216,4 @@ $(function(){
         }
     }
     App.init();
-
-   // can.route( "#!content/:type" );
-   // can.route.attr( "type", "songs" );
-
-    //can.route.ready(false);
-    //can.route.ready(true);
-    //    can.route.attr({type: 'pages', id: 5}, true)
-
 });

@@ -4,11 +4,11 @@
         <div class="list-lessons_item">
             <div class="-row">
                 <div class="-unit">
-                    <a class="list-lessons_item_arrow" href="#!<%= pagesInfo.lesson.routeName %>/<%= lesson.id %>"><%= lesson.name %></a>
+                    <a class="list-lessons_item_arrow" href="#!<%= pagesInfo.lesson.routeName + '/' + pagesInfo.lesson.routeMethod + '/' + lesson.id %>"><%= lesson.name %></a>
                 </div>
                 <div class="-unit _right list-lessons_item_info">
                     <i class="icon-user" title="имя лектора"></i> <%= lesson.teacher %><br/>
-                    <i class="icon-time" title="продолжительность лекции"></i> <%= lesson.category %>
+                    <i class="icon-folder-open" title="продолжительность лекции"></i> <%= lesson.category %>
                 </div>
             </div>
         </div>

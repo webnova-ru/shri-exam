@@ -1,0 +1,35 @@
+<article class="mediaBox">
+    <h1 class="stripe-title">
+        <%= this.name %>
+    </h1>
+    <div class="lesson-info">
+        <div class="-row">
+            <div class="-unit">
+                <i class="icon-time" title="продолжительность лекции"></i> <%= this.time %>
+            </div>
+            <div class="-unit">
+                <i class="icon-user" title="имя лектора"></i> <%= this.teacher %>
+            </div>
+            <div class="-unit">
+                <i class="icon-folder-open" title="имя лектора"></i> <%= this.category %>
+            </div>
+            <div class="-unit">
+                <i class="icon-tags" title="ключевые слова"></i> <%= this.tags %>
+            </div>
+        </div>
+    </div>
+    <div class="lesson-video">
+        <iframe width="658" height="250" frameborder="0" src="<%= this.videoLink %>" class="player"></iframe>
+    </div>
+    <div class="lesson-download">
+        <strong class="lesson-download_title">Скачать материалы лекции:</strong>
+        <div class="-ui-group _spacer-l">
+            <a class="-ui-group_item -btn" href="<%= this.pressLink %>" target="_blank">презентация</a>
+            <span class="-ui-group_item -mark">.pdf</span>
+        </div>
+        <div class="-ui-group _spacer-l">
+            <a class="-ui-group_item -btn" href="<%= this.downloadLink %>" target="_blank">видео файл</a>
+            <span class="-ui-group_item -mark">430 Мб</span>
+        </div>
+    </div>
+</article>
