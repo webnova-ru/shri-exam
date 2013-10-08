@@ -2813,6 +2813,50 @@ h3 {
   -o-box-shadow: inset 0px 1px 4px #111111;
   box-shadow: inset 0px 1px 4px #111111;
 }
+.stripe-title {
+  position: relative;
+  font-size: 20px;
+  line-height: 150%;
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  padding: 5px 30px;
+  margin: 0 -30px 10px;
+  text-shadow: 0px 1px 0px #f8f8f7;
+  background-color: #f4f0e6;
+  background: #f0eadd;
+  background-image: -moz-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f0e6), to(#ede4d4));
+  background-image: -webkit-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: -o-linear-gradient(top, #f4f0e6, #ede4d4);
+  background-image: linear-gradient(top, #f4f0e6, #ede4d4);
+  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
+  background-image: -ms-linear-gradient(top, #f4f0e6, #ede4d4);
+  *zoom: 1;
+  -webkit-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  -moz-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  -o-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+  box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
+}
+.stripe-title:before,
+.stripe-title:after {
+  display: block;
+  content: '';
+  width: 0px;
+  height: 0px;
+  left: 0px;
+  bottom: -10px;
+  position: absolute;
+  border-style: solid;
+  border-color: #d2c2a2 #d2c2a2 transparent transparent;
+  border-width: 5px;
+  border-left-width: 4px;
+}
+.stripe-title:after {
+  right: 0px;
+  left: auto;
+  border-color: #ddceb0 transparent transparent #ddceb0;
+}
 .logo {
   margin: auto;
   width: 350px;
@@ -2958,50 +3002,6 @@ h3 {
   box-shadow: 0px 1px 0px #2d4853;
   padding: 20px;
 }
-.stripe-title {
-  position: relative;
-  font-size: 20px;
-  line-height: 150%;
-  font-family: 'Roboto Slab', serif;
-  font-weight: normal;
-  padding: 5px 30px;
-  margin: 0 -30px 10px;
-  text-shadow: 0px 1px 0px #f8f8f7;
-  background-color: #f4f0e6;
-  background: #f0eadd;
-  background-image: -moz-linear-gradient(top, #f4f0e6, #ede4d4);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f0e6), to(#ede4d4));
-  background-image: -webkit-linear-gradient(top, #f4f0e6, #ede4d4);
-  background-image: -o-linear-gradient(top, #f4f0e6, #ede4d4);
-  background-image: linear-gradient(top, #f4f0e6, #ede4d4);
-  filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f4f0e6, endColorstr=#ede4d4)";
-  background-image: -ms-linear-gradient(top, #f4f0e6, #ede4d4);
-  *zoom: 1;
-  -webkit-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
-  -moz-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
-  -o-box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
-  box-shadow: 0px 1px 0px #c2b8a3, 0px 1px 1px #ccc3b3;
-}
-.stripe-title:before,
-.stripe-title:after {
-  display: block;
-  content: '';
-  width: 0px;
-  height: 0px;
-  left: 0px;
-  bottom: -10px;
-  position: absolute;
-  border-style: solid;
-  border-color: #d2c2a2 #d2c2a2 transparent transparent;
-  border-width: 5px;
-  border-left-width: 4px;
-}
-.stripe-title:after {
-  right: 0px;
-  left: auto;
-  border-color: #ddceb0 transparent transparent #ddceb0;
-}
 .lesson-info {
   font-size: 16px;
   height: 24px;
@@ -3031,6 +3031,39 @@ h3 {
 .lesson-download_title {
   display: inline-block;
   margin-top: 3px;
+}
+.form-comment {
+  padding: 20px 0px;
+}
+.comments {
+  padding: 20px 0px;
+}
+.comment {
+  margin-bottom: 20px;
+  position: relative;
+}
+.comment_info {
+  padding: 0 10px;
+}
+.comment_info_author {
+  font-weight: bold;
+}
+.comment_info_date {
+  color: #adb5b8;
+  font-size: 11px;
+}
+.comment_text {
+  border: 1px solid #b3bdc1;
+  -webkit-box-shadow: 0 1px 1px #c1c9cd;
+  -moz-box-shadow: 0 1px 1px #c1c9cd;
+  -o-box-shadow: 0 1px 1px #c1c9cd;
+  box-shadow: 0 1px 1px #c1c9cd;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: #fff;
 }
 .hex-grid {
   text-align: center;

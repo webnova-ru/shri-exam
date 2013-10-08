@@ -101,6 +101,43 @@ h1, h2, h3 {
   background-color: hsla(0, 0%, 0%, 55%);
   .shadow(inset 0px 1px 4px #111);
 }
+.stripe-title {
+  @titleColor: hsl(40, 40%, 93%);
+  @titleColorHue: hue(@titleColor);
+
+  position: relative;
+  font-size: 20px;
+  line-height: 150%;
+  font-family: 'Roboto Slab', serif;
+  font-weight: normal;
+  padding: 5px @unit-space + 10px;
+  margin: 0 -(@unit-space + 10px) (@unit-space / 2);
+  .text-shadow(hsl(@titleColorHue, 10%, 97%));
+  background-color: @titleColor;
+  .gradient(hsl(@titleColorHue, 40%, 88%), @titleColor);
+  @sh: 0px 1px 0px hsl(@titleColorHue, 20%, 70%),
+  0px 1px 1px hsl(@titleColorHue, 20%, 75%);
+  .shadow(@sh);
+  &:before,
+  &:after {
+    display: block;
+    content: '';
+    .size(0px, 0px);
+    left: 0px;
+    bottom: -10px;
+    position: absolute;
+    border-style: solid;
+    @brColor: hsl(@titleColorHue, 35%, 73%);
+    border-color: @brColor @brColor transparent transparent;
+    border-width: 5px;
+    border-left-width: 4px;
+  }
+  &:after {
+    right: 0px;
+    left:  auto;
+    border-color: darken(@titleColor, 15%) transparent transparent darken(@titleColor, 15%);
+  }
+}
 // LOGO
 .logo {
   margin: auto;
@@ -234,44 +271,6 @@ h1, h2, h3 {
 
   padding: @unit-space;
 }
-
-.stripe-title {
-  @titleColor: hsl(40, 40%, 93%);
-  @titleColorHue: hue(@titleColor);
-
-  position: relative;
-  font-size: 20px;
-  line-height: 150%;
-  font-family: 'Roboto Slab', serif;
-  font-weight: normal;
-  padding: 5px @unit-space + 10px;
-  margin: 0 -(@unit-space + 10px) (@unit-space / 2);
-  .text-shadow(hsl(@titleColorHue, 10%, 97%));
-  background-color: @titleColor;
-  .gradient(hsl(@titleColorHue, 40%, 88%), @titleColor);
-  @sh: 0px 1px 0px hsl(@titleColorHue, 20%, 70%),
-  0px 1px 1px hsl(@titleColorHue, 20%, 75%);
-  .shadow(@sh);
-  &:before,
-  &:after {
-    display: block;
-    content: '';
-    .size(0px, 0px);
-    left: 0px;
-    bottom: -10px;
-    position: absolute;
-    border-style: solid;
-    @brColor: hsl(@titleColorHue, 35%, 73%);
-    border-color: @brColor @brColor transparent transparent;
-    border-width: 5px;
-    border-left-width: 4px;
-  }
-  &:after {
-    right: 0px;
-    left:  auto;
-    border-color: darken(@titleColor, 15%) transparent transparent darken(@titleColor, 15%);
-  }
-}
 .lesson-info {
   font-size: 16px;
   height: 24px;
@@ -299,6 +298,38 @@ h1, h2, h3 {
     margin-top: 3px;
   }
 // END LESSONS
+
+
+// COMMENTS
+.form-comment {
+  padding: @unit-space 0px;
+}
+.comments {
+  padding: @unit-space 0px;
+}
+.comment {
+  margin-bottom: @unit-space;
+  position: relative;
+}
+.comment_info {
+  padding: 0 (@unit-space / 2);
+}
+.comment_info_author {
+  font-weight: bold;
+}
+.comment_info_date {
+  color: lighten(@textColor, 40%);
+  font-size: 11px;
+}
+.comment_text {
+  .border(hsl(@hue, 10%, 73%));
+  @sh: 0 1px 1px hsl(@hue, 10%, 78%);
+  .shadow(@sh);
+  .round(@round);
+  padding: @unit-space / 2;
+  background-color: #fff;
+}
+// END COMMENTS
 
 // LIST STUDENTS
 .hex-grid {
