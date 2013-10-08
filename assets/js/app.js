@@ -101,11 +101,39 @@ $(function(){
         findAll: 'GET /lessons',
         findOne: 'GET /lesson/{id}'
     }, {});
-    can.fixture('GET /lessons', function(){
-        return LESSONS;
+    function getFullLessonsInfo(lessons, category, teachers) {
+        var lessonsArray = $.isPlainObject(lessons)? [lessons]: lessons;
+
+        return lessonsArray.map(function(lesson) {
+            var lessonCopy = can.extend({}, lesson);
+            lessonCopy.category = category.filter(function(cat){
+                return cat.id === lessonCopy.categoryId
+            })[0];
+            lessonCopy.category = lessonCopy.category.name;
+            lessonCopy.teacher = teachers.filter(function(teacher){
+                return teacher.id === lessonCopy.teacherId
+            })[0];
+            lessonCopy.teacher = lessonCopy.teacher.name;
+            return lessonCopy;
+        });
+    }
+    can.fixture('GET /lessons', function() {
+        return getFullLessonsInfo(LESSONS, LESSONS_CATEGORY, TEACHERS);
     });
-    can.fixture('GET /lesson/{id}', function(request){
-        return LESSONS[request.data.id - 1];
+    can.fixture('GET /lesson/{id}', function(request) {
+        return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS);
+    });
+
+    // Модель взятия лектора
+    var TeachersModel = can.Model({
+        findAll: 'GET /teachers',
+        findOne: 'GET /teacher/{id}'
+    }, {});
+    can.fixture('GET /teachers', function(){
+        return TEACHERS;
+    });
+    can.fixture('GET /teacher/{id}', function(request){
+        return TEACHERS[request.data.id - 1];
     });
 
     // Модель взятия категорий лекций
@@ -144,7 +172,8 @@ $(function(){
                     var tempParam = {
                         pageContent: reqPageContent,
                         lessonsCategoryArray: reqLessonsCategoryArray,
-                        lessonsArray: reqLessonsArray
+                        lessonsArray: reqLessonsArray,
+                        pagesInfo: pages
                     };
                     var pageFragment = can.view(config.pathViewFolder + pages.lessons.template, tempParam);
                     $el.html(pageFragment);

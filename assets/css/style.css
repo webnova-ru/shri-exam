@@ -2770,6 +2770,9 @@ h3 {
 .header {
   margin: 20px;
 }
+.content {
+  margin-bottom: 20px;
+}
 .title {
   border-bottom: 1px solid #819198;
   box-shadow: 0 1px 0 #FFFFFF;
@@ -3130,6 +3133,14 @@ h3 {
   border-bottom: 1px solid #94bdd1;
   font-size: 18px;
   font-weight: bold;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -ms-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+.list-lessons_item_arrow:before,
+.list-lessons_item_arrow:after {
   -webkit-transition: all 0.4s ease-out;
   -moz-transition: all 0.4s ease-out;
   -ms-transition: all 0.4s ease-out;

@@ -62,6 +62,9 @@ h1, h2, h3 {
 .header {
   margin: @unit-space;
 }
+.content {
+  margin-bottom: @unit-space;
+}
 
 .title {
   border-bottom: 1px solid #819198;
@@ -400,6 +403,9 @@ h1, h2, h3 {
       font-weight: bold;
       .trans(all 0.4s ease-out);
 
+      &:before, &:after {
+        .trans(all 0.4s ease-out);
+      }
       &:before {
         border-left: 5px solid transparent;
         border-top: 5px solid hsl(200, 30%, 70%);
