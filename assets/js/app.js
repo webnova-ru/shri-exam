@@ -1,7 +1,8 @@
 $(function(){
     "use strict";
     var config = {
-        pathViewFolder: '/assets/views/'
+        pathViewFolder: '/assets/views/',
+        ServerRequestDelay: 600
     };
     var pages = {
         index: {
@@ -97,6 +98,7 @@ $(function(){
         findAll: 'GET /info',
         findOne: 'GET /info/{pageName}'
     }, {});
+    can.fixture.delay = config.ServerRequestDelay;
     can.fixture('GET /info', function(){
         return [PAGE_CONTENT];
     });
@@ -157,28 +159,50 @@ $(function(){
 
     // Отслеживание изменения хеша и обработка событий по ним
     var Router = can.Control.extend({
+        defaults: {
+            preloaderClass: 'preloader',
+            hideClass: '_hide',
+            innerClass: 'js-content_inner'
+        }
+    },
+    {
         init: function() {
             can.route(":page/:action/:param");
+
+            this.$preloader = $('.' + this.options.preloaderClass, this.element);
+            this.$contentInner = $('.' + this.options.innerClass, this.element);
+        },
+        toggleLoadAndContent: function(fragment) {
+             if(fragment)
+             {
+                 this.$contentInner.html(fragment);
+                 this.$preloader.addClass(this.options.hideClass);
+             }
+
+             else
+             {
+                 this.$contentInner.empty();
+                 this.$preloader.removeClass(this.options.hideClass);
+             }
+
         },
         '{students.routeName} route' : function(){
-            this.element.empty();
+            this.toggleLoadAndContent();
             console.log("the hash is #!active");
         },
         '{lesson.routeName}/{lesson.routeMethod}/:param route' : function(urlParam){
             var pages = this.options;
-            var $el = this.element;
-            $el.empty();
-
+            this.toggleLoadAndContent();
+            var self = this;
             LessonsModel.findOne({id: urlParam.param}, function(lessonInfo){
                 var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
-                $el.html(pageFragment);
+                self.toggleLoadAndContent(pageFragment);
             });
         },
         '{lessons.routeName} route' : function(){
             var pages = this.options;
-            var $el = this.element;
-            $el.empty();
-
+            this.toggleLoadAndContent();
+            var self = this;
             can.when(PageContentModel.findOne({pageName: 'lessons'}), LessonsCategoryModel.findAll(), LessonsModel.findAll())
                .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray){
                     var tempParam = {
@@ -188,7 +212,7 @@ $(function(){
                         pagesInfo: pages
                     };
                     var pageFragment = can.view(config.pathViewFolder + pages.lessons.template, tempParam);
-                    $el.html(pageFragment);
+                    self.toggleLoadAndContent(pageFragment);
                 });
 
         },
@@ -200,11 +224,11 @@ $(function(){
         },
         renderIndexPage: function() {
             var pages = this.options;
-            var $el = this.element;
-            $el.empty();
+            this.toggleLoadAndContent();
+            var self = this;
             PageContentModel.findOne({pageName: 'index'}, function(pageContent){
                 var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
-                $el.html(pageFragment);
+                self.toggleLoadAndContent(pageFragment);
             });
         }
     });

@@ -93,7 +93,13 @@ h1, h2, h3 {
   color: hsl(200, 100%, 98%);
   padding: 0px @unit-space;
 }
-
+.preloader {
+  width: 160px;
+  margin: @unit-space auto;
+  padding: (@unit-space / 2);
+  .round((2 * @round));
+  background-color: hsla(0, 0%, 0%, 50%);
+}
 // LOGO
 .logo {
   margin: auto;
