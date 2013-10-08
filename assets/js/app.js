@@ -63,24 +63,30 @@ $(function(){
             init: function(element, menuData) {
                 var menuFragment = can.view(config.pathViewFolder + menuData.template, menuData.menuItems);
                 this.element.html(menuFragment);
-                var hash = can.route._getHash();
-                var idActiveMenuItem = menuData.menuItems[0].id;
-                if(hash !== '')
-                {
-                    can.each(menuData.menuItems, function(item){
-                        if(hash.indexOf(item.url) !== -1)
-                            idActiveMenuItem = item.id;
-                    });
-                }
-                this.setActiveMenuItem($('#' + idActiveMenuItem, this.element));
+
+                can.route.bind('change', can.proxy(this.setActiveMenuItem, this));
             },
-            '.{menuItemClass} click': function($el) {
-                this.setActiveMenuItem($el);
-            },
-            setActiveMenuItem: function($el) {
+            setActiveMenuItem: function() {
                 var opt = this.options;
                 $('.' + opt.activeClassName, this.element).removeClass(opt.activeClassName);
                 $('.' + opt.arrowActiveMenuClassName, this.element).addClass(opt.hideClass);
+
+                var hash = can.route._getHash();
+                if(hash === '')
+                {
+                    this.lightActiveItem(opt.menuItems[0].id);
+                    return;
+                }
+                var self = this;
+                can.each(opt.menuItems, function(item){
+                    if(item.url && (hash === item.url || hash.indexOf(item.url + '/') !== -1))
+                        self.lightActiveItem(item.id);
+                });
+
+            },
+            lightActiveItem: function(id) {
+                var $el = $('#' + id, this.element);
+                var opt = this.options;
                 $el.addClass(opt.activeClassName);
                 $('.' + opt.arrowActiveMenuClassName, $el).removeClass(opt.hideClass);
             }
@@ -154,12 +160,6 @@ $(function(){
         init: function() {
             can.route(":page/:action/:param");
         },
-        'route': function(){
-            this.renderIndexPage();
-        },
-        '{index.routeName} route': function(){
-            this.renderIndexPage();
-        },
         '{students.routeName} route' : function(){
             this.element.empty();
             console.log("the hash is #!active");
@@ -170,7 +170,6 @@ $(function(){
             $el.empty();
 
             LessonsModel.findOne({id: urlParam.param}, function(lessonInfo){
-                console.log(lessonInfo);
                 var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
                 $el.html(pageFragment);
             });
@@ -193,11 +192,16 @@ $(function(){
                 });
 
         },
+        'route': function(){
+            this.renderIndexPage();
+        },
+        '{index.routeName} route': function(){
+            this.renderIndexPage();
+        },
         renderIndexPage: function() {
             var pages = this.options;
             var $el = this.element;
             $el.empty();
-
             PageContentModel.findOne({pageName: 'index'}, function(pageContent){
                 var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
                 $el.html(pageFragment);
