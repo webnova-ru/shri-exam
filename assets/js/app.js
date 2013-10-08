@@ -10,7 +10,8 @@ $(function(){
         },
         lessons: {
             routeName: 'lessons',
-            routeMethod: 'list'
+            routeMethod: 'list',
+            template: 'lessons.ejs'
         },
         lesson: {
             routeName: 'lesson'
@@ -83,19 +84,44 @@ $(function(){
             }
     });
 
-    var InfoPageContent = can.Model({
-        findAll: 'GET /info'
+    // Модель текстовки сайта
+    var PageContentModel = can.Model({
+        findAll: 'GET /info',
+        findOne: 'GET /info/{pageName}'
     }, {});
     can.fixture('GET /info', function(){
-        return [PAGE_CONTENT.index];
+        return [PAGE_CONTENT];
+    });
+    can.fixture('GET /info/{pageName}', function(request){
+        return PAGE_CONTENT[request.data.pageName];
     });
 
+    // Модель взятия лекций
+    var LessonsModel = can.Model({
+        findAll: 'GET /lessons',
+        findOne: 'GET /lesson/{id}'
+    }, {});
+    can.fixture('GET /lessons', function(){
+        return LESSONS;
+    });
+    can.fixture('GET /lesson/{id}', function(request){
+        return LESSONS[request.data.id - 1];
+    });
 
+    // Модель взятия категорий лекций
+    var LessonsCategoryModel = can.Model({
+        findAll: 'GET /category',
+        findOne: 'GET /category/{id}'
+    }, {});
+    can.fixture('GET /category', function(){
+        return LESSONS_CATEGORY;
+    });
+    can.fixture('GET /category/{id}', function(request){
+        return LESSONS_CATEGORY[request.data.id - 1];
+    });
+
+    // Отслеживание изменения хеша и обработка событий по ним
     var Router = can.Control.extend({
-        defaults: {
-            wrapContentClass: 'js-content_inner'
-        }
-    },{
         init: function() {
             can.route(":page/:action/:param");
         },
@@ -110,16 +136,28 @@ $(function(){
             console.log("the hash is #!active");
         },
         '{lessons.routeName} route' : function(){
-            this.element.empty();
-            console.log("the hash is #!project/create")
+            var pages = this.options;
+            var $el = this.element;
+            $el.empty();
+            can.when(PageContentModel.findOne({pageName: 'lessons'}), LessonsCategoryModel.findAll(), LessonsModel.findAll())
+               .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray){
+                    var tempParam = {
+                        pageContent: reqPageContent,
+                        lessonsCategoryArray: reqLessonsCategoryArray,
+                        lessonsArray: reqLessonsArray
+                    };
+                    var pageFragment = can.view(config.pathViewFolder + pages.lessons.template, tempParam);
+                    $el.html(pageFragment);
+                });
+
         },
         renderIndexPage: function() {
             var pages = this.options;
             var $el = this.element;
-            this.element.empty();
-            can.when(InfoPageContent.findAll()).then(function(pageContent){
-                var contentFragment = can.view(config.pathViewFolder + pages.index.template, pageContent[0]);
-                $el.html(contentFragment);
+            $el.empty();
+            PageContentModel.findOne({pageName: 'index'}, function(pageContent){
+                var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
+                $el.html(pageFragment);
             });
         }
     });

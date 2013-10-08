@@ -2792,7 +2792,7 @@ h3 {
 .big-title {
   font-family: 'Roboto Slab', serif;
   font-size: 28px;
-  text-shadow: 0px 2px 0px #6b6661, 0px -1px 0px #8d8881, 1px 0px 0px #8d8881, -1px 0px 0px #8d8881, 0px 1px 2px #000000;
+  text-shadow: 0px 2px 0px #66615c, 0px -1px 0px #8d8881, 1px 0px 0px #8d8881, -1px 0px 0px #8d8881, 0px 1px 2px #000000;
   color: #f5fcff;
   padding: 0px 20px;
 }
