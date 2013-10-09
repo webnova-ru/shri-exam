@@ -20,11 +20,17 @@ $(function(){
             template: 'lesson.ejs'
         },
         students: {
-            routeName: 'students'
+            routeName: 'students',
+            template: 'students.ejs'
         },
         student: {
             routeName: 'student',
-            routeMethod: ['edit', 'view']
+            routeMethod: {
+                create: 'new',
+                edit: 'edit',
+                view: 'view'
+            },
+            template: 'student.ejs'
         }
     }
 
@@ -157,6 +163,43 @@ $(function(){
         return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS)[0];
     });
 
+    // Модель студентов
+    var StudentsModel = can.Model.LocalStorage({
+        storageName: 'students',
+        initLocalStorageData: function() {
+            var storageName = this.storageName;
+            if(!window.localStorage[storageName])
+            {
+                can.ajax({
+                    url: '/students/full-info',
+                    success: function(data) {
+                        window.localStorage[storageName] = JSON.stringify(data);
+                    }
+                });
+            }
+        }
+    },{});
+    StudentsModel.initLocalStorageData();
+    can.fixture('GET /students/full-info', function() {
+        return STUDENTS;
+    });
+
+    //StudentsModel.initLocalStorageData(STUDENTS);
+   /* StudentsModel.findAll({}, function(data){
+        data[0].attr({
+            first_name: 'Хуита'
+        });
+        data[0].save();
+        console.log(data[0]);
+    }); */
+   /* var tt = new StudentsModel({
+        about: 'ffgg',
+        first_name: 'dfdf',
+        last_name: 'yjjk'
+    });
+    console.log(tt);*/
+    //console.log(StudentsModel);
+
     // Отслеживание изменения хеша и обработка событий по ним
     var Router = can.Control.extend({
         defaults: {
@@ -172,21 +215,21 @@ $(function(){
             this.$preloader = $('.' + this.options.preloaderClass, this.element);
             this.$contentInner = $('.' + this.options.innerClass, this.element);
         },
-        toggleLoadAndContent: function(fragment) {
-             if(fragment)
-             {
-                 this.$preloader.addClass(this.options.hideClass);
-                 this.$contentInner.html(fragment);
-             }
-             else
-             {
-                 this.$contentInner.empty();
-                 this.$preloader.removeClass(this.options.hideClass);
-             }
+        '{student.routeName}/{student.routeAction.create} route' : function(){
+            this.toggleLoadAndContent();
+            console.log("the hash is #!active");
+        },
+        '{student.routeName}/{student.routeAction.view}/:param route' : function(urlParam){
+            this.toggleLoadAndContent();
+            console.log("the hash is #!active" + urlParam.param);
+        },
+        '{student.routeName}/{student.routeAction.edit}/:param route' : function(urlParam){
+            this.toggleLoadAndContent();
+            console.log("the hash is #!active" + urlParam.param);
         },
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
-            console.log("the hash is #!active");
+
         },
         '{lesson.routeName}/{lesson.routeMethod}/:param route' : function(urlParam){
             var pages = this.options;
@@ -229,6 +272,18 @@ $(function(){
                 var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
                 self.toggleLoadAndContent(pageFragment);
             });
+        },
+        toggleLoadAndContent: function(fragment) {
+            if(fragment)
+            {
+                this.$preloader.addClass(this.options.hideClass);
+                this.$contentInner.html(fragment);
+            }
+            else
+            {
+                this.$contentInner.empty();
+                this.$preloader.removeClass(this.options.hideClass);
+            }
         }
     });
 

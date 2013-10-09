@@ -1,9 +1,10 @@
 can.Model('can.Model.LocalStorage', {
 // Implement local storage handling
     localStore : function (cb) {
-        var name = this.name,
+        var name = this.storageName,
             data = JSON.parse(window.localStorage[name] || (window.localStorage[name] = '[]')),
             res = cb.call(this, data);
+        //debugger;
         if (res !== false) {
             can.each(data, function (todo) {
                 delete todo.editing;
