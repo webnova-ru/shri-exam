@@ -519,5 +519,8 @@ var PAGE_CONTENT = {
     },
     lessons: {
         titlePromoText: 'Все лекции школы разработки интерфейсов'
+    },
+    students: {
+        titlePromoText: 'Cтуденты нашей школы'
     }
 };

@@ -3067,7 +3067,7 @@ h3 {
 }
 .hex-grid {
   text-align: center;
-  margin-top: -90px;
+  margin: -90px 0 180px;
 }
 .hex-grid_row-odd {
   display: inline-block;
@@ -3094,7 +3094,7 @@ h3 {
   -webkit-transform: rotate(120deg);
   -moz-transform: rotate(120deg);
   transform: rotate(120deg);
-  cursor: pointer;
+  display: block;
   height: 380px;
   overflow: hidden;
   visibility: hidden;
@@ -3121,7 +3121,7 @@ h3 {
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 170% 50%;
+  background-size: 100% 50%;
 }
 .hexagon_inner2--bgCorrect {
   background-size: 100% 100%;

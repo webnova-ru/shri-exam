@@ -1,0 +1,22 @@
+<h1 class="big-title _center">
+    <%= pageContent.titlePromoText %>
+</h1>
+
+<section class="hex-grid">
+<% can.each(studentsArray, function(elem){ %>
+    <div class="hex-grid_row-odd">
+        <% can.each(elem[0], function(studInfo){ %>
+            <div class="hexagon-wrap">
+                <%== can.view.render(tempForHexagon, {studInfo: studInfo, urlPage: pagesInfo.student}); %>
+            </div>
+        <% }); %>
+    </div>
+    <div class="hex-grid_row-even">
+        <% can.each(elem[1], function(studInfo){ %>
+            <div class="hexagon-wrap">
+                <%== can.view.render(tempForHexagon, {studInfo: studInfo, urlPage: pagesInfo.student}); %>
+            </div>
+        <% }); %>
+    </div>
+<% }); %>
+</section>

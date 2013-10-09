@@ -21,7 +21,8 @@ $(function(){
         },
         students: {
             routeName: 'students',
-            template: 'students.ejs'
+            template: 'students.ejs',
+            templateForHexagon: 'hexagon.ejs'
         },
         student: {
             routeName: 'student',
@@ -170,12 +171,14 @@ $(function(){
             var storageName = this.storageName;
             if(!window.localStorage[storageName])
             {
-                can.ajax({
+               /* can.ajax({
                     url: '/students/full-info',
                     success: function(data) {
+                        console.log('--' + data);
                         window.localStorage[storageName] = JSON.stringify(data);
                     }
-                });
+                }); */
+                window.localStorage[storageName] = JSON.stringify(STUDENTS);
             }
         }
     },{});
@@ -185,13 +188,13 @@ $(function(){
     });
 
     //StudentsModel.initLocalStorageData(STUDENTS);
-   /* StudentsModel.findAll({}, function(data){
-        data[0].attr({
+    StudentsModel.findAll({}, function(data){
+       /* data[0].attr({
             first_name: 'Хуита'
         });
-        data[0].save();
-        console.log(data[0]);
-    }); */
+        data[0].save();*/
+        //console.log(data[0]);
+    });
    /* var tt = new StudentsModel({
         about: 'ffgg',
         first_name: 'dfdf',
@@ -230,6 +233,48 @@ $(function(){
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
 
+            var pages = this.options;
+            var self = this;
+            can.when(PageContentModel.findOne({pageName: 'students'}), StudentsModel.findAll())
+               .then(function(reqPageContent, reqStudentsArray) {
+
+                    // подготавливаем массив данных для шаблона
+                    var studentsArray = [];
+                    var stud1 = [null, null, null];
+                    var stud2 = [null, null, null, null];
+                    for(var i = 0, len = reqStudentsArray.length, flag1 = 1, flag2 = 1; i < len; i++)
+                    {
+                        if(flag1 % 4)
+                        {
+                            stud1[flag1 - 1] = reqStudentsArray[i];
+                            flag1++;
+                        }
+                        else
+                        {
+                            if(flag2 % 5)
+                            {
+                                stud2[flag2 - 1] = reqStudentsArray[i];
+                                flag2++;
+                            }
+                            else
+                            {
+                                flag2 = flag1 = 1;
+                                studentsArray.push([stud1, stud2]);
+                                stud1 = [null, null, null];
+                                stud2 = [null, null, null, null];
+                            }
+                        }
+                    }
+
+                    var tempParam = {
+                        pageContent: reqPageContent,
+                        studentsArray: studentsArray,
+                        pagesInfo: pages,
+                        tempForHexagon: config.pathViewFolder + pages.students.templateForHexagon
+                    };
+                    var pageFragment = can.view(config.pathViewFolder + pages.students.template, tempParam);
+                    self.toggleLoadAndContent(pageFragment);
+               });
         },
         '{lesson.routeName}/{lesson.routeMethod}/:param route' : function(urlParam){
             var pages = this.options;
@@ -242,8 +287,8 @@ $(function(){
             });
         },
         '{lessons.routeName} route' : function(){
-            var pages = this.options;
             this.toggleLoadAndContent();
+            var pages = this.options;
             var self = this;
             can.when(PageContentModel.findOne({pageName: 'lessons'}), LessonsCategoryModel.findAll(), LessonsModel.findAll())
                .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray){
