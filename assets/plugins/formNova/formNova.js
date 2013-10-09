@@ -19,6 +19,11 @@
             temp_onSubmitErrorItem: '<li class="-form-errors_list_item" />',
 
             afterValidate: function(fieldObj) {
+
+            },
+            isSubmit: true,
+            beforeSubmit: function() {
+
             }
         };
     var messages = {
@@ -219,13 +224,20 @@
                     var fieldObj = me._validate(this);
                     fieldObj.isFailed && errors.push(me._getOnSubmitError(fieldObj).error);
                     me.options.showInlineErrorsOnSubmit && me._showInlineError(me._getInlineError(fieldObj));
-                    me.options.afterValidate(fieldObj);
+                    $.isFunction(me.options.afterValidate) && me.options.afterValidate(fieldObj);
                 });
                 if(errors.length)
                 {
                     me.options.showErrorsOnSubmit && me._showErrorsOnSubmit(errors);
                     return false;
                 }
+
+                $.isFunction(me.options.beforeSubmit) && me.options.beforeSubmit();
+                if(!me.options.isSubmit)
+                {
+                    return false;
+                }
+
             });
         },
         _getInputsWithValidRule: function() {

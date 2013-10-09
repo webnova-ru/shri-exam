@@ -1452,7 +1452,7 @@ button.-button {
   margin-top: 6px;
 }
 .-win_content {
-  padding: 10px;
+  padding: 20px 10px 10px;
   background-color: #eff0f0;
   border-top: 1px solid #FFF;
 }
@@ -2965,7 +2965,6 @@ h3 {
   margin: 20px;
 }
 .student-info_foto {
-  width: 410px;
   display: block;
   margin-right: 20px;
   padding: 5px;
@@ -3099,6 +3098,7 @@ h3 {
   overflow: hidden;
   visibility: hidden;
   width: 160px;
+  border: none;
 }
 .hexagon:hover .hexagon_desc {
   opacity: 1;

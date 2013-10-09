@@ -28,7 +28,6 @@ $(function(){
             routeName: 'student',
             routeMethod: {
                 create: 'new',
-                edit: 'edit',
                 view: 'view'
             },
             template: 'student.ejs'
@@ -166,35 +165,32 @@ $(function(){
 
     // Модель студентов
     var StudentsModel = can.Model.LocalStorage({
-        storageName: 'students',
-        initLocalStorageData: function() {
+        storageName: 'LS_Tags',
+        initLocalStorageData: function(data) {
             var storageName = this.storageName;
             if(!window.localStorage[storageName])
             {
-               /* can.ajax({
+                /*can.ajax({
                     url: '/students/full-info',
                     success: function(data) {
-                        console.log('--' + data);
                         window.localStorage[storageName] = JSON.stringify(data);
                     }
                 }); */
-                window.localStorage[storageName] = JSON.stringify(STUDENTS);
+                window.localStorage[storageName] = JSON.stringify(data);
             }
         }
     },{});
-    StudentsModel.initLocalStorageData();
+    StudentsModel.initLocalStorageData(STUDENTS);
     can.fixture('GET /students/full-info', function() {
         return STUDENTS;
     });
-
-    //StudentsModel.initLocalStorageData(STUDENTS);
-    StudentsModel.findAll({}, function(data){
-       /* data[0].attr({
+   /* StudentsModel.findAll({}, function(data){
+        data[0].attr({
             first_name: 'Хуита'
         });
-        data[0].save();*/
+        data[0].save();
         //console.log(data[0]);
-    });
+    }); */
    /* var tt = new StudentsModel({
         about: 'ffgg',
         first_name: 'dfdf',
@@ -218,17 +214,81 @@ $(function(){
             this.$preloader = $('.' + this.options.preloaderClass, this.element);
             this.$contentInner = $('.' + this.options.innerClass, this.element);
         },
-        '{student.routeName}/{student.routeAction.create} route' : function(){
+        '{student.routeName}/{student.routeMethod.create} route' : function(){
             this.toggleLoadAndContent();
             console.log("the hash is #!active");
         },
-        '{student.routeName}/{student.routeAction.view}/:param route' : function(urlParam){
+        '{student.routeName}/{student.routeMethod.view}/:param route' : function(urlParam){
             this.toggleLoadAndContent();
-            console.log("the hash is #!active" + urlParam.param);
-        },
-        '{student.routeName}/{student.routeAction.edit}/:param route' : function(urlParam){
-            this.toggleLoadAndContent();
-            console.log("the hash is #!active" + urlParam.param);
+            var pages = this.options;
+            var self = this;
+            var studId = urlParam.param;
+            StudentsModel.findAll({}, function(studentsArray){
+                var studentInfo = null;
+                for(var i = 0, len = studentsArray.length; i < len; i++)
+                {
+                    if(studentsArray[i].id == studId)
+                    {
+                        studentInfo = studentsArray[i];
+                        break;
+                    }
+                }
+                var tempParam = {
+                    studentInfo: studentInfo,
+                    urlPageInfo: pages
+                };
+                var pageFragment = can.view(config.pathViewFolder + pages.student.template, tempParam);
+                self.toggleLoadAndContent(pageFragment);
+
+                var editStudentForm = $('[data-validate="formNova"]');
+                editStudentForm.formNova();
+                editStudentForm.formNova('config', {
+                    isSubmit: false,
+                    beforeSubmit: function() {
+                        if(studentInfo)
+                        {
+                            var resFormValue = {};
+                            can.each(editStudentForm.serializeArray(), function(obj){
+                                resFormValue[obj.name] = obj.value;
+                            });
+                            studentInfo.attr(resFormValue).save(function(){
+                                location.hash = '#!' + pages.student.routeName + '/'
+                                                     + pages.student.routeMethod.view + '/'
+                                                     + studentInfo.id;
+                            });
+                        }
+                    }
+                });
+
+                // удаление студента
+                var deleteStudentButton = $('#js-delete-student', this.element);
+                deleteStudentButton.on('click', function(e){
+                    e.preventDefault();
+                    studentInfo.destroy(function() {
+                        location.hash = '#!' + pages.students.routeName;
+                    });
+                });
+
+                var viewButton = $('#js-view-student', self.element);
+                var editButton = $('#js-edit-student', self.element);
+                var goBackToViewButton = $('#js-go-to-view', self.element);
+                var goToViewAction = function(e) {
+                    e.preventDefault();
+                    editButton.removeClass('-btn--active');
+                    viewButton.addClass('-btn--active');
+                    $('#js-student-edit').hide();
+                    $('#js-student-info').show();
+                };
+                viewButton.on('click', goToViewAction);
+                goBackToViewButton.on('click', goToViewAction);
+                editButton.on('click', function(e) {
+                    e.preventDefault();
+                    viewButton.removeClass('-btn--active');
+                    editButton.addClass('-btn--active');
+                    $('#js-student-info').hide();
+                    $('#js-student-edit').show();
+                });
+            });
         },
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
@@ -246,6 +306,7 @@ $(function(){
                     {
                         if(flag1 % 4)
                         {
+
                             stud1[flag1 - 1] = reqStudentsArray[i];
                             flag1++;
                         }
@@ -265,7 +326,9 @@ $(function(){
                             }
                         }
                     }
-
+                    console.log(studentsArray);
+                    console.log(i);
+                    console.log(allStudentsAndCreateBtn.length);
                     var tempParam = {
                         pageContent: reqPageContent,
                         studentsArray: studentsArray,

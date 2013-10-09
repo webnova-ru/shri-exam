@@ -1,0 +1,143 @@
+<div class="student-info">
+    <div class="-row">
+        <div class="-unit2of3">
+            <img class="student-info_foto" src="<%= studentInfo.link_photo %>" alt="фото студента" width="100%" height="100%">
+        </div>
+        <div class="-unit1of3">
+            <h1 class="student-info_fio"><%= studentInfo.first_name %><br/><%= studentInfo.last_name %></h1>
+            <div class="student-info_city"><i class="icon-map-marker"></i> <%= studentInfo.city %></div>
+        </div>
+    </div>
+</div>
+<div class="-win-wrap">
+    <div class="-win">
+        <div class="-win_header">
+            <div class="-win_header_inline _left">
+                <a href="#!<%= urlPageInfo.students.routeName %>" class="-btn">
+                    <i class="icon-chevron-left"></i> К списку студентов
+                </a>
+            </div>
+            <div class="win-title -win_header_title">Информация о студенте</div>
+            <div class="-win_header_inline _right">
+                <div class="-ui-group">
+                    <a href="javascript://" id="js-view-student" class="-ui-group_item -btn -btn--active">
+                        <i class="icon-eye-open"></i> Просмотр
+                    </a>
+                    <a href="javascript://" id="js-edit-student" class="-ui-group_item -btn">
+                        <i class="icon-pencil"></i> Редактирование
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="-win_content">
+            <div class="student-info-full" id="js-student-info">
+                <h2 class="title">О себе</h2>
+                <p>
+                     <%= studentInfo.about %>
+                </p>
+                <h2 class="title">Ссылки на социальные сети</h2>
+                <table class="-table -table--bordered">
+                    <tbody>
+                    <% if(studentInfo.link_facebook) { %>
+                        <tr>
+                            <td><strong>Facebook</strong></td>
+                            <td><a href="<%= studentInfo.link_facebook %>" target="_blank"><%= studentInfo.link_facebook %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_vk) { %>
+                        <tr>
+                            <td><strong>Вконтакте</strong></td>
+                            <td><a href="<%= studentInfo.link_vk %>" target="_blank"><%= studentInfo.link_vk %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_gihub) { %>
+                        <tr>
+                            <td><strong>GitHub</strong></td>
+                            <td><a href="<%= studentInfo.link_gihub %>" target="_blank"><%= studentInfo.link_gihub %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_yaru) { %>
+                        <tr>
+                            <td><strong>Ya.ru</strong></td>
+                            <td><a href="<%= studentInfo.link_yaru %>" target="_blank"><%= studentInfo.link_yaru %></a></td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--редактирование-->
+            <div class="student-edit" id="js-student-edit">
+                <h2 class="title _spacer">Редактирование данных студента</h2>
+                <form action="#" method="post" data-validate="formNova">
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="first_name">Имя</label>
+                        <div class="-form-right">
+                            <input id="first_name" class="-input-text" name="first_name" data-validrules="required" value="<%= studentInfo.first_name %>" />
+                        </div>
+                    </div>
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="last_name">Фамилия</label>
+                        <div class="-form-right">
+                            <input id="last_name" class="-input-text" name="last_name" data-validrules="required" value="<%= studentInfo.last_name %>" />
+                        </div>
+                    </div>
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="city">Город</label>
+                        <div class="-form-right">
+                            <input id="city" class="-input-text" name="city" data-validrules="required" value="<%= studentInfo.city %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="link_photo">Ссылка на фото</label>
+                        <div class="-form-right">
+                            <input id="link_photo" class="-input-text" name="link_photo" data-validrules="required" value="<%= studentInfo.link_photo %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="link_facebook">Ссылка facebook</label>
+                        <div class="-form-right">
+                            <input id="link_facebook" class="-input-text" name="link_facebook" value="<%= studentInfo.link_facebook %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="link_vk">Ссылка vk</label>
+                        <div class="-form-right">
+                            <input id="link_vk" class="-input-text" name="link_vk" value="<%= studentInfo.link_vk %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="link_gihub">Ссылка GitHub</label>
+                        <div class="-form-right">
+                            <input id="link_gihub" class="-input-text" name="link_gihub" value="<%= studentInfo.link_gihub %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label -form-left" for="link_yaru">Ссылка Ya.ru</label>
+                        <div class="-form-right">
+                            <input id="link_yaru" class="-input-text" name="link_yaru" value="<%= studentInfo.link_yaru %>" />
+                        </div>
+                    </div>
+
+                    <div class="-form-line">
+                        <label class="-label" for="about">О себе</label>
+                        <textarea id="about" class="-textarea -width-100" name="about" data-validrules="required|minLength[40]"><%= studentInfo.about %></textarea>
+                    </div>
+
+                    <div class="-form-line -form-action">
+                        <div class="-form-right">
+                            <button type="submit" class="-button">Сохранить</button>
+                            <button class="-button -button--gray _spacer-l" id="js-go-to-view">Обратно</button>
+                            <span class="-btn _right _spacer-r" id="js-delete-student"><i class="icon-trash"></i> Удалить студента</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
