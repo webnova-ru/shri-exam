@@ -245,18 +245,15 @@ $(function(){
                 editStudentForm.formNova('config', {
                     isSubmit: false,
                     beforeSubmit: function() {
+                        var resFormValue = {};
+                        can.each(editStudentForm.serializeArray(), function(obj) {
+                            resFormValue[obj.name] = obj.value;
+                        });
                         if(studentInfo)
-                        {
-                            var resFormValue = {};
-                            can.each(editStudentForm.serializeArray(), function(obj){
-                                resFormValue[obj.name] = obj.value;
-                            });
-                            studentInfo.attr(resFormValue).save(function(){
-                                location.hash = '#!' + pages.student.routeName + '/'
-                                                     + pages.student.routeMethod.view + '/'
-                                                     + studentInfo.id;
-                            });
-                        }
+                            studentInfo.attr(resFormValue).save();
+                        else
+                            new StudentsModel(resFormValue).save();
+                        location.hash = '#!' + pages.students.routeName;
                     }
                 });
 
@@ -290,6 +287,7 @@ $(function(){
                 });
             });
         },
+        // страница со списком студентов
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
 
@@ -302,33 +300,35 @@ $(function(){
                     var studentsArray = [];
                     var stud1 = [null, null, null];
                     var stud2 = [null, null, null, null];
-                    for(var i = 0, len = reqStudentsArray.length, flag1 = 1, flag2 = 1; i < len; i++)
+                    for(var i = 0, len = reqStudentsArray.length, rowCounter1 = 1, rowCounter2 = 1, flag = 0; i < len; i++)
                     {
-                        if(flag1 % 4)
+                        var studItem  = reqStudentsArray[i];
+                        if(rowCounter1 % 4)
                         {
-
-                            stud1[flag1 - 1] = reqStudentsArray[i];
-                            flag1++;
+                            stud1[rowCounter1 - 1] = studItem;
+                            rowCounter1++;
+                            flag++;
                         }
                         else
                         {
-                            if(flag2 % 5)
+                            if(rowCounter2 % 5)
                             {
-                                stud2[flag2 - 1] = reqStudentsArray[i];
-                                flag2++;
+                                stud2[rowCounter2 - 1] = studItem;
+                                rowCounter2++;
+                                flag++;
                             }
                             else
                             {
-                                flag2 = flag1 = 1;
+                                rowCounter2 = rowCounter1 = 1;
+                                flag = 0;
                                 studentsArray.push([stud1, stud2]);
                                 stud1 = [null, null, null];
                                 stud2 = [null, null, null, null];
                             }
                         }
                     }
-                    console.log(studentsArray);
-                    console.log(i);
-                    console.log(allStudentsAndCreateBtn.length);
+                    if(i && flag)
+                        studentsArray.push([stud1, stud2]);
                     var tempParam = {
                         pageContent: reqPageContent,
                         studentsArray: studentsArray,

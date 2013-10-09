@@ -36,6 +36,7 @@
 @_text-small:  _text-small;  // большой размер текста
 @_text-ghost:  _text-ghost;  // полупрозрачный текст
 @_center: _center; // центрирование текста
+@_bold: _bold; // Жирное начертание шрифта
 // -----------------------------------------
 
 // local variables and mixins --------------
@@ -150,6 +151,9 @@
   }
   .@{_center} {
     text-align: center;
+  }
+  .@{_bold} {
+    font-weight: bold !important;
   }
 }
 //---------------------------------------
