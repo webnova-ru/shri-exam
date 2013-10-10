@@ -138,6 +138,32 @@ h1, h2, h3 {
     border-color: darken(@titleColor, 15%) transparent transparent darken(@titleColor, 15%);
   }
 }
+.note {
+  position: fixed;
+  top: -50px;
+  z-index: 3;
+  width: 700px;
+  opacity: 0;
+  .trans(all 1s ease);
+}
+.note--active {
+  top: 90px;
+  opacity: 1;
+}
+  .note_inner {
+    display: inline-block;
+    padding: 15px @unit-space 15px 53px;
+    background: hsl(@hue, 7%, 30%) url("@{path-imgFolder}/icon-note.png") 12px center no-repeat;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    .round(10px);
+    @green: hsl(90, 100%, 70%);
+    border: 2px solid @green;
+    @sh: inset 0 0 8px 3px hsl(@hue, 7%, 20%),
+               0 0 4px #222;
+    .shadow(@sh);
+  }
 // LOGO
 .logo {
   margin: auto;

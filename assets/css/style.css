@@ -2860,6 +2860,39 @@ h3 {
   left: auto;
   border-color: #ddceb0 transparent transparent #ddceb0;
 }
+.note {
+  position: fixed;
+  top: -50px;
+  z-index: 3;
+  width: 700px;
+  opacity: 0;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+.note--active {
+  top: 90px;
+  opacity: 1;
+}
+.note_inner {
+  display: inline-block;
+  padding: 15px 20px 15px 53px;
+  background: #474f52 url("/assets/img/icon-note.png") 12px center no-repeat;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  border: 2px solid #b3ff66;
+  -webkit-box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
+  -moz-box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
+  -o-box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
+  box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
+}
 .logo {
   margin: auto;
   width: 350px;

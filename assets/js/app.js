@@ -35,39 +35,41 @@ $(function(){
             templateEditStudent: 'studentEdit.ejs',
             templateNewStudent: 'studentNew.ejs'
         }
-    }
-
-    var menuData = {
-        template: 'menu.ejs',
-        menuItems: [
-            {
-                text: 'О ШРИ',
-                desc: 'Информация о школе',
-                id: 'js-menu-info',
-                iconClass: 'icon-info-sign',
-                url: ''
-            },
-            {
-                text: 'Студенты',
-                desc: 'Список учащихся',
-                id: 'js-menu-students',
-                iconClass: 'icon-group',
-                url: 'students'
-            },{
-                text: 'Лекции',
-                desc: 'Записи видео лекций',
-                id: 'js-menu-lessons',
-                iconClass: 'icon-film',
-                url: 'lessons'
-            }]
     };
 
     var Menu = can.Control.extend({
             defaults: {
+                template: 'menu.ejs',
+
                 menuItemClass: 'js-menu_item',
                 activeClassName: 'menu_item--active',
                 arrowActiveMenuClassName: 'menu_item_arrow',
-                hideClass: '_hide'
+                hideClass: '_hide',
+
+                menuItems: [
+                    {
+                        text: 'О ШРИ',
+                        desc: 'Информация о школе',
+                        id: 'js-menu-info',
+                        iconClass: 'icon-info-sign',
+                        url: ''
+                    },
+                    {
+                        text: 'Студенты',
+                        desc: 'Список учащихся',
+                        id: 'js-menu-students',
+                        iconClass: 'icon-group',
+                        url: 'students'
+                    },
+                    {
+                        text: 'Лекции',
+                        desc: 'Записи видео лекций',
+                        id: 'js-menu-lessons',
+                        iconClass: 'icon-film',
+                        url: 'lessons'
+                    }
+                ]
+
             }
         }, {
             init: function(element, menuData) {
@@ -88,7 +90,7 @@ $(function(){
                     return;
                 }
                 var self = this;
-                can.each(opt.menuItems, function(item){
+                can.each(opt.menuItems, function(item) {
                     if(item.url && (hash === item.url || hash.indexOf(item.url + '/') !== -1))
                         self.lightActiveItem(item.id);
                 });
@@ -155,6 +157,7 @@ $(function(){
         return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS)[0];
     });
 
+    // функция получения полной информации о лекции. Подобие JOIN-а таблиц из SQL
     function getFullLessonsInfo(lessons, category, teachers) {
         var lessonsArray = $.isPlainObject(lessons)? [lessons]: lessons;
         return lessonsArray.map(function(lesson) {
@@ -192,6 +195,45 @@ $(function(){
 
     can.fixture('GET /students/full-info', function() {
         return STUDENTS;
+    });
+
+    // Контроллер уведомлений о событиях работы с моделями данных
+    var Note = can.Control.extend({
+        defaults: {
+            activeClass: 'note--active',
+            innerId: 'js-note_inner',
+            timeShowMsg: 2800,
+
+            messages: {
+                studentAdd: 'Новый студент успешно добавлен',
+                studentUpdate: 'Данные о студенте изменены',
+                studentDel: 'Студент удалён'
+            }
+        }
+    },{
+        init: function() {
+            this.$textElem = $('#' + this.options.innerId, this.element);
+        },
+        '{models.Students} created': function() {
+            this.showNote(this.options.messages.studentAdd);
+        },
+        '{models.Students} updated': function() {
+            this.showNote(this.options.messages.studentUpdate);
+        },
+        '{models.Students} destroyed': function() {
+            this.showNote(this.options.messages.studentDel);
+        },
+
+        // показывает уведомление с текстом из параметра
+        showNote: function(text) {
+            this.$textElem.text(text);
+            this.element.addClass(this.options.activeClass);
+
+            var self = this;
+            setTimeout(function() {
+                self.element.removeClass(self.options.activeClass);
+            }, this.options.timeShowMsg);
+        }
     });
 
     // Контроллер контента страницы, отслеживание изменения хеша и обработка событий по ним
@@ -397,7 +439,15 @@ $(function(){
             models.Lessons.findOne({id: urlParam.param}, function(lessonInfo){
                 var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
                 self.toggleLoadAndContent(pageFragment);
-                $('[data-validate="formNova"]').formNova();
+
+                var form = $('[data-validate="formNova"]');
+                form.formNova();
+                form.formNova('config', {
+                    isSubmit: false,
+                    beforeSubmit: function() {
+
+                    }
+                });
             });
         },
 
@@ -462,12 +512,14 @@ $(function(){
     var App = {
         config: {
             contentClass: 'js-content',
-            menuClass: 'js-menu'
+            menuClass: 'js-menu',
+            noteId: 'js-note'
         },
         init: function() {
             new Content('.' + this.config.contentClass, pages);
-            new Menu('.' + this.config.menuClass, menuData);
+            new Menu('.' + this.config.menuClass);
+            new Note('#' + this.config.noteId, {models: models});
         }
-    }
+    };
     App.init();
 });
