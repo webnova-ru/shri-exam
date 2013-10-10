@@ -13,17 +13,17 @@
     <div class="-win">
         <div class="-win_header">
             <div class="-win_header_inline _left">
-                <a href="#!<%= urlPageInfo.students.routeName %>" class="-btn">
+                <a href="<%= listUrl %>" class="-btn">
                     <i class="icon-chevron-left"></i> К списку студентов
                 </a>
             </div>
             <div class="win-title -win_header_title">Информация о студенте</div>
             <div class="-win_header_inline _right">
                 <div class="-ui-group">
-                    <a href="javascript://" id="js-view-student" class="-ui-group_item -btn -btn--active">
+                    <a href="<%= viewUrl %>" id="js-view-student" class="-ui-group_item -btn">
                         <i class="icon-eye-open"></i> Просмотр
                     </a>
-                    <a href="javascript://" id="js-edit-student" class="-ui-group_item -btn">
+                    <a href="<%= editUrl %>" id="js-edit-student" class="-ui-group_item -btn">
                         <i class="icon-pencil"></i> Редактирование
                     </a>
                 </div>
@@ -67,7 +67,7 @@
             </div>
 
             <!--редактирование-->
-            <%== can.view.render(tempEditForm, {state: state, studentInfo: studentInfo}); %>
+            <%== can.view.render(tempEditForm, {state: state, goBackUrl: viewUrl, studentInfo: studentInfo}); %>
         </div>
     </div>
 </div>

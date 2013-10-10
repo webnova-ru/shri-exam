@@ -28,7 +28,8 @@ $(function(){
             routeName: 'student',
             routeMethod: {
                 create: 'new',
-                view: 'view'
+                view: 'view',
+                edit: 'edit'
             },
             template: 'student.ejs',
             templateEditStudent: 'studentEdit.ejs',
@@ -101,11 +102,15 @@ $(function(){
             }
     });
 
+    // пространство имён для моделей
+    var models = {};
+
     // Модель текстовки сайта
-    var PageContentModel = can.Model({
+    models.PageContent = can.Model({
         findAll: 'GET /info',
         findOne: 'GET /info/{pageName}'
     }, {});
+
     can.fixture.delay = config.ServerRequestDelay;
     can.fixture('GET /info', function(){
         return [PAGE_CONTENT];
@@ -115,7 +120,7 @@ $(function(){
     });
 
     // Модель взятия лектора
-    var TeachersModel = can.Model({
+    models.Teachers = can.Model({
         findAll: 'GET /teachers',
         findOne: 'GET /teacher/{id}'
     }, {});
@@ -127,7 +132,7 @@ $(function(){
     });
 
     // Модель взятия категорий лекций
-    var LessonsCategoryModel = can.Model({
+    models.LessonsCategory = can.Model({
         findAll: 'GET /category',
         findOne: 'GET /category/{id}'
     }, {});
@@ -139,10 +144,17 @@ $(function(){
     });
 
     // Модель взятия лекций
-    var LessonsModel = can.Model({
+     models.Lessons = can.Model({
         findAll: 'GET /lessons',
         findOne: 'GET /lesson/{id}'
     }, {});
+    can.fixture('GET /lessons', function() {
+        return getFullLessonsInfo(LESSONS, LESSONS_CATEGORY, TEACHERS);
+    });
+    can.fixture('GET /lesson/{id}', function(request) {
+        return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS)[0];
+    });
+
     function getFullLessonsInfo(lessons, category, teachers) {
         var lessonsArray = $.isPlainObject(lessons)? [lessons]: lessons;
         return lessonsArray.map(function(lesson) {
@@ -158,15 +170,9 @@ $(function(){
             return lessonCopy;
         });
     }
-    can.fixture('GET /lessons', function() {
-        return getFullLessonsInfo(LESSONS, LESSONS_CATEGORY, TEACHERS);
-    });
-    can.fixture('GET /lesson/{id}', function(request) {
-        return getFullLessonsInfo(LESSONS[request.data.id - 1], LESSONS_CATEGORY, TEACHERS)[0];
-    });
 
     // Модель студентов
-    var StudentsModel = can.Model.LocalStorage({
+    models.Students = can.Model.LocalStorage({
         storageName: 'LS_Tags',
         initLocalStorageData: function(data) {
             var storageName = this.storageName;
@@ -182,13 +188,14 @@ $(function(){
             }
         }
     },{});
-    StudentsModel.initLocalStorageData(STUDENTS);
+    models.Students.initLocalStorageData(STUDENTS);
+
     can.fixture('GET /students/full-info', function() {
         return STUDENTS;
     });
 
-    // Отслеживание изменения хеша и обработка событий по ним
-    var Router = can.Control.extend({
+    // Контроллер контента страницы, отслеживание изменения хеша и обработка событий по ним
+    var Content = can.Control.extend({
         defaults: {
             preloaderClass: 'preloader',
             hideClass: '_hide',
@@ -213,32 +220,33 @@ $(function(){
             var tempParam = {
                 urlPageInfo: pages,
                 state: 'create',
-                tempEditForm: config.pathViewFolder + pages.student.templateEditStudent
+                tempEditForm: config.pathViewFolder + pages.student.templateEditStudent,
+                listUrl: '#!' + pages.students.routeName
             };
             var pageFragment = can.view(config.pathViewFolder + pages.student.templateNewStudent, tempParam);
             self.toggleLoadAndContent(pageFragment);
 
             // назначаем валидатор на форму
-            self.setValidatorForForm();
+            self.setValidatorForForm(undefined);
 
             // назначаем кнопку назад
-            var goBackToViewButton = $('#js-go-to-view', this.element);
-            goBackToViewButton.on('click', function(e){
+            var goBackButton = $('#js-go-to-view', this.element);
+            goBackButton.on('click', function(e){
                 e.preventDefault();
                 location.hash = '#!' + pages.students.routeName;
             });
         },
 
         // Страница просмотра анкеты студента
-        '{student.routeName}/{student.routeMethod.view}/:param route' : function(urlParam) {
+        '{student.routeName}/:action/:param route' : function(urlParam) {
             this.toggleLoadAndContent();
             var pages = this.options;
             var self = this;
             var studId = urlParam.param;
 
-            StudentsModel.findAll({}, function(studentsArray) {
+            models.Students.findAll({}, function(studentsArray) {
 
-                // находим нужным нам объект студента по id
+                // находим нужный нам объект студента с id из параметра урла
                 var studentInfo = null;
                 for(var i = 0, len = studentsArray.length; i < len; i++)
                 {
@@ -254,9 +262,12 @@ $(function(){
                 // собираем данные для шаблона, рендрим его и пихаем на страницу
                 var tempParam = {
                     studentInfo: studentInfo,
-                    urlPageInfo: pages,
                     state: 'view',
-                    tempEditForm: config.pathViewFolder + pages.student.templateEditStudent
+                    tempEditForm: config.pathViewFolder + pages.student.templateEditStudent,
+
+                    viewUrl: can.route.url({ page: pages.student.routeName, action: pages.student.routeMethod.view, param: studentInfo.id}),
+                    editUrl: can.route.url({ page: pages.student.routeName, action: pages.student.routeMethod.edit, param: studentInfo.id}),
+                    listUrl: '#!' + pages.students.routeName
                 };
                 var pageFragment = can.view(config.pathViewFolder + pages.student.template, tempParam);
                 self.toggleLoadAndContent(pageFragment);
@@ -273,17 +284,22 @@ $(function(){
                     });
                 });
 
-                // назначаем действия на кнопки просмотра/редактирования анкеты студента
-                var $viewEditGoBackButtons = $('#js-view-student, #js-edit-student, #js-go-to-view', self.element);
+                // назначаем кнопки просмотра/редактирования анкеты студента
+                var $viewButton = $('#js-view-student', self.element);
+                var $editButton = $('#js-edit-student', self.element);
                 var $studentEditForm = $('#js-student-edit', self.element);
+                var $studentFullInfo = $('#js-student-info', self.element);
 
-                $studentEditForm.hide();
-                $viewEditGoBackButtons.on('click', function(e) {
-                    e.preventDefault();
-                    $viewAndEditButton.toggleClass('-btn--active');
-                    $studentEditForm.toggle();
-                    $('#js-student-info').toggle();
-                });
+                if(urlParam.action === pages.student.routeMethod.view)
+                {
+                    $studentEditForm.hide();
+                    $viewButton.addClass('-btn--active');
+                }
+                if(urlParam.action === pages.student.routeMethod.edit)
+                {
+                    $studentFullInfo.hide();
+                    $editButton.addClass('-btn--active');
+                }
             });
         },
 
@@ -291,34 +307,41 @@ $(function(){
         setValidatorForForm: function(studItem) {
             var pages = this.options;
 
-            var editStudentForm = $('[data-validate="formNova"]');
-            editStudentForm.formNova();
-            editStudentForm.formNova('config', {
+            var form = $('[data-validate="formNova"]');
+            form.formNova();
+            form.formNova('config', {
                 isSubmit: false,
                 beforeSubmit: function() {
                     var resFormValue = {};
-                    can.each(editStudentForm.serializeArray(), function(obj) {
+                    can.each(form.serializeArray(), function(obj) {
                         resFormValue[obj.name] = obj.value;
                     });
-                    if(studItem)
-                        studItem.attr(resFormValue).save();
+
+                    var studItemCopy = studItem;
+
+                    if(studItemCopy)
+                        studItemCopy.attr(resFormValue).save();
                     else
-                        new StudentsModel(resFormValue).save();
-                    location.hash = '#!' + pages.students.routeName;
+                    {
+                        studItemCopy = new models.Students(resFormValue);
+                        studItemCopy.save();
+                    }
+                    location.hash = can.route.url({ page: pages.student.routeName, action: pages.student.routeMethod.view, param: studItemCopy.id})
                 }
             });
         },
 
         // страница со списком студентов
-        '{students.routeName} route' : function(){
-            this.toggleLoadAndContent();
-
+        '{students.routeName} route' : function() {
             var pages = this.options;
             var self = this;
-            can.when(PageContentModel.findOne({pageName: 'students'}), StudentsModel.findAll())
+
+            this.toggleLoadAndContent();
+
+            can.when(models.PageContent.findOne({pageName: 'students'}), models.Students.findAll())
                .then(function(reqPageContent, reqStudentsArray) {
 
-                    // подготавливаем массив данных для шаблона
+                    // подготавливаем массив данных для шаблона (нужно для вывода сетки из сот)
                     var studentsArray = [];
                     var stud1 = [null, null, null];
                     var stud2 = [null, null, null, null];
@@ -363,22 +386,32 @@ $(function(){
                     self.toggleLoadAndContent(pageFragment);
                });
         },
+
+        // страница показа одной лекции
         '{lesson.routeName}/{lesson.routeMethod}/:param route' : function(urlParam){
             var pages = this.options;
-            this.toggleLoadAndContent();
             var self = this;
-            LessonsModel.findOne({id: urlParam.param}, function(lessonInfo){
+
+            this.toggleLoadAndContent();
+
+            models.Lessons.findOne({id: urlParam.param}, function(lessonInfo){
                 var pageFragment = can.view(config.pathViewFolder + pages.lesson.template, lessonInfo);
                 self.toggleLoadAndContent(pageFragment);
                 $('[data-validate="formNova"]').formNova();
             });
         },
-        '{lessons.routeName} route' : function(){
-            this.toggleLoadAndContent();
+
+        // страница со списком лекций
+        '{lessons.routeName} route' : function() {
             var pages = this.options;
             var self = this;
-            can.when(PageContentModel.findOne({pageName: 'lessons'}), LessonsCategoryModel.findAll(), LessonsModel.findAll())
-               .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray){
+
+            this.toggleLoadAndContent();
+
+            can.when(models.PageContent.findOne({pageName: 'lessons'}), models.LessonsCategory.findAll(), models.Lessons.findAll())
+               .then(function(reqPageContent, reqLessonsCategoryArray, reqLessonsArray) {
+
+                    // собираем данные для шаблона, рендрим его и пихаем на страницу
                     var tempParam = {
                         pageContent: reqPageContent,
                         lessonsCategoryArray: reqLessonsCategoryArray,
@@ -396,15 +429,22 @@ $(function(){
         '{index.routeName} route': function(){
             this.renderIndexPage();
         },
+
+        // функция показа главной страницы
         renderIndexPage: function() {
             var pages = this.options;
-            this.toggleLoadAndContent();
             var self = this;
-            PageContentModel.findOne({pageName: 'index'}, function(pageContent){
+
+            this.toggleLoadAndContent();
+
+            // идём за данными для страницы, пихаим их в шаблон и рендрим страницу
+            models.PageContent.findOne({pageName: 'index'}, function(pageContent){
                 var pageFragment = can.view(config.pathViewFolder + pages.index.template, pageContent);
                 self.toggleLoadAndContent(pageFragment);
             });
         },
+
+        // переключаемся между состоянием загрузки страницы и наличием контента на ней
         toggleLoadAndContent: function(fragment) {
             if(fragment)
             {
@@ -425,7 +465,7 @@ $(function(){
             menuClass: 'js-menu'
         },
         init: function() {
-            new Router('.' + this.config.contentClass, pages);
+            new Content('.' + this.config.contentClass, pages);
             new Menu('.' + this.config.menuClass, menuData);
         }
     }
