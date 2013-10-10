@@ -67,77 +67,7 @@
             </div>
 
             <!--редактирование-->
-            <div class="student-edit" id="js-student-edit">
-                <h2 class="title _spacer">Редактирование данных студента</h2>
-                <form action="#" method="post" data-validate="formNova">
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="first_name">Имя</label>
-                        <div class="-form-right">
-                            <input id="first_name" class="-input-text" name="first_name" data-validrules="required" value="<%= studentInfo.first_name %>" />
-                        </div>
-                    </div>
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="last_name">Фамилия</label>
-                        <div class="-form-right">
-                            <input id="last_name" class="-input-text" name="last_name" data-validrules="required" value="<%= studentInfo.last_name %>" />
-                        </div>
-                    </div>
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="city">Город</label>
-                        <div class="-form-right">
-                            <input id="city" class="-input-text" name="city" data-validrules="required" value="<%= studentInfo.city %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="link_photo">Ссылка на фото</label>
-                        <div class="-form-right">
-                            <input id="link_photo" class="-input-text" name="link_photo" data-validrules="required" value="<%= studentInfo.link_photo %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="link_facebook">Ссылка facebook</label>
-                        <div class="-form-right">
-                            <input id="link_facebook" class="-input-text" name="link_facebook" value="<%= studentInfo.link_facebook %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="link_vk">Ссылка vk</label>
-                        <div class="-form-right">
-                            <input id="link_vk" class="-input-text" name="link_vk" value="<%= studentInfo.link_vk %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="link_gihub">Ссылка GitHub</label>
-                        <div class="-form-right">
-                            <input id="link_gihub" class="-input-text" name="link_gihub" value="<%= studentInfo.link_gihub %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label -form-left" for="link_yaru">Ссылка Ya.ru</label>
-                        <div class="-form-right">
-                            <input id="link_yaru" class="-input-text" name="link_yaru" value="<%= studentInfo.link_yaru %>" />
-                        </div>
-                    </div>
-
-                    <div class="-form-line">
-                        <label class="-label" for="about">О себе</label>
-                        <textarea id="about" class="-textarea -width-100" name="about" data-validrules="required|minLength[40]"><%= studentInfo.about %></textarea>
-                    </div>
-
-                    <div class="-form-line -form-action">
-                        <div class="-form-right">
-                            <button type="submit" class="-button">Сохранить</button>
-                            <button class="-button -button--gray _spacer-l" id="js-go-to-view">Обратно</button>
-                            <span class="-btn _right _spacer-r" id="js-delete-student"><i class="icon-trash"></i> Удалить студента</span>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <%== can.view.render(tempEditForm, {state: state, studentInfo: studentInfo}); %>
         </div>
     </div>
 </div>

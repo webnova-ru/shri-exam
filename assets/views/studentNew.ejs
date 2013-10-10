@@ -1,0 +1,15 @@
+<div class="-win-wrap">
+    <div class="-win">
+        <div class="-win_header">
+            <div class="-win_header_inline _left">
+                <a href="#!<%= urlPageInfo.students.routeName %>" class="-btn">
+                    <i class="icon-chevron-left"></i> К списку студентов
+                </a>
+            </div>
+            <div class="win-title -win_header_title">Информация о студенте</div>
+        </div>
+        <div class="-win_content">
+            <%== can.view.render(tempEditForm, {state: state, studentInfo: {}}); %>
+        </div>
+    </div>
+</div>

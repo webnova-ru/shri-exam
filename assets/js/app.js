@@ -30,7 +30,9 @@ $(function(){
                 create: 'new',
                 view: 'view'
             },
-            template: 'student.ejs'
+            template: 'student.ejs',
+            templateEditStudent: 'studentEdit.ejs',
+            templateNewStudent: 'studentNew.ejs'
         }
     }
 
@@ -184,20 +186,6 @@ $(function(){
     can.fixture('GET /students/full-info', function() {
         return STUDENTS;
     });
-   /* StudentsModel.findAll({}, function(data){
-        data[0].attr({
-            first_name: 'Хуита'
-        });
-        data[0].save();
-        //console.log(data[0]);
-    }); */
-   /* var tt = new StudentsModel({
-        about: 'ffgg',
-        first_name: 'dfdf',
-        last_name: 'yjjk'
-    });
-    console.log(tt);*/
-    //console.log(StudentsModel);
 
     // Отслеживание изменения хеша и обработка событий по ним
     var Router = can.Control.extend({
@@ -214,16 +202,43 @@ $(function(){
             this.$preloader = $('.' + this.options.preloaderClass, this.element);
             this.$contentInner = $('.' + this.options.innerClass, this.element);
         },
+
+        // Страница создания нового студента
         '{student.routeName}/{student.routeMethod.create} route' : function(){
             this.toggleLoadAndContent();
-            console.log("the hash is #!active");
+            var pages = this.options;
+            var self = this;
+
+            // собираем данные для шаблона, рендрим его и пихаем на страницу
+            var tempParam = {
+                urlPageInfo: pages,
+                state: 'create',
+                tempEditForm: config.pathViewFolder + pages.student.templateEditStudent
+            };
+            var pageFragment = can.view(config.pathViewFolder + pages.student.templateNewStudent, tempParam);
+            self.toggleLoadAndContent(pageFragment);
+
+            // назначаем валидатор на форму
+            self.setValidatorForForm();
+
+            // назначаем кнопку назад
+            var goBackToViewButton = $('#js-go-to-view', this.element);
+            goBackToViewButton.on('click', function(e){
+                e.preventDefault();
+                location.hash = '#!' + pages.students.routeName;
+            });
         },
-        '{student.routeName}/{student.routeMethod.view}/:param route' : function(urlParam){
+
+        // Страница просмотра анкеты студента
+        '{student.routeName}/{student.routeMethod.view}/:param route' : function(urlParam) {
             this.toggleLoadAndContent();
             var pages = this.options;
             var self = this;
             var studId = urlParam.param;
-            StudentsModel.findAll({}, function(studentsArray){
+
+            StudentsModel.findAll({}, function(studentsArray) {
+
+                // находим нужным нам объект студента по id
                 var studentInfo = null;
                 for(var i = 0, len = studentsArray.length; i < len; i++)
                 {
@@ -233,29 +248,21 @@ $(function(){
                         break;
                     }
                 }
+                if(studentInfo === null)
+                    return;
+
+                // собираем данные для шаблона, рендрим его и пихаем на страницу
                 var tempParam = {
                     studentInfo: studentInfo,
-                    urlPageInfo: pages
+                    urlPageInfo: pages,
+                    state: 'view',
+                    tempEditForm: config.pathViewFolder + pages.student.templateEditStudent
                 };
                 var pageFragment = can.view(config.pathViewFolder + pages.student.template, tempParam);
                 self.toggleLoadAndContent(pageFragment);
 
-                var editStudentForm = $('[data-validate="formNova"]');
-                editStudentForm.formNova();
-                editStudentForm.formNova('config', {
-                    isSubmit: false,
-                    beforeSubmit: function() {
-                        var resFormValue = {};
-                        can.each(editStudentForm.serializeArray(), function(obj) {
-                            resFormValue[obj.name] = obj.value;
-                        });
-                        if(studentInfo)
-                            studentInfo.attr(resFormValue).save();
-                        else
-                            new StudentsModel(resFormValue).save();
-                        location.hash = '#!' + pages.students.routeName;
-                    }
-                });
+                // назначаем валидатор на форму редактирования анкеты
+                self.setValidatorForForm(studentInfo);
 
                 // удаление студента
                 var deleteStudentButton = $('#js-delete-student', this.element);
@@ -266,27 +273,42 @@ $(function(){
                     });
                 });
 
-                var viewButton = $('#js-view-student', self.element);
-                var editButton = $('#js-edit-student', self.element);
-                var goBackToViewButton = $('#js-go-to-view', self.element);
-                var goToViewAction = function(e) {
+                // назначаем действия на кнопки просмотра/редактирования анкеты студента
+                var $viewEditGoBackButtons = $('#js-view-student, #js-edit-student, #js-go-to-view', self.element);
+                var $studentEditForm = $('#js-student-edit', self.element);
+
+                $studentEditForm.hide();
+                $viewEditGoBackButtons.on('click', function(e) {
                     e.preventDefault();
-                    editButton.removeClass('-btn--active');
-                    viewButton.addClass('-btn--active');
-                    $('#js-student-edit').hide();
-                    $('#js-student-info').show();
-                };
-                viewButton.on('click', goToViewAction);
-                goBackToViewButton.on('click', goToViewAction);
-                editButton.on('click', function(e) {
-                    e.preventDefault();
-                    viewButton.removeClass('-btn--active');
-                    editButton.addClass('-btn--active');
-                    $('#js-student-info').hide();
-                    $('#js-student-edit').show();
+                    $viewAndEditButton.toggleClass('-btn--active');
+                    $studentEditForm.toggle();
+                    $('#js-student-info').toggle();
                 });
             });
         },
+
+        // валидатор для формы
+        setValidatorForForm: function(studItem) {
+            var pages = this.options;
+
+            var editStudentForm = $('[data-validate="formNova"]');
+            editStudentForm.formNova();
+            editStudentForm.formNova('config', {
+                isSubmit: false,
+                beforeSubmit: function() {
+                    var resFormValue = {};
+                    can.each(editStudentForm.serializeArray(), function(obj) {
+                        resFormValue[obj.name] = obj.value;
+                    });
+                    if(studItem)
+                        studItem.attr(resFormValue).save();
+                    else
+                        new StudentsModel(resFormValue).save();
+                    location.hash = '#!' + pages.students.routeName;
+                }
+            });
+        },
+
         // страница со списком студентов
         '{students.routeName} route' : function(){
             this.toggleLoadAndContent();
@@ -329,6 +351,8 @@ $(function(){
                     }
                     if(i && flag)
                         studentsArray.push([stud1, stud2]);
+
+                    // собираем данные для шаблона, рендрим его и пихаем на страницу
                     var tempParam = {
                         pageContent: reqPageContent,
                         studentsArray: studentsArray,
