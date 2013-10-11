@@ -18,6 +18,9 @@ define(['can', 'fixture'], function() {
         }
     };
 
+    // ставим задержку на фейковый ответ сервера
+    can.fixture.delay = 600;
+
     can.fixture('GET /info', function(){
         return [PAGE_CONTENT];
     });
