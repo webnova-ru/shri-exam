@@ -1,0 +1,39 @@
+#comments { .init() {
+// -----------------------------------------
+/* comments style */
+// -----------------------------------------
+
+// variables
+
+// style
+.form-comment {
+  padding: @unit-space 0px;
+}
+.comments {
+  padding: @unit-space 0px;
+}
+.comment {
+  margin-bottom: @unit-space;
+  position: relative;
+}
+.comment_info {
+  padding: 0 (@unit-space / 2);
+}
+.comment_info_author {
+  font-weight: bold;
+}
+.comment_info_date {
+  color: lighten(@textColor, 40%);
+  font-size: 11px;
+}
+.comment_text {
+  .border(hsl(@hue, 10%, 73%));
+  @sh: 0 1px 1px hsl(@hue, 10%, 78%);
+  .shadow(@sh);
+  .round(@round);
+  padding: @unit-space / 2;
+  background-color: #fff;
+}
+
+// -----------------------------------------
+}}

@@ -1,0 +1,82 @@
+#lessons-list { .init() {
+// -----------------------------------------
+/* lessons-list style */
+// -----------------------------------------
+
+// variables
+
+// style
+.list-lessons {
+  text-align: center;
+}
+  .list-lessons_item {
+    display: inline-block;
+    position: relative;
+    list-style: none;
+    text-align: left;
+    margin-top: 15px;
+    padding: (@unit-space / 2) @unit-space;
+    background-color: hsl(200, 20%, 98%);
+    @sh: 0px 1px 2px #333,
+    inset 0px 1px 0px #fff;
+    .shadow(@sh);
+    .round(6px);
+  }
+  .list-lessons_item_arrow {
+    display: inline-block;
+    left: -(@unit-space + 5);
+    top: 4px;
+    padding: 5px @unit-space;
+    max-width: 440px;
+    height: 25px;
+    position: relative;
+    background-color: hsl(200, 40%, 90%);
+    .round-top-left(@round);
+    border-bottom:1px solid hsl(200, 40%, 70%);
+    font-size: 18px;
+    font-weight: bold;
+    .trans(all 0.4s ease-out);
+
+    &:before, &:after {
+      .trans(all 0.4s ease-out);
+    }
+    &:before {
+      border-left: 5px solid transparent;
+      border-top: 5px solid hsl(200, 30%, 70%);
+      bottom: -5px;
+      content: "";
+      height: 0;
+      left: 0;
+      position: absolute;
+      width: 0;
+    }
+
+    &:after {
+      border-bottom: 19px solid transparent;
+      border-left: 8px solid hsl(200, 40%, 90%);
+      border-top: 18px solid transparent;
+      content: "";
+      height: 0;
+      position: absolute;
+      right: -8px;
+      top: 0;
+      width: 0;
+    }
+
+    @bgHoverColor: hsl(hue(@linkHoverColor), 30%, 90%);
+    &:hover {
+      background-color: @bgHoverColor;
+      &:after {
+        border-left-color: @bgHoverColor;
+      }
+      &:before {
+        border-top-color: darken(@bgHoverColor, 20%);
+      }
+    }
+  }
+  .list-lessons_item_info {
+    border-left: 1px solid #ccc;
+  }
+
+// -----------------------------------------
+}}

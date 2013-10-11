@@ -1,0 +1,37 @@
+#lessons { .init() {
+// -----------------------------------------
+/* lessons style */
+// -----------------------------------------
+
+// variables
+
+//style
+.lesson-info {
+  font-size: 16px;
+  height: 24px;
+  border-bottom: 1px solid #ccc;
+  padding-top: 1px;
+  margin-bottom: @unit-space;
+}
+.lesson-video {
+  margin-bottom: @unit-space;
+}
+.lesson-download {
+  @color: hsl(200, 10%, 88%);
+  padding: (@unit-space / 2);
+  padding-bottom: (@unit-space / 2 - 3);
+  margin-top: (@unit-space / 2);
+  background-color: @color;
+  .round(4px);
+  border-top: 1px solid darken(@color, 10%);
+  border-bottom: 1px solid #FFF;
+  @sh: inset 0 0px 1px darken(@color, 15%);
+  .shadow(@sh);
+}
+  .lesson-download_title {
+    display: inline-block;
+    margin-top: 3px;
+  }
+
+// -----------------------------------------
+}}

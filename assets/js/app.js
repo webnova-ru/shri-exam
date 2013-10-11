@@ -284,7 +284,7 @@ $(function(){
             this.toggleLoadAndContent();
             var pages = this.options;
             var self = this;
-            var studId = urlParam.param;
+            var studId = parseInt(urlParam.param);
 
             models.Students.findAll({}, function(studentsArray) {
 
@@ -292,7 +292,7 @@ $(function(){
                 var studentInfo = null;
                 for(var i = 0, len = studentsArray.length; i < len; i++)
                 {
-                    if(studentsArray[i].id == studId)
+                    if(studentsArray[i].id === studId)
                     {
                         studentInfo = studentsArray[i];
                         break;
@@ -473,10 +473,10 @@ $(function(){
                 });
 
         },
-        'route': function(){
+        'route': function() {
             this.renderIndexPage();
         },
-        '{index.routeName} route': function(){
+        '{index.routeName} route': function() {
             this.renderIndexPage();
         },
 

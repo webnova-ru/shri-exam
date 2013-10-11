@@ -2893,6 +2893,17 @@ h3 {
   -o-box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
   box-shadow: inset 0 0 8px 3px #2f3537, 0 0 4px #222222;
 }
+.mediaBox {
+  background: #f4f5f6 url("/assets/img/bg_page.png");
+  background-color: #f4f5f6;
+  border: 1px solid #949b9e;
+  -webkit-box-shadow: 0px 1px 0px #2d4853;
+  -moz-box-shadow: 0px 1px 0px #2d4853;
+  -o-box-shadow: 0px 1px 0px #2d4853;
+  box-shadow: 0px 1px 0px #2d4853;
+  padding: 20px;
+}
+/* logo style */
 .logo {
   margin: auto;
   width: 350px;
@@ -2906,11 +2917,9 @@ h3 {
   border: none;
   text-decoration: none;
 }
+/* menu style */
 .menu {
   margin-bottom: 30px;
-}
-.menu_item_icon-wrap {
-  margin-top: 12px;
 }
 .menu_item {
   display: block;
@@ -2984,6 +2993,9 @@ h3 {
   -o-box-shadow: 0px 1px 2px #999999;
   box-shadow: 0px 1px 2px #999999;
 }
+.menu_item_icon-wrap {
+  margin-top: 12px;
+}
 .menu_item_icon {
   font-size: 32px;
   display: block;
@@ -2996,7 +3008,9 @@ h3 {
 }
 .menu_item_subtext {
   color: #646e73;
+  font-size: 13px;
 }
+/* student-info style */
 .student-info {
   margin: 20px;
 }
@@ -3024,16 +3038,7 @@ h3 {
   margin-top: 20px;
   font-size: 18px;
 }
-.mediaBox {
-  background: #f4f5f6 url("/assets/img/bg_page.png");
-  background-color: #f4f5f6;
-  border: 1px solid #949b9e;
-  -webkit-box-shadow: 0px 1px 0px #2d4853;
-  -moz-box-shadow: 0px 1px 0px #2d4853;
-  -o-box-shadow: 0px 1px 0px #2d4853;
-  box-shadow: 0px 1px 0px #2d4853;
-  padding: 20px;
-}
+/* lessons style */
 .lesson-info {
   font-size: 16px;
   height: 24px;
@@ -3064,6 +3069,7 @@ h3 {
   display: inline-block;
   margin-top: 3px;
 }
+/* comments style */
 .form-comment {
   padding: 20px 0px;
 }
@@ -3097,6 +3103,7 @@ h3 {
   padding: 10px;
   background-color: #fff;
 }
+/* students-list style */
 .hex-grid {
   text-align: center;
   margin: -90px 0 160px;
@@ -3191,6 +3198,7 @@ h3 {
   -o-box-shadow: 0px 0px 3px #000000;
   box-shadow: 0px 0px 3px #000000;
 }
+/* lessons-list style */
 .list-lessons {
   text-align: center;
 }

@@ -1,0 +1,93 @@
+#students-list { .init() {
+// -----------------------------------------
+/* students-list style */
+// -----------------------------------------
+
+// variables
+
+// style
+.hex-grid {
+  text-align: center;
+  margin: -90px 0 160px;
+}
+  .hex-grid_row-odd {
+    display: inline-block;
+    margin: 0 auto -270px auto;
+    overflow: hidden;
+  }
+  .hex-grid_row-even {
+    display: inline-block;
+    margin: 0 auto -270px auto;
+    overflow: hidden;
+  }
+
+.hexagon-wrap {
+  float: left;
+  margin: 20px 10px;
+  width: 160px;
+  &:first-child {
+    margin-left: 0px;
+  }
+  &:last-child {
+    margin-right: 0px;
+  }
+}
+.hexagon {
+  .rotate(120deg);
+  display: block;
+  height: 380px;
+  overflow: hidden;
+  visibility: hidden;
+  width: 160px;
+  border: none;
+  &:hover .hexagon_desc {
+    opacity: 1;
+  }
+}
+  .hexagon_inner1 {
+    .rotate(-60deg);
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+  .hexagon_inner2 {
+    .rotate(-60deg);
+    height: 100%;
+    position: relative;
+    visibility: visible;
+    width: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 50%;
+  }
+  .hexagon_inner2--bgCorrect {
+    background-size: 100% 100%;
+  }
+  .hexagon_desc {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    color: #fff;
+    text-align: center;
+    text-shadow: 0px 1px 2px #222;
+    visibility: visible;
+    background-color: hsla(32, 90%, 20%, 75%);
+    opacity: 0;
+    .trans();
+  }
+    .hexagon_desc_title {
+      margin: 165px 20px 0px;
+    }
+
+.newStudent {
+  padding: (@unit-space / 2);
+  background-color: hsla(45, 75%, 90%, 75%);
+  display: inline-block;
+  .round(@round);
+  .shadow(0px 0px 3px #000);
+}
+
+// -----------------------------------------
+}}
