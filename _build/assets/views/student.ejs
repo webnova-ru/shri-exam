@@ -1,0 +1,73 @@
+<div class="student-info">
+    <div class="-row">
+        <div class="-unit2of3">
+            <img class="student-info_foto" src="<%= studentInfo.link_photo %>" alt="фото студента" width="100%" height="100%">
+        </div>
+        <div class="-unit1of3">
+            <h1 class="student-info_fio"><%= studentInfo.first_name %><br/><%= studentInfo.last_name %></h1>
+            <div class="student-info_city"><i class="icon-map-marker"></i> <%= studentInfo.city %></div>
+        </div>
+    </div>
+</div>
+<div class="-win-wrap">
+    <div class="-win">
+        <div class="-win_header">
+            <div class="-win_header_inline _left">
+                <a href="<%= listUrl %>" class="-btn">
+                    <i class="icon-chevron-left"></i> К списку студентов
+                </a>
+            </div>
+            <div class="win-title -win_header_title">Информация о студенте</div>
+            <div class="-win_header_inline _right">
+                <div class="-ui-group">
+                    <a href="<%= viewUrl %>" id="js-view-student" class="-ui-group_item -btn">
+                        <i class="icon-eye-open"></i> Просмотр
+                    </a>
+                    <a href="<%= editUrl %>" id="js-edit-student" class="-ui-group_item -btn">
+                        <i class="icon-pencil"></i> Редактирование
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="-win_content">
+            <div class="student-info-full" id="js-student-info">
+                <h2 class="title">О себе</h2>
+                <p>
+                     <%= studentInfo.about %>
+                </p>
+                <h2 class="title">Ссылки на социальные сети</h2>
+                <table class="-table -table--bordered">
+                    <tbody>
+                    <% if(studentInfo.link_facebook) { %>
+                        <tr>
+                            <td><strong>Facebook</strong></td>
+                            <td><a href="<%= studentInfo.link_facebook %>" target="_blank"><%= studentInfo.link_facebook %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_vk) { %>
+                        <tr>
+                            <td><strong>Вконтакте</strong></td>
+                            <td><a href="<%= studentInfo.link_vk %>" target="_blank"><%= studentInfo.link_vk %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_gihub) { %>
+                        <tr>
+                            <td><strong>GitHub</strong></td>
+                            <td><a href="<%= studentInfo.link_gihub %>" target="_blank"><%= studentInfo.link_gihub %></a></td>
+                        </tr>
+                    <% } %>
+                    <% if(studentInfo.link_yaru) { %>
+                        <tr>
+                            <td><strong>Ya.ru</strong></td>
+                            <td><a href="<%= studentInfo.link_yaru %>" target="_blank"><%= studentInfo.link_yaru %></a></td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--редактирование-->
+            <%== can.view.render(tempEditForm, {state: state, goBackUrl: viewUrl, studentInfo: studentInfo}); %>
+        </div>
+    </div>
+</div>

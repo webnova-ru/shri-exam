@@ -5,29 +5,27 @@ define(['can'], function() {
     var Note = can.Control.extend({
         defaults: {
             activeClass: 'note--active',
-            innerId: 'js-note_inner',
-            timeShowMsg: 2800,
-
-            messages: {
-                studentAdd: 'Новый студент успешно добавлен',
-                studentUpdate: 'Данные о студенте изменены',
-                studentDel: 'Студент удалён'
-            }
+            innerId: 'js-note_inner'
         }
     },{
         init: function() {
             this.$textElem = $('#' + this.options.innerId, this.element);
         },
         '{models.Students} created': function() {
-            this.showNote(this.options.messages.studentAdd);
+            this.showNote(this.options.note.messages.studentAdd);
         },
         '{models.Students} updated': function() {
-            this.showNote(this.options.messages.studentUpdate);
+            this.showNote(this.options.note.messages.studentUpdate);
         },
         '{models.Students} destroyed': function() {
-            this.showNote(this.options.messages.studentDel);
+            this.showNote(this.options.note.messages.studentDel);
         },
-
+        '{models.Comments} created': function() {
+            this.showNote(this.options.note.messages.commentCreate);
+        },
+        '{models.Comments} destroyed': function() {
+            this.showNote(this.options.note.messages.commentDel);
+        },
         // показывает уведомление с текстом из параметра
         showNote: function(text) {
             this.$textElem.text(text);
@@ -36,7 +34,7 @@ define(['can'], function() {
             var self = this;
             setTimeout(function() {
                 self.element.removeClass(self.options.activeClass);
-            }, this.options.timeShowMsg);
+            }, this.options.note.timeShowMsg);
         }
     });
 

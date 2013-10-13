@@ -10,8 +10,6 @@ define(['database/students', 'database/pageContent', 'database/lessons', 'canLoc
         findOne: 'GET /info/{pageName}'
     }, {});
 
-    //can.fixture.delay = config.ServerRequestDelay;
-
     // Модель взятия лектора
     models.Teachers = can.Model({
         findAll: 'GET /teachers',
@@ -41,6 +39,11 @@ define(['database/students', 'database/pageContent', 'database/lessons', 'canLoc
         }
     },{});
     models.Students.initLocalStorageData(STUDENTS);
+
+    // Модель комментария
+    models.Comments = can.Model.LocalStorage({
+        storageName: 'comment_tag'
+    },{});
 
     return models;
 });

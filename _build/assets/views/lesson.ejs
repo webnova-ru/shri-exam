@@ -1,0 +1,87 @@
+<article class="mediaBox">
+    <h1 class="stripe-title">
+        <%= this.name %>
+    </h1>
+    <div class="lesson-info">
+        <div class="-row">
+            <div class="-unit">
+                <i class="icon-time" title="продолжительность лекции"></i> <%= this.time %>
+            </div>
+            <div class="-unit">
+                <i class="icon-user" title="имя лектора"></i> <%= this.teacher %>
+            </div>
+            <div class="-unit">
+                <i class="icon-folder-open" title="имя лектора"></i> <%= this.category %>
+            </div>
+            <div class="-unit">
+                <i class="icon-tags" title="ключевые слова"></i> <%= this.tags %>
+            </div>
+        </div>
+    </div>
+    <div class="lesson-video">
+        <iframe width="658" height="250" frameborder="0" src="<%= this.videoLink %>" class="player"></iframe>
+    </div>
+    <div class="lesson-download">
+        <strong class="lesson-download_title">Скачать материалы лекции:</strong>
+        <div class="-ui-group _spacer-l">
+            <a class="-ui-group_item -btn" href="<%= this.pressLink %>" target="_blank">презентация</a>
+            <span class="-ui-group_item -mark">.pdf</span>
+        </div>
+        <div class="-ui-group _spacer-l">
+            <a class="-ui-group_item -btn" href="<%= this.downloadLink %>" target="_blank">видео файл</a>
+            <span class="-ui-group_item -mark">430 Мб</span>
+        </div>
+    </div>
+    <section class="form-comment _spacer-t">
+        <h2 class="title _spacer">Комментировать лекцию</h2>
+        <form action="" method="post" data-validate="formNova">
+            <div class="-form-line">
+                <label class="-label -form-left" for="name">Имя</label>
+                <div class="-form-right">
+                    <input class="-input-text" id="name" type="text" name="name" data-validRules="required" />
+                </div>
+            </div>
+            <div class="-form-line">
+                <label class="-label -form-left" for="mail">
+                    Почта <span class="-note" data-symbol="?" data-note="Почта никому не показывается, не видна на сайте и на неё не присылается спам"></span>
+                </label>
+                <div class="-form-right">
+                    <input class="-input-text" id="mail" type="text" name="mail" data-validRules="required|validEmail" />
+                </div>
+            </div>
+            <div class="-form-line">
+                <label class="-label -form-left" for="comment">Сообщение</label>
+                <div class="-form-right">
+                    <textarea class="-textarea -width-100" name="comment" id="comment" data-validRules="required|minLength[40]"></textarea>
+                </div>
+            </div>
+            <div class="-form-line -form-action">
+                <div class="-form-right">
+                    <button type="submit" class="-button">Комментировать</button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+    <section class="comments">
+        <h2 class="title _spacer">Комментарии</h2>
+        <div class="comment">
+            <div class="comment_info">
+                <span class="comment_info_author"><i class="icon-user"></i> имя человека</span>
+                <span class="comment_info_date -right">12.06.2013</span>
+            </div>
+            <div class="comment_text">
+                Текст комментария
+            </div>
+        </div>
+        <div class="comment">
+            <div class="comment_info">
+                <span class="comment_info_author"><i class="icon-user"></i> имя человека</span>
+                <span class="comment_info_date -right">12.06.2013</span>
+            </div>
+            <div class="comment_text">
+                Текст комментария
+            </div>
+        </div>
+    </section>
+</article>

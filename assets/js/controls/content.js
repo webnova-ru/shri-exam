@@ -202,26 +202,70 @@ define(['can', 'formNova'], function() {
 
             // страница показа одной лекции
             '{pages.lesson.routeName}/{pages.lesson.routeMethod}/:param route' : function(urlParam) {
-
                 var pages = this.options.pages;
                 var models = this.options.models;
                 var self = this;
+                var lessonId = parseInt(urlParam.param);
 
                 this.toggleLoadAndContent();
 
-                models.Lessons.findOne({id: urlParam.param}, function(lessonInfo){
-                    var pageFragment = can.view(self.options.viewPath + pages.lesson.template, lessonInfo);
-                    self.toggleLoadAndContent(pageFragment);
+                can.when(models.Lessons.findOne({id: urlParam.param}), models.Comments.findAll())
+                   .then(function(lessonReq, commentsReq) {
 
-                    var form = $('[data-validate="formNova"]');
-                    form.formNova();
-                    form.formNova('config', {
-                        isSubmit: false,
-                        beforeSubmit: function() {
-
+                        var comments = [];
+                        if(commentsReq.length)
+                        {
+                            commentsReq.each(function(elem) {
+                                if(elem.lessonId == lessonId)
+                                    comments.push(elem);
+                            });
                         }
+
+                        // собираем данные для шаблона и довавляем его dom
+                        var tempParam = {
+                            lessonInfo: lessonReq,
+                            comments: comments,
+                            commentViewUrl: self.options.viewPath + pages.lesson.templateComment
+                        };
+
+                        var pageFragment = can.view(self.options.viewPath + pages.lesson.template, tempParam);
+                        self.toggleLoadAndContent(pageFragment);
+
+                        // назначаем обработчик на ссылку удаления комментария
+                        var commentsInner = $('.js-comments_inner', self.element);
+                        var delLinkClass = 'js-del-comment';
+                        var commentClass = 'js-comment';
+                        commentsInner.on('click', '.' + delLinkClass, function(e) {
+                            e.preventDefault();
+                            var commentRootElement = $(this).closest('.' + commentClass);
+                            commentRootElement.data('comment').destroy();
+                            commentRootElement.remove();
+                        });
+
+                        // определяем валидатор для формы комментариев
+                        var form = $('[data-validate="formNova"]');
+                        form.formNova();
+                        form.formNova('config', {
+                            isSubmit: false,
+                            beforeSubmit: function() {
+                                var resFormValue = {};
+                                can.each(form.serializeArray(), function(obj) {
+                                    resFormValue[obj.name] = obj.value;
+                                });
+                                var date = new Date();
+                                resFormValue['date'] = date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+
+                                var newComment = new models.Comments(resFormValue);
+                                newComment.save(function(comment) {
+                                    // пихаем новый комментарий на страницу
+                                    $('.js-no-comment-note', commentsInner).remove();
+                                    var commentFragment = can.view(tempParam.commentViewUrl, comment);
+                                    commentsInner.append(commentFragment);
+                                });
+                            }
+                        });
+
                     });
-                });
             },
 
             // страница со списком лекций

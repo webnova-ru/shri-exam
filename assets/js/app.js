@@ -14,7 +14,7 @@ define(
             init: function() {
                 new Content('.js-content', {pages: config.pages, models: models, viewPath: config.viewPath});
                 new Menu('.js-menu', {menu: config.menu, viewPath: config.viewPath});
-                new Note('#js-note', {models: models});
+                new Note('#js-note', {note: config.note, models: models});
             }
         };
 

@@ -32,7 +32,7 @@ require.config({
 });
 
 // запучкаем приложение из файла app.js
-define(['app'], function () {});
+require(['app'], function () {});
 
 
 

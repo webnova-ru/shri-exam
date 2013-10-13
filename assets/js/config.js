@@ -18,7 +18,8 @@ define([], function() {
             lesson: {
                 routeName: 'lesson',
                 routeMethod: 'view',
-                template: 'lesson.ejs'
+                template: 'lesson.ejs',
+                templateComment: 'comment.ejs'
             },
             students: {
                 routeName: 'students',
@@ -63,6 +64,18 @@ define([], function() {
                     url: 'lessons'
                 }
             ]
+        },
+
+        note: {
+            timeShowMsg: 3000,
+
+            messages: {
+                studentAdd: 'Новый студент успешно добавлен',
+                studentUpdate: 'Данные о студенте изменены',
+                studentDel: 'Студент удалён',
+                commentCreate: 'Комментарий добавлен',
+                commentDel: 'Комментарий удалён'
+            }
         }
     };
 

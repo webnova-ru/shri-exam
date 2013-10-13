@@ -15,6 +15,10 @@
 .comment {
   margin-bottom: @unit-space;
   position: relative;
+
+  &:hover .del-comment {
+    display: inline;
+  }
 }
 .comment_info {
   padding: 0 (@unit-space / 2);
@@ -34,6 +38,8 @@
   padding: @unit-space / 2;
   background-color: #fff;
 }
-
+.del-comment {
+  display: none;
+}
 // -----------------------------------------
 }}
