@@ -2,7 +2,7 @@ define([], function() {
     'use strict';
 
     var config = {
-        viewPath: '/assets/views/',
+        viewPath: '/assets/js/app/views/',
 
         pages: {
             index: {

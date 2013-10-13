@@ -1,19 +1,17 @@
 require.config({
 
-    baseUrl: 'assets/js',
+    baseUrl: 'assets/js/app',
 
     paths : {
-        jquery : "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min",
-        can: 'libs/can.jquery',
-        canObject: 'libs/can.object',
-        fixture: 'libs/can.fixture',
-        canLocalStorage: 'libs/can.localstorage',
-        formNova: 'plugins/formNova/formNova'
+        can: '../libs/can.jquery',
+        canObject: '../libs/can.object',
+        fixture: '../libs/can.fixture',
+        canLocalStorage: '../libs/can.localstorage',
+        formNova: '../plugins/formNova/formNova'
     },
 
     shim: {
         'can': {
-            deps: ['jquery'],
             exports: 'can'
         },
         'canObject' : {
@@ -24,9 +22,6 @@ require.config({
         },
         'canLocalStorage': {
             deps: ['can']
-        },
-        'formNova': {
-            deps: ['jquery']
         }
     }
 });
