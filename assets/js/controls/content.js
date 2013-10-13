@@ -169,8 +169,6 @@ define(['can', 'formNova'], function() {
                             }
                             else
                             {
-                                if(rowCounter2 == 1)
-                                    console.log(stud1);
                                 if(rowCounter2 % 5)
                                 {
                                     stud2[rowCounter2 - 1] = studItem;
@@ -179,7 +177,6 @@ define(['can', 'formNova'], function() {
                                 }
                                 else
                                 {
-                                    console.log(stud2);
                                     rowCounter2 = rowCounter1 = 1;
                                     flag = 0;
                                     i--;
@@ -191,7 +188,7 @@ define(['can', 'formNova'], function() {
                         }
                         if(i && flag)
                             studentsArray.push([stud1, stud2]);
-                        console.log(i);
+
                         // собираем данные для шаблона, рендрим его и пихаем на страницу
                         var tempParam = {
                             pageContent: reqPageContent,
