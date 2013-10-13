@@ -1,1 +1,12 @@
-This file was created by JetBrains PhpStorm 6.0.3 for binding GitHub repository
+#Решение экзаменационного задания ШРИ 2013
+Технологии и библиотеки использованные в решении:
+
+- Вёрстка по методологии MCSS
+- LESS
+- Jquery
+- Canjs
+- RequireJS
+
+Поддерживаемые браузеры: IE 9-10, и все другие.
+
+Живой результат можно посмотреть по ссылке: [http://shri-exam.webnova.ru](http://shri-exam.webnova.ru)
