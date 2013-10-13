@@ -3,7 +3,6 @@ define([], function() {
 
     var config = {
         viewPath: '/assets/views/',
-        ServerRequestDelay: 1000,
 
         pages: {
             index: {
